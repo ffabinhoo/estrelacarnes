@@ -8,8 +8,6 @@
 
 	<description>Estrela Carnes</description>
 
-
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<weld.version>2.1.2.Final</weld.version>
@@ -174,7 +172,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>administracao</finalName>
+		<finalName>estrelacarnes</finalName>
 		<outputDirectory>${basedir}/src/main/webapp/WEB-INF/classes</outputDirectory>
 		<plugins>
 			<plugin>
