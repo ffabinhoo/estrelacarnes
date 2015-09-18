@@ -7,6 +7,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import br.com.estrelacarnes.model.Complemento;
+import br.com.estrelacarnes.model.Preparo;
 import br.com.estrelacarnes.model.Produto;
 
 public class DefaultPedidoDAO implements PedidoDAO, Serializable{
@@ -25,16 +27,26 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 	}
 
 	@Override
-	public List<Produto> listarProdutosPorCategoria(String id) {
+	public List<Produto> listarProdutosPorCategoria(Integer id) {
 		List<Produto> lista = new ArrayList<Produto>();
-		String sql = "select p "
-				+ "from Produto  where p.idCategoria = :id order by p.nome asc";
-		
+		String sql = "select p from Produto p where p.categoria.id = :id order by p.nome asc";
+		lista = entityManager.createQuery(sql, Produto.class).setParameter("id", id ).getResultList();
+		return lista;
+	}
 
-		lista = entityManager.createQuery(sql, Produto.class)
-				.setParameter("id", id ).getResultList();
+	@Override
+	public List<Preparo> listarPreparos() {
+		List<Preparo> lista = new ArrayList<Preparo>();
+		String sql = "select p from Preparo p order by p.nome asc";
+		lista = entityManager.createQuery(sql, Preparo.class).getResultList();
+		return lista;
+	}
 
-		
+	@Override
+	public List<Complemento> listarComplementos() {
+		List<Complemento> lista = new ArrayList<Complemento>();
+		String sql = "select p from Complemento p order by p.id asc";
+		lista = entityManager.createQuery(sql, Complemento.class).getResultList();
 		return lista;
 	}
 	

@@ -1,9 +1,12 @@
 package br.com.estrelacarnes.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Categoria implements Serializable{
@@ -16,6 +19,10 @@ public class Categoria implements Serializable{
 	private String nome;
 	
 	private String descricao;
+	
+	
+	@OneToMany(mappedBy = "categoria", targetEntity=Produto.class, fetch=FetchType.EAGER)
+	private List<Produto> produtos;
 
 	public Integer getId() {
 		return id;
@@ -39,6 +46,14 @@ public class Categoria implements Serializable{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
 	
 	

@@ -1,5 +1,7 @@
 package br.com.estrelacarnes.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import br.com.caelum.vraptor.Controller;
@@ -8,6 +10,10 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.estrelacarnes.dao.PedidoDAO;
 import br.com.estrelacarnes.interceptor.UserInfo;
+import br.com.estrelacarnes.model.Categoria;
+import br.com.estrelacarnes.model.Complemento;
+import br.com.estrelacarnes.model.Preparo;
+import br.com.estrelacarnes.model.Produto;
 
 @Controller
 public class AdminController {
@@ -39,7 +45,18 @@ public class AdminController {
 	    
 	}
 	
-	
+	@Get("/cadastrarPedido/{categoria.id}")
+	public void cadastrarPedido(Categoria categoria) {
+	    List<Produto> listaProdutos = pedidoDAO.listarProdutosPorCategoria(categoria.getId());
+	    List<Preparo> listaPreparos = pedidoDAO.listarPreparos();
+	    List<Complemento> listaComplementos = pedidoDAO.listarComplementos();
+	    
+	    
+	    result.include("listaProdutos", listaProdutos);
+	    result.include("listaPreparos", listaPreparos);
+	    result.include("listaComplementos", listaComplementos);
+	    result.include("idCategoria", categoria.getId());
+	}
 	
 	
 

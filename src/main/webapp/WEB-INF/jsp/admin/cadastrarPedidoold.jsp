@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <title>Estrela Carnes</title>
@@ -17,10 +17,6 @@
 <link href="/estrelacarnes/css/font-awesome.css" rel="stylesheet">
 <link href="/estrelacarnes/css/style.css" rel="stylesheet">
 <link href="/estrelacarnes/css/pages/dashboard.css" rel="stylesheet">
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
 </head>
 <body>
 	<div class="navbar navbar-fixed-top">
@@ -53,7 +49,6 @@
 		</div>
 		<!-- /navbar-inner -->
 	</div>
-	<!-- /navbar -->
 	<div class="subnavbar">
 		<div class="subnavbar-inner">
 			<div class="container">
@@ -77,7 +72,7 @@
 		</div>
 		<!-- /subnavbar-inner -->
 	</div>
-	<!-- /subnavbar -->
+	
 	<div class="main">
 		<div class="main-inner">
 			<div class="container">
@@ -107,13 +102,28 @@
 							</div>
 							<!-- /widget-content -->
 						</div>
-						<div class="widget widget-table action-table" id="listaPedidosHoje">
-							<div class="widget-header">
-								<i class="icon-th-list"></i>
-								<h3>Cadastrar Pedido</h3>
-							</div>
-							<!-- /widget-header -->
-								<div class="widget-content">
+						
+					</div>
+					<!-- /span6 -->
+					
+					<!-- /span6 -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /main-inner -->
+	</div>
+
+
+<div class="span12">
+	<div class="widget widget-table action-table">
+		<div class="widget-header">
+			<i class="icon-th-list"></i>
+			<h3>Mix de Produtos</h3>
+		</div>
+		<!-- /widget-header -->
+		<div class="widget-content">
 			<form id="cadastrarPedido" class="form-horizontal">
 				<fieldset>
 
@@ -235,58 +245,17 @@
 				</fieldset>
 			</form>
 		</div>
-								
-							<!-- /widget-content -->
-						</div>
-					</div>
-					<!-- /span6 -->
-					
-					<!-- /span6 -->
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
-		</div>
-		<!-- /main-inner -->
+		<!-- /widget-content -->
+
 	</div>
-	<!-- /main -->
-	<div class="extra">
-		<div class="extra-inner">
-			<div class="container">
-				<div class="row">
-					<div class="span3">
-						<h4>Sobre Estrela Carnes</h4>
-
-					</div>
-					<!-- /span3 -->
-					<div class="span3">
-						<h4>Suporte</h4>
-
-					</div>
-					<!-- /span3 -->
-					<div class="span3"></div>
-					<!-- /span3 -->
-					<div class="span3"></div>
-					<!-- /span3 -->
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
-		</div>
-		<!-- /extra-inner -->
-	</div>
-
-	<script src="/estrelacarnes/js/jquery-1.7.2.min.js"></script>
+</div>
+<script src="/estrelacarnes/js/jquery-1.7.2.min.js"></script>
 <script src="/estrelacarnes/js/excanvas.min.js"></script>
 <script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 <script src="/estrelacarnes/js/bootstrap.js"></script>
+<script language="javascript" type="text/javascript"
+		src="js/full-calendar/fullcalendar.min.js"></script>
 <script>
-$(function(){
-    $("#listaPedidosHoje").show();
-		$( "#pedidosHoje" ).click(function() {
-		  	$( "#listaPedidosHoje" ).toggle( "slow" );
-		});
-});
 	$(function() {
 
 		 $('#quantidadekg').click(function() {
@@ -305,7 +274,3 @@ $(function(){
 	    window.location = "/estrelacarnes/cadastrarPedido/" + value;
 	});
 </script>
-
-
-</body>
-</html>
