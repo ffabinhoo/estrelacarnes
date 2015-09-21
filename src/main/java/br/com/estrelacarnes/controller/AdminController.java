@@ -12,6 +12,7 @@ import br.com.estrelacarnes.dao.PedidoDAO;
 import br.com.estrelacarnes.interceptor.UserInfo;
 import br.com.estrelacarnes.model.Categoria;
 import br.com.estrelacarnes.model.Complemento;
+import br.com.estrelacarnes.model.Item;
 import br.com.estrelacarnes.model.Preparo;
 import br.com.estrelacarnes.model.Produto;
 
@@ -42,20 +43,23 @@ public class AdminController {
 	
 	@Get("/cadastrarPedido")
 	public void cadastrarPedido() {
-	    
+		Item item = new Item();
+		item.setQuantidade("1");
+		result.include("quantidade", item .getQuantidade());
 	}
 	
-	@Get("/cadastrarPedido/{categoria.id}")
-	public void cadastrarPedido(Categoria categoria) {
+	@Get("/cadastrarPedido/{categoria.id}/{item.tipo}/{item.quantidade}")
+	public void cadastrarPedido(Categoria categoria, Item item, Item item2) {
 	    List<Produto> listaProdutos = pedidoDAO.listarProdutosPorCategoria(categoria.getId());
 	    List<Preparo> listaPreparos = pedidoDAO.listarPreparos();
 	    List<Complemento> listaComplementos = pedidoDAO.listarComplementos();
-	    
 	    
 	    result.include("listaProdutos", listaProdutos);
 	    result.include("listaPreparos", listaPreparos);
 	    result.include("listaComplementos", listaComplementos);
 	    result.include("idCategoria", categoria.getId());
+	    result.include("tipo", item.getTipo());
+	    result.include("quantidade", item.getQuantidade());
 	}
 	
 	
