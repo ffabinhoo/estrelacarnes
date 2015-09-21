@@ -10,6 +10,8 @@ public class Item {
 	private String tipo;
 	
 	private String quantidade;
+	
+	
 
 	public Integer getId() {
 		return id;
