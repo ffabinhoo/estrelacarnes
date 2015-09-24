@@ -71,7 +71,7 @@
 	<div class="main">
 		<div class="main-inner">
 			<div class="container">
-				<form id="cadastrarPedido" class="form-horizontal" action="${linkTo[AdminController].inserirItem}">
+				<form id="cadastrarPedido" class="form-horizontal" action="${linkTo[AdminController].inserirItem}" method="post">
 				<div class="row">
 					<div class="span12">
 
@@ -137,15 +137,21 @@
 								<i class="icon-th-list"></i>
 								<h3>Produto</h3>
 							</div>
-							<div class="widget-content">
-								<div class="controls">
-									<c:forEach var="produto" items="${listaProdutos}">
-										<label class="checkbox inline"> <input type="radio" id="produto" name="produto" value="${produto.id}" required/>${produto.nome}</label>
+							<div class="controls">
+								<div class="row">
+									<div class="col-sm-3 col-md-6 col-lg-12">
+									<c:forEach var="produto" items="${listaProdutos}" varStatus="i">
+										<c:if test="${i.count % 8 == 0}">
+											<br /> 
+										</c:if>
+										<div class="span2">
+											<input type="radio" id="produto" name="produto" value="${produto.id}" required/>${produto.nome.trim()}
+										</div>
 									</c:forEach>
+									</div>
 								</div>
 							</div>
 						</div>
-						
 						<div class="widget widget-table action-table" id="listaPedidosHoje">
 							<div class="widget-header" id="idTituloPreparo">
 								<i class="icon-th-list"></i>
@@ -276,8 +282,8 @@
 			$("#idDivObservacao").hide();
 
 
-			$("input:radio[name=produto]").click(function() {
-				if ($( "input:radio[name=produto]:checked" )){
+			$("input:radio[name=preparo]").click(function() {
+				if ($( "input:radio[name=preparo]:checked" )){
 					$("#idDivObservacao").show();						
 				} else {
 					$("#idDivObservacao").hide();

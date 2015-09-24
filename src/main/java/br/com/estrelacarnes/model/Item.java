@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Item implements Serializable{
@@ -15,11 +18,17 @@ public class Item implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GenericGenerator(name="generator", strategy="increment")
+	@GeneratedValue(generator="generator")
 	private Integer id;
 	
 	private String tipo;
 	
 	private String quantidade;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idPedido")
+	private Pedido pedido = new Pedido();
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idCategoria")
@@ -36,8 +45,6 @@ public class Item implements Serializable{
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idComplemento")
 	private Complemento complemento = new Complemento();
-	
-	
 	
 	private String observacao;
 
@@ -97,8 +104,6 @@ public class Item implements Serializable{
 		this.complemento = complemento;
 	}
 
-	
-
 	public String getObservacao() {
 		return observacao;
 	}
@@ -107,6 +112,11 @@ public class Item implements Serializable{
 		this.observacao = observacao;
 	}
 
-	
+	public Pedido getPedido() {
+		return pedido;
+	}
 
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
 }
