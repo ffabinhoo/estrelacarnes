@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
+import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.estrelacarnes.dao.PedidoDAO;
@@ -62,6 +63,11 @@ public class AdminController {
 	    result.include("quantidade", item.getQuantidade());
 	}
 	
+	
+	@Post
+	public void inserirItem(){
+		System.out.println("aquiiiii");
+	}
 	
 
 }

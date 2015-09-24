@@ -37,7 +37,7 @@ public class Item implements Serializable{
 	@JoinColumn(name = "idComplemento")
 	private Complemento complemento = new Complemento();
 	
-	private Integer modoEntrega;
+	
 	
 	private String observacao;
 
@@ -97,13 +97,7 @@ public class Item implements Serializable{
 		this.complemento = complemento;
 	}
 
-	public Integer getModoEntrega() {
-		return modoEntrega;
-	}
-
-	public void setModoEntrega(Integer modoEntrega) {
-		this.modoEntrega = modoEntrega;
-	}
+	
 
 	public String getObservacao() {
 		return observacao;

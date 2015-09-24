@@ -71,7 +71,7 @@
 	<div class="main">
 		<div class="main-inner">
 			<div class="container">
-				<form id="cadastrarPedido" class="form-horizontal">
+				<form id="cadastrarPedido" class="form-horizontal" action="${linkTo[AdminController].inserirItem}">
 				<div class="row">
 					<div class="span12">
 
@@ -176,7 +176,7 @@
 							</div>
 						</div>
 						
-						<div class="widget widget-table action-table" id="listaPedidosHoje">
+						<div class="widget widget-table action-table" id="idDivObservacao">
 							<div class="widget-header" id="idTituloObservacao">
 								<i class="icon-th-list"></i>
 								<h3>Observação</h3>
@@ -188,21 +188,9 @@
 							</div>
 						</div>
 						
-						<div class="widget widget-table action-table" id="listaPedidosHoje">
-							<div class="widget-header" id="idTituloEntrega">
-								<i class="icon-th-list"></i>
-								<h3>Modo de Entrega</h3>
-							</div>
-							<div class="widget-content">
-								<div class="controls">
-									<label class="checkbox inline"> <input type="radio" name="entrega" value="1" required> Pick-Up	</label> 
-									<label class="checkbox inline"> <input type="radio" name="entrega" value="2" required> Delivery </label>
-								</div>
-							</div>
-						</div>
 						
 						<div class="form-actions">
-							<button type="submit" class="btn btn-primary">Salvar</button>
+							<button type="submit" class="btn btn-primary">Incluir Item</button>
 							<button class="btn">Cancelar</button>
 						</div>
 						
@@ -285,7 +273,16 @@
 			$("#idTituloObservacao").hide();
 			$("#idTituloComplemento").hide();
 			$("#idTituloQuantidade").hide();
-			$("#idTituloEntrega").hide();
+			$("#idDivObservacao").hide();
+
+
+			$("input:radio[name=produto]").click(function() {
+				if ($( "input:radio[name=produto]:checked" )){
+					$("#idDivObservacao").show();						
+				} else {
+					$("#idDivObservacao").hide();
+				}
+			});
 			
 			$("#idMostrarTitulos").click(function() {
 				$("#idTituloCategoria").toggle("slow");
@@ -294,7 +291,6 @@
 				$("#idTituloObservacao").toggle("slow");
 				$("#idTituloComplemento").toggle("slow");
 				$("#idTituloQuantidade").toggle("slow");
-				$("#idTituloEntrega").toggle("slow");
 				
 			});
 		});
