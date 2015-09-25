@@ -50,6 +50,7 @@ public class Cliente implements Serializable{
 	
 	private String destaque;
 	
+	private String celular;
 	
 	
 	
@@ -64,7 +65,7 @@ public class Cliente implements Serializable{
 	}
 
 	public String getNome() {
-		return WordUtils.capitalize(nome.toLowerCase());
+		return nome;
 	}
 
 	public void setNome(String nome) {
@@ -183,6 +184,14 @@ public class Cliente implements Serializable{
 
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
+	}
+
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
 	}
 
 	

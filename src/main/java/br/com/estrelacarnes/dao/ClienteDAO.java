@@ -17,6 +17,8 @@ public interface ClienteDAO {
 	void atualizar(Cliente cliente);
 	
 	Integer retornaMaxId();
+
+	Cliente consultarUsuarioPorTelefone(String telefone);
 	
 	
 }

@@ -35,9 +35,9 @@
 
 							</ul></li>
 					</ul>
-					<form class="navbar-search pull-right">
+					<!-- <form class="navbar-search pull-right">
 						<input type="text" class="search-query" placeholder="Search">
-					</form>
+					</form> -->
 				</div>
 				<!--/.nav-collapse -->
 			</div>
@@ -71,7 +71,7 @@
 	<div class="main">
 		<div class="main-inner">
 			<div class="container">
-				<form id="cadastrarPedido" class="form-horizontal" action="${linkTo[AdminController].inserirItem}" method="post">
+				
 				<div class="row">
 					<div class="span12">
 
@@ -92,6 +92,17 @@
 							</div>
 							<!-- /widget-content -->
 						</div> --%>
+						
+						<!-- <div class="shortcuts align-left">
+							<a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">Usuário</span> </a>
+						</div> -->
+						<div class="widget widget-table action-table" id="buscaUsuario">
+								<input type="text" class="" placeholder="Telefone" id="telefone" name="telefone" value="${cliente.telefone}">
+								<a href="#" id="idBusca"><i class="icon-search"></i></a> 
+								<label>${cliente.nome}</label>
+								<input type="hidden" id="idCliente" name="idCliente" value="${cliente.id}">
+						</div>	
+						<form id="cadastrarPedido" class="form-horizontal" action="${linkTo[AdminController].inserirItem}" method="post">
 						<div class="widget widget-table action-table" id="listaPedidosHoje">
 							<div class="widget-header" id="idTituloQuantidade">
 								<i class="icon-th-list"></i>
@@ -318,12 +329,13 @@
 			var value = $(this).val();
 			var tipo = $( "input:radio[name=tipo]:checked" ).val();
 			var quantidade = $( "input:text[name=quantidade]" ).val();
+			var idCliente = $('#idCliente').val();
 			
 			if (quantidade == ""){
 				quantidade = 1;
 			}
 			
-			window.location = "/estrelacarnes/cadastrarPedido/" + value + "/" + tipo + "/" + quantidade;
+			window.location = "/estrelacarnes/cadastrarPedido/" + idCliente + "/" + value + "/" + tipo + "/" + quantidade;
 			//$( "#cadastrarPedido" ).submit();
 		});
 
@@ -346,8 +358,17 @@
 	            (charCode < 48 || charCode > 57))
 	            return false;
 	        return true;
-	    }    	
-	</script>
+	    } 
+
+		
+		$(document).ready(function() {
+			$('#idBusca').on('click', function() {
+				var telefone = $('#telefone').val();
+				window.location = "/estrelacarnes/consultarUsuario/" + telefone;
+			});
+		});
+	</script>   	
+	
 
 
 </body>

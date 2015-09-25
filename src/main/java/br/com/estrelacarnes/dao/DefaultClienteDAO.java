@@ -10,7 +10,6 @@ import br.com.estrelacarnes.model.Cliente;
 
 public class DefaultClienteDAO implements ClienteDAO, Serializable{
 	
-	
 	private static final long serialVersionUID = -4756737758015483441L;
 	private final EntityManager entityManager;
 	
@@ -55,6 +54,12 @@ public class DefaultClienteDAO implements ClienteDAO, Serializable{
 	public Integer retornaMaxId(){
 		Integer valor = entityManager.createQuery("select max(id)+1 from Cliente ", Integer.class).getSingleResult();
 		return valor;
+	}
+
+	@Override
+	public Cliente consultarUsuarioPorTelefone(String telefone) {
+		return entityManager.createQuery("select c from Cliente c where c.telefone = " + telefone, Cliente.class).getSingleResult();
+		
 	}
 
 }
