@@ -35,9 +35,9 @@
 
 							</ul></li>
 					</ul>
-					<form class="navbar-search pull-right">
+					<!-- <form class="navbar-search pull-right">
 						<input type="text" class="search-query" placeholder="Search">
-					</form>
+					</form> -->
 				</div>
 				<!--/.nav-collapse -->
 			</div>
@@ -71,7 +71,7 @@
 	<div class="main">
 		<div class="main-inner">
 			<div class="container">
-				<form id="cadastrarPedido" class="form-horizontal">
+				
 				<div class="row">
 					<div class="span12">
 
@@ -92,6 +92,17 @@
 							</div>
 							<!-- /widget-content -->
 						</div> --%>
+						
+						<!-- <div class="shortcuts align-left">
+							<a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">Usuário</span> </a>
+						</div> -->
+						<div class="widget widget-table action-table" id="buscaUsuario">
+								<input type="text" class="" placeholder="Telefone" id="telefone" name="telefone" value="${cliente.telefone}">
+								<a href="#" id="idBusca"><i class="icon-search"></i></a> 
+								<label>${cliente.nome}</label>
+								<input type="hidden" id="idCliente" name="idCliente" value="${cliente.id}">
+						</div>	
+						<form id="cadastrarPedido" class="form-horizontal" action="${linkTo[AdminController].inserirItem}" method="post">
 						<div class="widget widget-table action-table" id="listaPedidosHoje">
 							<div class="widget-header" id="idTituloQuantidade">
 								<i class="icon-th-list"></i>
@@ -137,15 +148,21 @@
 								<i class="icon-th-list"></i>
 								<h3>Produto</h3>
 							</div>
-							<div class="widget-content">
-								<div class="controls">
-									<c:forEach var="produto" items="${listaProdutos}">
-										<label class="checkbox inline"> <input type="radio" id="produto" name="produto" value="${produto.id}" required/>${produto.nome}</label>
+							<div class="controls">
+								<div class="row">
+									<div class="col-sm-3 col-md-6 col-lg-12">
+									<c:forEach var="produto" items="${listaProdutos}" varStatus="i">
+										<c:if test="${i.count % 8 == 0}">
+											<br /> 
+										</c:if>
+										<div class="span2">
+											<input type="radio" id="produto" name="produto" value="${produto.id}" required/>${produto.nome.trim()}
+										</div>
 									</c:forEach>
+									</div>
 								</div>
 							</div>
 						</div>
-						
 						<div class="widget widget-table action-table" id="listaPedidosHoje">
 							<div class="widget-header" id="idTituloPreparo">
 								<i class="icon-th-list"></i>
@@ -176,7 +193,7 @@
 							</div>
 						</div>
 						
-						<div class="widget widget-table action-table" id="listaPedidosHoje">
+						<div class="widget widget-table action-table" id="idDivObservacao">
 							<div class="widget-header" id="idTituloObservacao">
 								<i class="icon-th-list"></i>
 								<h3>Observação</h3>
@@ -188,21 +205,9 @@
 							</div>
 						</div>
 						
-						<div class="widget widget-table action-table" id="listaPedidosHoje">
-							<div class="widget-header" id="idTituloEntrega">
-								<i class="icon-th-list"></i>
-								<h3>Modo de Entrega</h3>
-							</div>
-							<div class="widget-content">
-								<div class="controls">
-									<label class="checkbox inline"> <input type="radio" name="entrega" value="1" required> Pick-Up	</label> 
-									<label class="checkbox inline"> <input type="radio" name="entrega" value="2" required> Delivery </label>
-								</div>
-							</div>
-						</div>
 						
 						<div class="form-actions">
-							<button type="submit" class="btn btn-primary">Salvar</button>
+							<button type="submit" class="btn btn-primary">Incluir Item</button>
 							<button class="btn">Cancelar</button>
 						</div>
 						
@@ -285,7 +290,16 @@
 			$("#idTituloObservacao").hide();
 			$("#idTituloComplemento").hide();
 			$("#idTituloQuantidade").hide();
-			$("#idTituloEntrega").hide();
+			$("#idDivObservacao").hide();
+
+
+			$("input:radio[name=preparo]").click(function() {
+				if ($( "input:radio[name=preparo]:checked" )){
+					$("#idDivObservacao").show();						
+				} else {
+					$("#idDivObservacao").hide();
+				}
+			});
 			
 			$("#idMostrarTitulos").click(function() {
 				$("#idTituloCategoria").toggle("slow");
@@ -294,7 +308,6 @@
 				$("#idTituloObservacao").toggle("slow");
 				$("#idTituloComplemento").toggle("slow");
 				$("#idTituloQuantidade").toggle("slow");
-				$("#idTituloEntrega").toggle("slow");
 				
 			});
 		});
@@ -316,12 +329,13 @@
 			var value = $(this).val();
 			var tipo = $( "input:radio[name=tipo]:checked" ).val();
 			var quantidade = $( "input:text[name=quantidade]" ).val();
+			var idCliente = $('#idCliente').val();
 			
 			if (quantidade == ""){
 				quantidade = 1;
 			}
 			
-			window.location = "/estrelacarnes/cadastrarPedido/" + value + "/" + tipo + "/" + quantidade;
+			window.location = "/estrelacarnes/cadastrarPedido/" + idCliente + "/" + value + "/" + tipo + "/" + quantidade;
 			//$( "#cadastrarPedido" ).submit();
 		});
 
@@ -344,8 +358,17 @@
 	            (charCode < 48 || charCode > 57))
 	            return false;
 	        return true;
-	    }    	
-	</script>
+	    } 
+
+		
+		$(document).ready(function() {
+			$('#idBusca').on('click', function() {
+				var telefone = $('#telefone').val();
+				window.location = "/estrelacarnes/consultarUsuario/" + telefone;
+			});
+		});
+	</script>   	
+	
 
 
 </body>
