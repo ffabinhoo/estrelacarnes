@@ -52,6 +52,8 @@ public class Cliente implements Serializable{
 	
 	private String celular;
 	
+	private String cpf;
+	
 	
 	
 	 
@@ -192,6 +194,14 @@ public class Cliente implements Serializable{
 
 	public void setCelular(String celular) {
 		this.celular = celular;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	

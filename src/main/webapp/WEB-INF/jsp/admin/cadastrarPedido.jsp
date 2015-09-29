@@ -51,7 +51,7 @@
 			<div class="container">
 				<ul class="mainnav">
 					<li class="active"><a href="/estrelacarnes"><i class="icon-dashboard"></i><span>Painel de Controle</span> </a></li>
-					<li><a href="${linkTo[AdminController].cadastrarPedido}" ><i class="icon-star-empty"></i><span>Cadastrar Pedido</span></a>
+					<li><a href="${linkTo[AdminController].consultarUsuario}" ><i class="icon-star-empty"></i><span>Cadastrar Pedido</span></a>
 					<li><a href="javascript:;" id="idMostrarTitulos"><i class="icon-adjust"></i><span>Mostrar/Esconder Títulos</span>
 					</a></li>
 					<li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-long-arrow-down"></i> <span>Opções</span>
@@ -76,33 +76,21 @@
 					<div class="span12">
 
 						<%-- <div class="widget">
-							<div class="widget-header">
-								<i class="icon-bookmark"></i>
-								<h3>Ícones</h3>
-							</div>
-							<!-- /widget-header -->
+							
 							<div class="widget-content">
 								<div class="shortcuts">
-									<a href="${linkTo[AdminController].cadastrarPedido}" class="shortcut"><i class="shortcut-icon icon-star-empty"></i><span
-										class="shortcut-label">Adicionar Pedido</span> </a> <a href="javascript:;" class="shortcut" id="pedidosHoje"><i
-										class="shortcut-icon icon-list-alt"></i><span class="shortcut-label">Pedidos de Hoje</span> </a> <a href="javascript:;" class="shortcut"><i
-										class="shortcut-icon icon-user"></i><span class="shortcut-label">Cadastrar Usuário</span> </a>
+										<a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">${cliente.nome} - ${cliente.celular}</span> </a>
 								</div>
 								<!-- /shortcuts -->
 							</div>
 							<!-- /widget-content -->
-						</div> --%>
-						
-						<!-- <div class="shortcuts align-left">
-							<a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">Usuário</span> </a>
-						</div> -->
-						<div class="widget widget-table action-table" id="buscaUsuario">
-								<input type="text" class="" placeholder="Telefone" id="telefone" name="telefone" value="${cliente.telefone}">
-								<a href="#" id="idBusca"><i class="icon-search"></i></a> 
-								<label>${cliente.nome}</label>
-								<input type="hidden" id="idCliente" name="idCliente" value="${cliente.id}">
-						</div>	
+						</div>
+						 --%>
+						<div class="shortcuts align-left">
+							<a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">${cliente.nome} - ${cliente.celular}</span> </a>
+						</div>
 						<form id="cadastrarPedido" class="form-horizontal" action="${linkTo[AdminController].inserirItem}" method="post">
+						<input type="hidden" id="idCliente" name="idCliente" value="${cliente.id}">
 						<div class="widget widget-table action-table" id="listaPedidosHoje">
 							<div class="widget-header" id="idTituloQuantidade">
 								<i class="icon-th-list"></i>
@@ -326,7 +314,7 @@
 		//var tipo = $("input:radio[name=tipo]").val();
 		
 		$("input:radio[name=categoria]").click(function() {
-			var value = $(this).val();
+			var categoria = $(this).val();
 			var tipo = $( "input:radio[name=tipo]:checked" ).val();
 			var quantidade = $( "input:text[name=quantidade]" ).val();
 			var idCliente = $('#idCliente').val();
@@ -335,7 +323,7 @@
 				quantidade = 1;
 			}
 			
-			window.location = "/estrelacarnes/cadastrarPedido/" + idCliente + "/" + value + "/" + tipo + "/" + quantidade;
+			window.location = "/estrelacarnes/cadastrarPedido/" + idCliente + "/" + tipo + "/" + quantidade + "/" + categoria;
 			//$( "#cadastrarPedido" ).submit();
 		});
 
