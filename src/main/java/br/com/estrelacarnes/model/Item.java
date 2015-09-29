@@ -18,8 +18,8 @@ public class Item implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GenericGenerator(name="generator", strategy="increment")
-	@GeneratedValue(generator="generator")
+	@GenericGenerator(name="idItem", strategy="increment")
+	@GeneratedValue(generator="idItem")
 	private Integer id;
 	
 	private String tipo;

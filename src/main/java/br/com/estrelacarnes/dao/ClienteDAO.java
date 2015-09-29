@@ -18,7 +18,7 @@ public interface ClienteDAO {
 	
 	Integer retornaMaxId();
 
-	Cliente consultarUsuarioPorTelefone(String telefone);
+	List<Cliente> consultarUsuarioPorTelefone(String telefone);
 	
 	
 }

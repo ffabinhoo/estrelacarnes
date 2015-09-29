@@ -57,8 +57,8 @@ public class DefaultClienteDAO implements ClienteDAO, Serializable{
 	}
 
 	@Override
-	public Cliente consultarUsuarioPorTelefone(String telefone) {
-		return entityManager.createQuery("select c from Cliente c where c.telefone = " + telefone, Cliente.class).getSingleResult();
+	public List<Cliente> consultarUsuarioPorTelefone(String telefone) {
+		return entityManager.createQuery("select c from Cliente c where c.celular like '%" + telefone + "%'", Cliente.class).getResultList();
 		
 	}
 
