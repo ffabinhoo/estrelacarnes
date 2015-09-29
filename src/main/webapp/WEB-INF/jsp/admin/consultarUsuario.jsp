@@ -93,16 +93,21 @@
 										<tr>
 											<th>Nome do Cliente</th>
 											<th>Telefone</th>
+											<th>CPF</th>
 											<th class="td-actions"></th>
 										</tr>
 									</thead>
 									<tbody>
 										<c:forEach var="cliente" items="${listaCliente}">
 											<tr>
+											
 												<td>${cliente.nome}</td>
 												<td>${cliente.celular}</td>
-												<td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a
-													href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
+												<td>${cliente.cpf}</td>
+												<form action="${linkTo[AdminController].cadastrarPedidoNovo}" method="post" id="formAbrirPedido">
+													<input type="hidden" id="idCliente" name="idCliente" value="${cliente.id}">
+													<td class="td-actions"><button class="button btn btn-success btn-large" id="abrirPedido">Abrir Pedido</button></td>
+												</form>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -158,6 +163,7 @@
 					$("#formConsulta").submit();
 				});
 			});
+			
 		</script>
 </body>
 </html>

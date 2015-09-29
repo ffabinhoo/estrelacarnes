@@ -6,12 +6,12 @@ import javax.inject.Inject;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
+import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.estrelacarnes.dao.ClienteDAO;
 import br.com.estrelacarnes.dao.PedidoDAO;
-import br.com.estrelacarnes.interceptor.Public;
 import br.com.estrelacarnes.interceptor.UserInfo;
 import br.com.estrelacarnes.model.Categoria;
 import br.com.estrelacarnes.model.Cliente;
@@ -48,10 +48,7 @@ public class AdminController {
 	    
 	}
 	
-	@Get("/cadastrarPedido")
-	public void cadastrarPedido() {
-		result.include("quantidade", "1");
-	}
+	
 	
 	@Post("/consultarUsuario")
 	public void consultarUsuario(String telefone){
@@ -65,8 +62,18 @@ public class AdminController {
 		System.out.println("consultar usuario");
 	}
 	
-	@Get("/cadastrarPedido/{idCliente}/{categoria}/{tipo}/{quantidade}")
-	public void cadastrarPedido(Integer idCliente, String categoria, String tipo, String quantidade) {
+	@Post("/cadastrarPedido")
+	public void cadastrarPedidoNovo(Integer idCliente) {
+		Cliente cliente = new Cliente();
+		cliente.setId(idCliente);
+		cliente = clienteDAO.load(cliente );
+		result.include(cliente);
+		result.include("quantidade", "1");
+		result.redirectTo(AdminController.class).cadastrarPedido(cliente.getId(), "KG", "1","0");
+	}
+	
+	@Get("/cadastrarPedido/{idCliente}/{tipo}/{quantidade}/{categoria}")
+	public void cadastrarPedido(Integer idCliente, String tipo, String quantidade, String categoria) {
 		List<Produto> listaProdutos = null;
     	List<Preparo> listaPreparos = null;
     	List<Complemento> listaComplementos = null;
@@ -105,8 +112,12 @@ public class AdminController {
 		clienteobj.setId(1);
 		categoriaobj.setId(Integer.valueOf(categoria));
 		produtoobj.setId(Integer.valueOf(produto));
-		complementoobj.setId(Integer.valueOf(complemento));
-		preparoobj.setId(Integer.valueOf(preparo));
+		if (complemento != null){
+			complementoobj.setId(Integer.valueOf(complemento));
+		}
+		if (preparo!= null){
+			preparoobj.setId(Integer.valueOf(preparo));
+		}
 		pedidoobj.setCliente(clienteobj);
 		
 		
