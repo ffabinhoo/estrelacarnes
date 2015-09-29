@@ -11,6 +11,7 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.estrelacarnes.dao.ClienteDAO;
 import br.com.estrelacarnes.dao.PedidoDAO;
+import br.com.estrelacarnes.interceptor.Public;
 import br.com.estrelacarnes.interceptor.UserInfo;
 import br.com.estrelacarnes.model.Categoria;
 import br.com.estrelacarnes.model.Cliente;
@@ -49,19 +50,20 @@ public class AdminController {
 	
 	@Get("/cadastrarPedido")
 	public void cadastrarPedido() {
-		/*Item item = new Item();
-		item.setQuantidade("1");
-		Cliente clienteobj = new Cliente();
-		if (idCliente!= null){
-			clienteobj.setId(idCliente);
-			clienteobj = clienteDAO.load(clienteobj );
-		}
-		result.include("cliente", clienteobj);
-		*/
 		result.include("quantidade", "1");
-		
 	}
 	
+	@Post("/consultarUsuario")
+	public void consultarUsuario(String telefone){
+		List<Cliente> listaCliente = clienteDAO.consultarUsuarioPorTelefone(telefone);
+		result.include("listaCliente", listaCliente);
+		//result.redirectTo(AdminController.class).consultarUsuario(telefone);
+	}
+	
+	@Get("/consultarUsuario")
+	public void consultarUsuario() {
+		System.out.println("consultar usuario");
+	}
 	
 	@Get("/cadastrarPedido/{idCliente}/{categoria}/{tipo}/{quantidade}")
 	public void cadastrarPedido(Integer idCliente, String categoria, String tipo, String quantidade) {
@@ -88,11 +90,7 @@ public class AdminController {
 	    result.include("quantidade", quantidade);
 	}
 	
-	@Get("/consultarUsuario/{telefone}")
-	public void consultarUsuario(String telefone){
-		Cliente cliente = clienteDAO.consultarUsuarioPorTelefone(telefone);
-		result.redirectTo(AdminController.class).cadastrarPedido(cliente.getId(), "0", "0", "1");
-	}
+	
 	
 	@Post
 	public void inserirItem(String quantidade, String tipo, String categoria, String produto, String complemento, String preparo, String observacao){

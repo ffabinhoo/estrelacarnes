@@ -18,8 +18,8 @@ public class Pedido implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GenericGenerator(name="generator", strategy="increment")
-	@GeneratedValue(generator="generator")
+	@GenericGenerator(name="idPedido", strategy="increment")
+	@GeneratedValue(generator="idPedido")
 	private Integer id;
 	
 	private String valor;

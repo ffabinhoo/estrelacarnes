@@ -89,7 +89,7 @@
 							<!-- /widget-header -->
 							<div class="widget-content">
 								<div class="shortcuts">
-									<a href="${linkTo[AdminController].cadastrarPedido}" class="shortcut"><i
+									<a href="${linkTo[AdminController].consultarUsuario}" class="shortcut"><i
 										class="shortcut-icon icon-star-empty"></i><span
 										class="shortcut-label">Adicionar Pedido</span> </a>
 									<a  href="javascript:;" class="shortcut" id="pedidosHoje"><i
