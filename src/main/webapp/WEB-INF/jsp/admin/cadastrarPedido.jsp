@@ -87,10 +87,10 @@
 						</div>
 						 --%>
 						<div class="shortcuts align-left">
-							<a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">${cliente.nome} - ${cliente.celular}</span> </a>
+							<a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">${pedido.cliente.nome} - ${pedido.cliente.celular}</span> </a>
 						</div>
 						<form id="cadastrarPedido" class="form-horizontal" action="${linkTo[AdminController].inserirItem}" method="post">
-						<input type="hidden" id="idCliente" name="idCliente" value="${cliente.id}">
+						<input type="hidden" id="idPedido" name="idPedido" value="${pedido.id}">
 						<div class="widget widget-table action-table" id="listaPedidosHoje">
 							<div class="widget-header" id="idTituloQuantidade">
 								<i class="icon-th-list"></i>
@@ -205,6 +205,9 @@
 							<fieldset>
 								<!-- /control-group -->
 							<div class="control-group">
+								<c:forEach var="item" items="${listaItensPedido}">
+								${item.id} - ${item.categoria.nome} - ${item.produto.nome} - ${item.preparo.nome} - ${item.complemento.nome}<br/>
+								</c:forEach>
 							</div>
 							</fieldset>
 							
@@ -317,13 +320,13 @@
 			var categoria = $(this).val();
 			var tipo = $( "input:radio[name=tipo]:checked" ).val();
 			var quantidade = $( "input:text[name=quantidade]" ).val();
-			var idCliente = $('#idCliente').val();
+			var idPedido = $('#idPedido').val();
 			
 			if (quantidade == ""){
 				quantidade = 1;
 			}
 			
-			window.location = "/estrelacarnes/cadastrarPedido/" + idCliente + "/" + tipo + "/" + quantidade + "/" + categoria;
+			window.location = "/estrelacarnes/cadastrarPedido/" + idPedido + "/" + tipo + "/" + quantidade + "/" + categoria;
 			//$( "#cadastrarPedido" ).submit();
 		});
 

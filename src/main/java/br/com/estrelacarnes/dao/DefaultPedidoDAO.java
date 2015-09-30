@@ -7,6 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import br.com.estrelacarnes.model.Cliente;
 import br.com.estrelacarnes.model.Complemento;
 import br.com.estrelacarnes.model.Item;
 import br.com.estrelacarnes.model.Pedido;
@@ -62,6 +63,19 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 		pedido = this.entityManager.merge(pedido);
 		return pedido;
 		
+	}
+
+	@Override
+	public List<Item> listarItensPorPedido(Integer idPedido) {
+		List<Item> lista = new ArrayList<Item>();
+		String sql = "select i from Item i where pedido.id = " + idPedido + " order by i.id asc";
+		lista = entityManager.createQuery(sql, Item.class).getResultList();
+		return lista;
+	}
+
+	@Override
+	public Pedido load(Pedido pedidoobj) {
+		return this.entityManager.find(Pedido.class, pedidoobj.getId());
 	}
 	
 	

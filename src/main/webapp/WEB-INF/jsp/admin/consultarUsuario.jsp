@@ -79,7 +79,6 @@
 						</div>
 					</div>
 					<!-- /row -->
-					<div class="row"></div>
 					<c:if test="${listaCliente.size() > 0}">
 						<div class="widget widget-table action-table" id="listaClientes">
 							<div class="widget-header">
