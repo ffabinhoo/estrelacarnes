@@ -6,8 +6,8 @@ import javax.inject.Inject;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
-import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
+import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.estrelacarnes.dao.ClienteDAO;
@@ -45,10 +45,16 @@ public class AdminController {
 	
 	@Get("/")
 	public void principal() {
+	    List<Pedido> listaPedidosAbertos = pedidoDAO.listarPedidosAbertos();
+	    result.include("listaPedidosAbertos", listaPedidosAbertos);
 	    
 	}
 	
 	
+	@Put("/item/alterar")
+	public void alterarItem(String id){
+		System.out.println("alterar item" + id);
+	}
 	
 	@Post("/consultarUsuario")
 	public void consultarUsuario(String telefone){
@@ -91,27 +97,56 @@ public class AdminController {
 		Pedido pedido = new Pedido();
 		pedido.setId(idPedido);
 		pedido = pedidoDAO.load(pedido);
-		/*
-		Cliente clienteobj = new Cliente();
-		if (idPedido!= null){
-			clienteobj.setId(idPedido);
-			clienteobj = clienteDAO.load(clienteobj );
-			
-			
-		}*/
 		
 		List<Item> listaItensPorPedido = pedidoDAO.listarItensPorPedido(idPedido);
 		result.include("listaItensPedido", listaItensPorPedido);
-		result.include("pedido", pedido );
+		
 		result.include("listaProdutos", listaProdutos);
 	    result.include("listaPreparos", listaPreparos);
 	    result.include("listaComplementos", listaComplementos);
 	    result.include("idCategoria", Integer.valueOf(categoria));
+	    result.include("pedido", pedido );
 	    result.include("tipo", tipo);
 	    result.include("quantidade", quantidade);
 	}
 	
 	
+	@Post("/mostrarItem")
+	public void editarItem(Integer idItem) {
+		List<Produto> listaProdutos = null;
+    	List<Preparo> listaPreparos = null;
+    	List<Complemento> listaComplementos = null;
+		
+		Item item = pedidoDAO.mostrarItem(idItem);
+		listaProdutos = pedidoDAO.listarProdutosPorCategoria(item.getCategoria().getId());
+    	listaPreparos = pedidoDAO.listarPreparos();
+    	listaComplementos = pedidoDAO.listarComplementos();
+		result.include("item", item);
+		result.include("listaProdutos", listaProdutos);
+	    result.include("listaPreparos", listaPreparos);
+	    result.include("listaComplementos", listaComplementos);
+	    result.redirectTo(AdminController.class).mostrarItem(item.getId(), item.getTipo(), item.getQuantidade(), item.getCategoria().getId().toString());
+	}
+	
+	@Get("/mostrarItem/{idItem}/{tipo}/{quantidade}/{categoria}")
+	public void mostrarItem(Integer idItem, String tipo, String quantidade, String categoria) {
+		List<Produto> listaProdutos = null;
+    	List<Preparo> listaPreparos = null;
+    	List<Complemento> listaComplementos = null;
+		
+		Item item = pedidoDAO.mostrarItem(idItem);
+		listaProdutos = pedidoDAO.listarProdutosPorCategoria(item.getCategoria().getId());
+    	listaPreparos = pedidoDAO.listarPreparos();
+    	listaComplementos = pedidoDAO.listarComplementos();
+		result.include("item", item);
+		result.include("listaProdutos", listaProdutos);
+	    result.include("listaPreparos", listaPreparos);
+	    result.include("listaComplementos", listaComplementos);
+	    result.include("idCategoria", Integer.valueOf(categoria));
+	    result.include("pedido", item.getPedido() );
+	    result.include("tipo", tipo);
+	    result.include("quantidade", quantidade);
+	}
 	
 	@Post
 	public void inserirItem(String quantidade, String tipo, String categoria, String produto, String complemento, String preparo, String observacao, Integer idPedido){
@@ -121,9 +156,9 @@ public class AdminController {
 		
 		
 		Pedido pedidoobj = new Pedido();
-		Cliente clienteobj = new Cliente();
-		
-		clienteobj.setId(1);
+		//Cliente clienteobj = new Cliente();
+		//clienteobj.setId(1);
+		//pedidoobj.setCliente(clienteobj);
 		categoriaobj.setId(Integer.valueOf(categoria));
 		produtoobj.setId(Integer.valueOf(produto));
 		if (complemento != null){
@@ -140,7 +175,7 @@ public class AdminController {
 		}else{
 			item.setPreparo(null);
 		}
-		pedidoobj.setCliente(clienteobj);
+		
 		
 		
 		item.setCategoria(categoriaobj);

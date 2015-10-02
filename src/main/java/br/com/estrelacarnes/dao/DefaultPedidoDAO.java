@@ -77,6 +77,26 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 	public Pedido load(Pedido pedidoobj) {
 		return this.entityManager.find(Pedido.class, pedidoobj.getId());
 	}
+
+	@Override
+	public Item mostrarItem(Integer idItem) {
+		return this.entityManager.find(Item.class, idItem);
+	}
+
+	@Override
+	public Pedido load(Integer idPedido) {
+		Pedido pedido = this.entityManager.find(Pedido.class, idPedido);
+		pedido.setItens(listarItensPorPedido(idPedido));
+		return pedido;
+	}
+
+	@Override
+	public List<Pedido> listarPedidosAbertos() {
+		List<Pedido> lista = new ArrayList<Pedido>();
+		String sql = "select p from Pedido p where p.status = 'A'order by p.id asc";
+		lista = entityManager.createQuery(sql, Pedido.class).getResultList();
+		return lista;
+	}
 	
 	
 

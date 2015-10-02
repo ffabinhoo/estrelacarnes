@@ -52,8 +52,6 @@
 				<ul class="mainnav">
 					<li class="active"><a href="/estrelacarnes"><i class="icon-dashboard"></i><span>Painel de Controle</span> </a></li>
 					<li><a href="${linkTo[AdminController].consultarUsuario}" ><i class="icon-star-empty"></i><span>Cadastrar Pedido</span></a>
-					<li><a href="javascript:;" id="idMostrarTitulos"><i class="icon-adjust"></i><span>Mostrar/Esconder Títulos</span>
-					</a></li>
 					<li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-long-arrow-down"></i> <span>Opções</span>
 							<b class="caret"></b></a>
 						<ul class="dropdown-menu">
@@ -87,10 +85,11 @@
 						</div>
 						 --%>
 						<div class="shortcuts align-left">
-							<a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">${pedido.cliente.nome} - ${pedido.cliente.celular}</span> </a>
+							<a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">${item.pedido.cliente.nome} - ${item.pedido.cliente.celular}</span> </a>
 						</div>
-						<form id="cadastrarPedido" class="form-horizontal" action="${linkTo[AdminController].inserirItem}" method="post">
-						<input type="hidden" id="idPedido" name="idPedido" value="${pedido.id}">
+						<form id="cadastrarPedido" class="form-horizontal" action="${linkTo[AdminController].alterarItem}" method="post">
+						<input type="hidden" id="idPedido" name="idPedido" value="${item.pedido.id}">
+						<input type="hidden" id="idItem" name="idItem" value="${item.id}">
 						<div class="widget widget-table action-table">
 							<div class="widget-header" id="idTituloQuantidade">
 								<i class="icon-th-list"></i>
@@ -98,9 +97,9 @@
 							</div>
 							<div class="widget-content">
 								<div class="controls">
-									<input class="span1" id="quantidade" name="quantidade" type="text" value="${quantidade}" required/>
-									<label class="checkbox inline"> <input type="radio" name="tipo" id="tipo" value="KG" ${'KG' == tipo ? 'checked' : ''} required> KG</label>
-									<label class="checkbox inline"><input type="radio" name="tipo" id="tipo" value="UN" ${'UN' == tipo ? 'checked' : ''} required> Unidade</label>
+									<input class="span1" id="quantidade" name="quantidade" type="text" value="${item.quantidade}" required/>
+									<label class="checkbox inline"> <input type="radio" name="tipo" id="tipo" value="KG" ${'KG' == item.tipo ? 'checked' : ''} required> KG</label>
+									<label class="checkbox inline"><input type="radio" name="tipo" id="tipo" value="UN" ${'UN' == item.tipo ? 'checked' : ''} required> Unidade</label>
 								</div>
 							</div>
 						</div>
@@ -112,19 +111,19 @@
 							</div>
 							<div class="widget-content">
 								<div class="controls">
-									<label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="1" ${1 == idCategoria ? 'checked' : ''} required>
+									<label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="1" ${1 == item.categoria.id ? 'checked' : ''} disabled>
 										Bovino
-									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="2" ${2 == idCategoria ? 'checked' : ''} required>
+									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="2" ${2 == item.categoria.id ? 'checked' : ''} disabled>
 										Suíno
-									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="3" ${3 == idCategoria ? 'checked' : ''} required>
+									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="3" ${3 == item.categoria.id ? 'checked' : ''} disabled>
 										Ave
-									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="4" ${4 == idCategoria ? 'checked' : ''} required>
+									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="4" ${4 == item.categoria.id ? 'checked' : ''} disabled>
 										Peixe
-									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="5" ${4 == idCategoria ? 'checked' : ''} required>
+									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="5" ${4 == item.categoria.id ? 'checked' : ''} disabled>
 										Cordeiro
-									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="6" ${6 == idCategoria ? 'checked' : ''} required>
+									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="6" ${6 == item.categoria.id ? 'checked' : ''} disabled>
 										Angus
-									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="7" ${7 == idCategoria ? 'checked' : ''} required>
+									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="7" ${7 == item.categoria.id ? 'checked' : ''} disabled>
 										Linguiça
 									</label>
 								</div>
@@ -134,17 +133,17 @@
 						<div class="widget widget-table action-table" >
 							<div class="widget-header" id="idTituloProduto">
 								<i class="icon-th-list"></i>
-								<h3>Produto</h3>
+								<h3>Produtoss</h3>
 							</div>
 							<div class="controls">
 								<div class="row">
 									<div class="col-sm-3 col-md-6 col-lg-12">
-									<c:forEach var="produto" items="${listaProdutos}" varStatus="i">
+									<c:forEach var="produtoobj" items="${listaProdutos}" varStatus="i">
 										<c:if test="${i.count % 8 == 0}">
 											<br /> 
 										</c:if>
 										<div class="span2">
-											<input type="radio" id="produto" name="produto" value="${produto.id}" required/>${produto.nome.trim()}
+											<input type="radio" id="produto" name="produto" value="${produtoobj.id}" ${item.produto.id == produtoobj.id ? 'checked' : ''}  required/>${produtoobj.nome.trim()}
 										</div>
 									</c:forEach>
 									</div>
@@ -158,8 +157,8 @@
 							</div>
 							<div class="widget-content">
 								<div class="controls">
-									<c:forEach var="preparo" items="${listaPreparos}">
-										<label class="checkbox inline"> <input type="radio" id="preparo" name="preparo" value="${preparo.id}" />${preparo.nome}
+									<c:forEach var="preparoobj" items="${listaPreparos}">
+										<label class="checkbox inline"> <input type="radio" id="preparo" name="preparo" value="${preparoobj.id}" ${item.preparo.id == preparoobj.id ? 'checked' : ''} />${preparoobj.nome}
 										</label>
 									</c:forEach>
 								</div>
@@ -173,8 +172,8 @@
 							</div>
 							<div class="widget-content">
 								<div class="controls">
-									<c:forEach var="complemento" items="${listaComplementos}">
-										<label class="checkbox inline"> <input type="radio" id="complemento" name="complemento" value="${complemento.id}" />${complemento.nome}
+									<c:forEach var="complementoobj" items="${listaComplementos}">
+										<label class="checkbox inline"> <input type="radio" id="complemento" name="complemento" value="${complementoobj.id}" ${item.complemento.id == complementoobj.id ? 'checked' : ''} />${complementoobj.nome}
 										</label>
 									</c:forEach>
 								</div>
@@ -188,84 +187,22 @@
 							</div>
 							<div class="widget-content">
 								<div class="controls">
-									<textarea rows="5" cols="5" class="span4" id="observacao" name="observacao"></textarea>
+									<textarea rows="5" cols="5" class="span4" name="observacao" id="observacao">${item.observacao}</textarea>
 								</div>
 							</div>
 						</div>
 						
-						</form>
 						
 						<div class="form-actions">
-							<button type="submit" class="btn btn-primary">Incluir Item</button>
+							<button type="submit" class="btn btn-primary">Alterar Item</button>
 						</div>
 						
 						<!-- /widget-header -->
-						<div class="widget-content">
-							
-							<fieldset>
-								<!-- /control-group -->
-							<div class="widget-content">
-							<table class="table table-striped table-bordered">
-								<thead>
-									<tr>
-										<th>Quantidade/Unidade</th>
-										<th>Categoria</th>
-										<th>Produto</th>
-										<th>Preparo</th>
-										<th>Complemento</th>
-										<th class="td-actions"></th>
-									</tr>
-								</thead>
-								<tbody>
-								<c:forEach var="item" items="${listaItensPedido}">
-									<tr>
-										<td>${item.quantidade} ${item.tipo}</td>
-										<td>${item.categoria.nome}</td>
-										<td>${item.produto.nome}</td>
-										<td>${item.preparo.nome}</td>
-										<td>${item.complemento.nome}</td>
-										<td class="td-actions">
-											<form id="formItem" method="post" action="${linkTo[AdminController].editarItem}">
-												<input type="hidden" id="idItem" name="idItem" value="${item.id}" >
-												<button class="button btn btn-success btn-small" id="abrirPedido">Editar Item</button>
-												<a href="javascript:;" class="btn btn-danger btn-small"><i	class="btn-icon-only icon-remove"></i></a>
-											</form>
-										</td>
-									</tr>
-								</c:forEach>
-								</tbody>
-								</table>
-							</div>
-							</fieldset>
-							
-						</div>
-							
-							
-							<!-- <div class="input-prepend input-append">
-								<span class="add-on"><input type="radio"
-									id="quantidadekg" name="quantidade" value="1"></span> <input
-									class="span1" id="kilograma" type="text" disabled> <span
-									class="add-on">KG</span>
-							</div>
-							<br />
-							<div class="input-prepend input-append">
-								<span class="add-on"><input type="radio"
-									id="quantidadeun" name="quantidade" value="2"></span> <input
-									class="span1" id="unidade" type="text" disabled> <span
-									class="add-on">UN</span>
-							</div> -->
-
-						<!-- /widget-content -->
-						
 						
 					</div>
 				</div>
-				
-				
-							<div class="pull-right">
-							<button type="submit" class="btn btn-primary">Fechar Pedido</button>
-							<button class="btn">Cancelar</button>
-							</div>
+				</form>
+							
 				
 				<!-- /span6 -->
 
@@ -276,7 +213,7 @@
 		<!-- /container -->
 	</div>
 	<!-- /main-inner -->
-	</div>
+	
 	<!-- /main -->
 	<div class="extra">
 		<div class="extra-inner">
@@ -310,22 +247,7 @@
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
 	<script>
 		$(function() {
-			$("#idTituloCategoria").hide();
-			$("#idTituloProduto").hide();
-			$("#idTituloPreparo").hide();
-			$("#idTituloObservacao").hide();
-			$("#idTituloComplemento").hide();
-			$("#idTituloQuantidade").hide();
-			$("#idDivObservacao").hide();
-
-
-			$("input:radio[name=preparo]").click(function() {
-				if ($( "input:radio[name=preparo]:checked" )){
-					$("#idDivObservacao").show();						
-				} else {
-					$("#idDivObservacao").hide();
-				}
-			});
+			
 			
 			$("#idMostrarTitulos").click(function() {
 				$("#idTituloCategoria").toggle("slow");
@@ -337,34 +259,6 @@
 				
 			});
 		});
-		/* $(function() {
-
-			 $('#quantidadekg').click(function() {
-				$('#kilograma').prop('disabled', false);
-				$('#unidade').prop('disabled', true);
-			});
-
-			$('#quantidadeun').click(function() {
-				$('#kilograma').prop('disabled', true);
-				$('#unidade').prop('disabled', false);
-			}); 
-		}); */
-		//var tipo = $("input:radio[name=tipo]").val();
-		
-		$("input:radio[name=categoria]").click(function() {
-			var categoria = $(this).val();
-			var tipo = $( "input:radio[name=tipo]:checked" ).val();
-			var quantidade = $( "input:text[name=quantidade]" ).val();
-			var idPedido = $('#idPedido').val();
-			
-			if (quantidade == ""){
-				quantidade = 1;
-			}
-			
-			window.location = "/estrelacarnes/cadastrarPedido/" + idPedido + "/" + tipo + "/" + quantidade + "/" + categoria;
-			//$( "#cadastrarPedido" ).submit();
-		});
-
 		
 		
 		$( "#quantidade" ).focus(function() {
@@ -387,12 +281,12 @@
 	    } 
 
 		
-		 $(document).ready(function() {
+		$(document).ready(function() {
 			$('#idBusca').on('click', function() {
 				var telefone = $('#telefone').val();
 				window.location = "/estrelacarnes/consultarUsuario/" + telefone;
 			});
-		}); 
+		});
 	</script>   	
 	
 

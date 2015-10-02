@@ -25,5 +25,15 @@ public interface PedidoDAO {
 	List<Item> listarItensPorPedido(Integer idPedido);
 
 	Pedido load(Pedido pedidoobj);
+	
+	Item mostrarItem(Integer idItem);
+	
+	Pedido load(Integer idPedido);
+	
+	List<Pedido> listarPedidosAbertos();
+	
+	
+	
+	
 
 }

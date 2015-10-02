@@ -105,7 +105,7 @@
 												<td>${cliente.cpf}</td>
 												<form action="${linkTo[AdminController].cadastrarPedidoNovo}" method="post" id="formAbrirPedido">
 													<input type="hidden" id="idCliente" name="idCliente" value="${cliente.id}">
-													<td class="td-actions"><button class="button btn btn-success btn-large" id="abrirPedido">Abrir Pedido</button></td>
+													<td class="td-actions"><button class="button btn btn-success btn-small" id="abrirPedido">Abrir Pedido</button></td>
 												</form>
 											</tr>
 										</c:forEach>
