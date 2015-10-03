@@ -6,8 +6,8 @@ import javax.inject.Inject;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
-import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
+import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.estrelacarnes.dao.ClienteDAO;
@@ -45,10 +45,16 @@ public class AdminController {
 	
 	@Get("/")
 	public void principal() {
+	    List<Pedido> listaPedidosAbertos = pedidoDAO.listarPedidosAbertos();
+	    result.include("listaPedidosAbertos", listaPedidosAbertos);
 	    
 	}
 	
 	
+	@Put("/item/alterar")
+	public void alterarItem(String id){
+		System.out.println("alterar item" + id);
+	}
 	
 	@Post("/consultarUsuario")
 	public void consultarUsuario(String telefone){
@@ -67,13 +73,19 @@ public class AdminController {
 		Cliente cliente = new Cliente();
 		cliente.setId(idCliente);
 		cliente = clienteDAO.load(cliente );
-		result.include(cliente);
+		
+		Pedido pedido = new Pedido();
+		pedido.setCliente(cliente);
+		pedido.setStatus("A");
+		pedido = pedidoDAO.abrirPedido(pedido);
+		
+		result.include("idPedido", pedido.getId());
 		result.include("quantidade", "1");
-		result.redirectTo(AdminController.class).cadastrarPedido(cliente.getId(), "KG", "1","0");
+		result.redirectTo(AdminController.class).cadastrarPedido(pedido.getId(), "KG", "1","0");
 	}
 	
-	@Get("/cadastrarPedido/{idCliente}/{tipo}/{quantidade}/{categoria}")
-	public void cadastrarPedido(Integer idCliente, String tipo, String quantidade, String categoria) {
+	@Get("/cadastrarPedido/{idPedido}/{tipo}/{quantidade}/{categoria}")
+	public void cadastrarPedido(Integer idPedido, String tipo, String quantidade, String categoria) {
 		List<Produto> listaProdutos = null;
     	List<Preparo> listaPreparos = null;
     	List<Complemento> listaComplementos = null;
@@ -82,59 +94,116 @@ public class AdminController {
 	    	listaPreparos = pedidoDAO.listarPreparos();
 	    	listaComplementos = pedidoDAO.listarComplementos();
 	    }	   
-	    Cliente clienteobj = new Cliente();
-		if (idCliente!= null){
-			clienteobj.setId(idCliente);
-			clienteobj = clienteDAO.load(clienteobj );
-		}
-		result.include("cliente", clienteobj);
-	    
+		Pedido pedido = new Pedido();
+		pedido.setId(idPedido);
+		pedido = pedidoDAO.load(pedido);
+		
+		List<Item> listaItensPorPedido = pedidoDAO.listarItensPorPedido(idPedido);
+		result.include("listaItensPedido", listaItensPorPedido);
+		
 		result.include("listaProdutos", listaProdutos);
 	    result.include("listaPreparos", listaPreparos);
 	    result.include("listaComplementos", listaComplementos);
 	    result.include("idCategoria", Integer.valueOf(categoria));
+	    result.include("pedido", pedido );
 	    result.include("tipo", tipo);
 	    result.include("quantidade", quantidade);
 	}
 	
 	
+	@Post("/mostrarItem")
+	public void editarItem(Integer idItem) {
+		List<Produto> listaProdutos = null;
+    	List<Preparo> listaPreparos = null;
+    	List<Complemento> listaComplementos = null;
+		
+		Item item = pedidoDAO.mostrarItem(idItem);
+		listaProdutos = pedidoDAO.listarProdutosPorCategoria(item.getCategoria().getId());
+    	listaPreparos = pedidoDAO.listarPreparos();
+    	listaComplementos = pedidoDAO.listarComplementos();
+		result.include("item", item);
+		result.include("listaProdutos", listaProdutos);
+	    result.include("listaPreparos", listaPreparos);
+	    result.include("listaComplementos", listaComplementos);
+	    result.redirectTo(AdminController.class).mostrarItem(item.getId(), item.getTipo(), item.getQuantidade(), item.getCategoria().getId().toString());
+	}
+	
+	@Get("/mostrarItem/{idItem}/{tipo}/{quantidade}/{categoria}")
+	public void mostrarItem(Integer idItem, String tipo, String quantidade, String categoria) {
+		List<Produto> listaProdutos = null;
+    	List<Preparo> listaPreparos = null;
+    	List<Complemento> listaComplementos = null;
+		
+		Item item = pedidoDAO.mostrarItem(idItem);
+		listaProdutos = pedidoDAO.listarProdutosPorCategoria(item.getCategoria().getId());
+    	listaPreparos = pedidoDAO.listarPreparos();
+    	listaComplementos = pedidoDAO.listarComplementos();
+		result.include("item", item);
+		result.include("listaProdutos", listaProdutos);
+	    result.include("listaPreparos", listaPreparos);
+	    result.include("listaComplementos", listaComplementos);
+	    result.include("idCategoria", Integer.valueOf(categoria));
+	    result.include("pedido", item.getPedido() );
+	    result.include("tipo", tipo);
+	    result.include("quantidade", quantidade);
+	}
 	
 	@Post
-	public void inserirItem(String quantidade, String tipo, String categoria, String produto, String complemento, String preparo, String observacao){
+	public void inserirItem(String quantidade, String tipo, String categoria, String produto, String complemento, String preparo, String observacao, Integer idPedido){
 		Item item = new Item();
 		Categoria categoriaobj = new Categoria();
 		Produto produtoobj = new Produto();
-		Preparo preparoobj = new Preparo();
-		Complemento complementoobj = new Complemento();
-		Pedido pedidoobj = new Pedido();
-		Cliente clienteobj = new Cliente();
 		
-		clienteobj.setId(1);
+		
+		Pedido pedidoobj = new Pedido();
+		//Cliente clienteobj = new Cliente();
+		//clienteobj.setId(1);
+		//pedidoobj.setCliente(clienteobj);
 		categoriaobj.setId(Integer.valueOf(categoria));
 		produtoobj.setId(Integer.valueOf(produto));
 		if (complemento != null){
+			Complemento complementoobj = new Complemento();
 			complementoobj.setId(Integer.valueOf(complemento));
+			item.setComplemento(complementoobj);
+		}else{
+			item.setComplemento(null);
 		}
 		if (preparo!= null){
+			Preparo preparoobj = new Preparo();
 			preparoobj.setId(Integer.valueOf(preparo));
+			item.setPreparo(preparoobj);
+		}else{
+			item.setPreparo(null);
 		}
-		pedidoobj.setCliente(clienteobj);
+		
 		
 		
 		item.setCategoria(categoriaobj);
-		item.setComplemento(complementoobj);
+		
 		item.setObservacao(observacao);
-		item.setPreparo(preparoobj);
+		
 		item.setProduto(produtoobj);
 		
 		item.setQuantidade(quantidade);
 		item.setTipo(tipo);
-		pedidoobj = pedidoDAO.abrirPedido(pedidoobj);
 		
+		
+		/*if (pedido==null){
+			
+			pedidoobj = pedidoDAO.abrirPedido(pedidoobj);
+		}else{
+			pedidoobj.setId(pedido);
+			pedidoobj = pedidoDAO.load(pedidoobj);
+		}*/
+		
+		pedidoobj.setId(idPedido);
 		item.setPedido(pedidoobj);
 		
 		pedidoDAO.inserirItem(item);
-		result.redirectTo(AdminController.class).cadastrarPedido(clienteobj.getId(), categoria, tipo, quantidade);
+		
+		
+		result.include("idPedido", pedidoobj.getId());
+		result.redirectTo(AdminController.class).cadastrarPedido(pedidoobj.getId(), tipo, quantidade, categoria);
 	}
 	
 

@@ -1,5 +1,8 @@
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
 <meta charset="utf-8">
 <title>Estrela Carnes</title>
@@ -26,7 +29,7 @@
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".nav-collapse"><span class="icon-bar"></span><span
 					class="icon-bar"></span><span class="icon-bar"></span> </a> <a
-					class="brand" href="/estrelacarnes">Estrela Carnes - AdministraÁ„o
+					class="brand" href="/estrelacarnes">Estrela Carnes - Administra√ß√£o
 					de Pedidos</a>
 				<div class="nav-collapse">
 					<ul class="nav pull-right">
@@ -57,11 +60,11 @@
 				<ul class="mainnav">
 					<li class="active"><a href="#"><i class="icon-dashboard"></i><span>Pedidos</span>
 					</a></li>
-					<!-- <li><a href="#"><i class="icon-list-alt"></i><span>RelatÛrios</span>
+					<!-- <li><a href="#"><i class="icon-list-alt"></i><span>Relat√≥rios</span>
 					</a></li> -->
 					<li class="dropdown"><a href="javascript:;"
 						class="dropdown-toggle" data-toggle="dropdown"> <i
-							class="icon-long-arrow-down"></i> <span>OpÁıes</span> <b
+							class="icon-long-arrow-down"></i> <span>Op√ß√µes</span> <b
 							class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><a href="#">Cadastrar Cliente</a></li>
@@ -84,7 +87,7 @@
 						<div class="widget">
 							<div class="widget-header">
 								<i class="icon-bookmark"></i>
-								<h3>Õcones</h3>
+								<h3>√çcones</h3>
 							</div>
 							<!-- /widget-header -->
 							<div class="widget-content">
@@ -98,7 +101,7 @@
 									<a
 										href="javascript:;" class="shortcut"><i
 										class="shortcut-icon icon-user"></i><span
-										class="shortcut-label">Cadastrar Usu·rio</span> </a>
+										class="shortcut-label">Cadastrar Usu√°rio</span> </a>
 								</div>
 								<!-- /shortcuts -->
 							</div>
@@ -114,39 +117,24 @@
 								<table class="table table-striped table-bordered">
 									<thead>
 										<tr>
-											<th>N˙mero do Pedido</th>
-											<th>Detalhes</th>
+											<th>N√∫mero do Pedido</th>
+											<th>Cliente - Celular</th>
+											
 											<th class="td-actions"></th>
 										</tr>
 									</thead>
 									<tbody>
+										<c:forEach var="pedido" items="${listaPedidosAbertos}">
 										<tr>
-											<td>Pedido 1</td>
-											<td>Detalhe 1</td>
-											<td class="td-actions"><a href="javascript:;"
+											<td>${pedido.id}</td>
+											<td>${pedido.cliente.nome} - ${pedido.cliente.celular}</td>
+											<td class="td-actions"><a href="cadastrarPedido/${pedido.id}/KG/1/0"
 												class="btn btn-small btn-success"><i
-													class="btn-icon-only icon-ok"> </i></a><a href="javascript:;"
+													class="btn-icon-only icon-ok"> </i></a><a href=""
 												class="btn btn-danger btn-small"><i
 													class="btn-icon-only icon-remove"> </i></a></td>
 										</tr>
-										<tr>
-											<td>Pedido 2</td>
-											<td>Detalhe 2</td>
-											<td class="td-actions"><a href="javascript:;"
-												class="btn btn-small btn-success"><i
-													class="btn-icon-only icon-ok"> </i></a><a href="javascript:;"
-												class="btn btn-danger btn-small"><i
-													class="btn-icon-only icon-remove"> </i></a></td>
-										</tr>
-										<tr>
-											<td>Pedido 3</td>
-											<td>Detalhe 3</td>
-											<td class="td-actions"><a href="javascript:;"
-												class="btn btn-small btn-success"><i
-													class="btn-icon-only icon-ok"> </i></a><a href="javascript:;"
-												class="btn btn-danger btn-small"><i
-													class="btn-icon-only icon-remove"> </i></a></td>
-										</tr>
+										</c:forEach>
 										
 									</tbody>
 								</table>

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import br.com.estrelacarnes.model.Cliente;
 import br.com.estrelacarnes.model.Complemento;
 import br.com.estrelacarnes.model.Item;
 import br.com.estrelacarnes.model.Pedido;
@@ -62,6 +63,39 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 		pedido = this.entityManager.merge(pedido);
 		return pedido;
 		
+	}
+
+	@Override
+	public List<Item> listarItensPorPedido(Integer idPedido) {
+		List<Item> lista = new ArrayList<Item>();
+		String sql = "select i from Item i where pedido.id = " + idPedido + " order by i.id asc";
+		lista = entityManager.createQuery(sql, Item.class).getResultList();
+		return lista;
+	}
+
+	@Override
+	public Pedido load(Pedido pedidoobj) {
+		return this.entityManager.find(Pedido.class, pedidoobj.getId());
+	}
+
+	@Override
+	public Item mostrarItem(Integer idItem) {
+		return this.entityManager.find(Item.class, idItem);
+	}
+
+	@Override
+	public Pedido load(Integer idPedido) {
+		Pedido pedido = this.entityManager.find(Pedido.class, idPedido);
+		pedido.setItens(listarItensPorPedido(idPedido));
+		return pedido;
+	}
+
+	@Override
+	public List<Pedido> listarPedidosAbertos() {
+		List<Pedido> lista = new ArrayList<Pedido>();
+		String sql = "select p from Pedido p where p.status = 'A'order by p.id asc";
+		lista = entityManager.createQuery(sql, Pedido.class).getResultList();
+		return lista;
 	}
 	
 	

@@ -21,5 +21,19 @@ public interface PedidoDAO {
 	void inserirItem(Item item);
 
 	Pedido abrirPedido(Pedido pedido);
+	
+	List<Item> listarItensPorPedido(Integer idPedido);
+
+	Pedido load(Pedido pedidoobj);
+	
+	Item mostrarItem(Integer idItem);
+	
+	Pedido load(Integer idPedido);
+	
+	List<Pedido> listarPedidosAbertos();
+	
+	
+	
+	
 
 }
