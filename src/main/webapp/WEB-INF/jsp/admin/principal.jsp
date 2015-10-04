@@ -58,7 +58,7 @@
 		<div class="subnavbar-inner">
 			<div class="container">
 				<ul class="mainnav">
-					<li class="active"><a href="#"><i class="icon-dashboard"></i><span>Pedidos</span>
+					<li class="active"><a href="/estrelacarnes"><i class="icon-dashboard"></i><span>Pedidos</span>
 					</a></li>
 					<!-- <li><a href="#"><i class="icon-list-alt"></i><span>Relatórios</span>
 					</a></li> -->
@@ -110,7 +110,7 @@
 						<div class="widget widget-table action-table" id="listaPedidosHoje">
 							<div class="widget-header">
 								<i class="icon-th-list"></i>
-								<h3>Pedidos de Hoje</h3>
+								<h3>Pedidos em Aberto</h3>
 							</div>
 							<!-- /widget-header -->
 							<div class="widget-content">
@@ -119,21 +119,37 @@
 										<tr>
 											<th>Número do Pedido</th>
 											<th>Cliente - Celular</th>
-											
+											<th>Data</th>
 											<th class="td-actions"></th>
 										</tr>
 									</thead>
 									<tbody>
 										<c:forEach var="pedido" items="${listaPedidosAbertos}">
 										<tr>
-											<td>${pedido.id}</td>
+											<td style="width: 200px;">${pedido.id}</td>
 											<td>${pedido.cliente.nome} - ${pedido.cliente.celular}</td>
-											<td class="td-actions"><a href="cadastrarPedido/${pedido.id}/KG/1/0"
-												class="btn btn-small btn-success"><i
-													class="btn-icon-only icon-ok"> </i></a><a href=""
-												class="btn btn-danger btn-small"><i
-													class="btn-icon-only icon-remove"> </i></a></td>
+											<td><fmt:formatDate pattern="dd/MM HH:mm" value="${pedido.data}" /></td>
+											<td class="td-actions" style="width: 200px;">
+												<form id="formVerPedido" method="get" action="cadastrarPedido/${pedido.id}/KG/1/0" 
+													style="float: left; padding: 1px;">
+													<button class="button btn btn-success btn-small" id="verPedido">Editar</button>
+												</form>
+												<form id="formExcluirPedido" method="get" action="${linkTo[AdminController].excluirPedido}${pedido.id}" 
+													style="float: left; padding: 1px;">
+													<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirPedido">Excluir</button>
+												</form>
+											</td>
+										
 										</tr>
+										<div id="confirm" class="modal hide fade">
+										  <div class="modal-body">
+										    Confirma exclusão do Pedido?
+										  </div>
+										  <div class="modal-footer">
+										    <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Excluir</button>
+										    <button type="button" data-dismiss="modal" class="btn">Cancelar</button>
+										  </div>
+										</div>
 										</c:forEach>
 										
 									</tbody>
@@ -198,6 +214,16 @@ $(function(){
 		  	$( "#listaPedidosHoje" ).toggle( "slow" );
 		});
 });
+$('button[name="_method"]').on('click', function(e){
+    var $form=$(this).closest('form'); 
+    e.preventDefault();
+    $('#confirm').modal({ backdrop: 'static', keyboard: false })
+        .one('click', '#delete', function() {
+            $form.trigger('submit'); // submit the form
+        });
+        // .one() is NOT a typo of .on()
+});
+
 </script>
 
 </body>

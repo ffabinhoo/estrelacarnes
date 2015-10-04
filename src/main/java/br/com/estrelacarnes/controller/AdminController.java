@@ -1,10 +1,12 @@
 package br.com.estrelacarnes.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import br.com.caelum.vraptor.Controller;
+import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Put;
@@ -77,6 +79,7 @@ public class AdminController {
 		Pedido pedido = new Pedido();
 		pedido.setCliente(cliente);
 		pedido.setStatus("A");
+		pedido.setData(new Date());
 		pedido = pedidoDAO.abrirPedido(pedido);
 		
 		result.include("idPedido", pedido.getId());
@@ -204,6 +207,23 @@ public class AdminController {
 		
 		result.include("idPedido", pedidoobj.getId());
 		result.redirectTo(AdminController.class).cadastrarPedido(pedidoobj.getId(), tipo, quantidade, categoria);
+	}
+	
+	@Delete("/item/excluir/{item.id}")
+	public void excluirItem(Item item){
+		Item itemobj = pedidoDAO.mostrarItem(item.getId());
+		Integer pedido = itemobj.getPedido().getId();
+		pedidoDAO.excluirItem(item);
+		result.redirectTo(AdminController.class).cadastrarPedido(pedido, "KG", "1","0");
+		
+	}
+	
+	@Get("/pedido/excluir/{pedido.id}")
+	public void excluirPedido(Pedido pedido){
+		pedidoDAO.excluirItensPedido(pedido);
+		pedidoDAO.excluirPedido(pedido);
+		result.redirectTo(AdminController.class).principal();
+		
 	}
 	
 

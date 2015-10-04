@@ -35,15 +35,9 @@
 
 							</ul></li>
 					</ul>
-					<!-- <form class="navbar-search pull-right">
-						<input type="text" class="search-query" placeholder="Search">
-					</form> -->
 				</div>
-				<!--/.nav-collapse -->
 			</div>
-			<!-- /container -->
 		</div>
-		<!-- /navbar-inner -->
 	</div>
 	<!-- /navbar -->
 	<div class="subnavbar">
@@ -61,33 +55,17 @@
 						</ul></li>
 				</ul>
 			</div>
-			<!-- /container -->
 		</div>
-		<!-- /subnavbar-inner -->
 	</div>
-	<!-- /subnavbar -->
 	<div class="main">
 		<div class="main-inner">
 			<div class="container">
-				
+			<form id="cadastrarPedido" class="form-horizontal" action="${linkTo[AdminController].alterarItem}" method="post">	
 				<div class="row">
 					<div class="span12">
-
-						<%-- <div class="widget">
-							
-							<div class="widget-content">
-								<div class="shortcuts">
-										<a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">${cliente.nome} - ${cliente.celular}</span> </a>
-								</div>
-								<!-- /shortcuts -->
-							</div>
-							<!-- /widget-content -->
-						</div>
-						 --%>
 						<div class="shortcuts align-left">
 							<a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">${item.pedido.cliente.nome} - ${item.pedido.cliente.celular}</span> </a>
 						</div>
-						<form id="cadastrarPedido" class="form-horizontal" action="${linkTo[AdminController].alterarItem}" method="post">
 						<input type="hidden" id="idPedido" name="idPedido" value="${item.pedido.id}">
 						<input type="hidden" id="idItem" name="idItem" value="${item.id}">
 						<div class="widget widget-table action-table">
@@ -103,7 +81,6 @@
 								</div>
 							</div>
 						</div>
-						
 						<div class="widget widget-table action-table" >
 							<div class="widget-header" id="idTituloCategoria">
 								<i class="icon-th-list"></i>
@@ -133,7 +110,7 @@
 						<div class="widget widget-table action-table" >
 							<div class="widget-header" id="idTituloProduto">
 								<i class="icon-th-list"></i>
-								<h3>Produtoss</h3>
+								<h3>Produto</h3>
 							</div>
 							<div class="controls">
 								<div class="row">
@@ -202,12 +179,7 @@
 					</div>
 				</div>
 				</form>
-							
-				
-				<!-- /span6 -->
-
-				<!-- /span6 -->
-			</div>
+			</div> <!-- Fim Div Container -->
 			<!-- /row -->
 		</div>
 		<!-- /container -->
