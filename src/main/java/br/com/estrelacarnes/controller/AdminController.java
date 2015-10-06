@@ -240,5 +240,14 @@ public class AdminController {
 		
 	}
 	
+	@Get("cliente/{idCliente}")
+	public void mostrarCliente(Integer idCliente){
+		Cliente cliente = new Cliente();
+		cliente.setId(idCliente);
+		clienteDAO.load(cliente);
+		result.include("cliente", cliente);
+		
+	}
+	
 
 }
