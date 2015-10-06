@@ -31,6 +31,12 @@ public interface PedidoDAO {
 	Pedido load(Integer idPedido);
 	
 	List<Pedido> listarPedidosAbertos();
+
+	void excluirItem(Item item);
+
+	void excluirPedido(Pedido pedido);
+
+	void excluirItensPedido(Pedido pedido);
 	
 	
 	

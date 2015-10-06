@@ -193,11 +193,13 @@
 							</div>
 						</div>
 						
-						</form>
+						
 						
 						<div class="form-actions">
 							<button type="submit" class="btn btn-primary">Incluir Item</button>
 						</div>
+						
+						</form>
 						
 						<!-- /widget-header -->
 						<div class="widget-content">
@@ -225,10 +227,14 @@
 										<td>${item.preparo.nome}</td>
 										<td>${item.complemento.nome}</td>
 										<td class="td-actions">
-											<form id="formItem" method="post" action="${linkTo[AdminController].editarItem}">
+											<form id="formItem" method="post" action="${linkTo[AdminController].editarItem}" style="float: left; padding: 5px;">
 												<input type="hidden" id="idItem" name="idItem" value="${item.id}" >
-												<button class="button btn btn-success btn-small" id="abrirPedido">Editar Item</button>
-												<a href="javascript:;" class="btn btn-danger btn-small"><i	class="btn-icon-only icon-remove"></i></a>
+												<button class="button btn btn-success btn-small" id="editarItem">Editar</button>
+											</form>
+											<form id="formItem" method="post" action="${linkTo[AdminController].excluirItem}${item.id}" style="float: left; padding: 5px;">
+												<input type="hidden" id="idItem" name="idItem" value="${item.id}" >
+												<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirItem">Excluir</button>
+												<!-- <a href="" class="btn btn-danger btn-small"><i	class="btn-icon-only icon-remove"></i></a> -->
 											</form>
 										</td>
 									</tr>

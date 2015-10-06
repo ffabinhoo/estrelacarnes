@@ -6,8 +6,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
-import br.com.estrelacarnes.model.Cliente;
 import br.com.estrelacarnes.model.Complemento;
 import br.com.estrelacarnes.model.Item;
 import br.com.estrelacarnes.model.Pedido;
@@ -97,8 +97,27 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 		lista = entityManager.createQuery(sql, Pedido.class).getResultList();
 		return lista;
 	}
-	
-	
 
+	@Override
+	public void excluirItem(Item item) {
+		Item obj = this.entityManager.merge(item );
+		this.entityManager.remove(obj);
+	}
+
+	@Override
+	public void excluirPedido(Pedido pedido) {
+		Pedido obj = this.entityManager.merge(pedido);
+		this.entityManager.remove(obj);
+		
+	}
+
+	@Override
+	public void excluirItensPedido(Pedido pedido) {
+		Query sql = this.entityManager
+				.createQuery("delete from Item i where i.pedido.id = " + pedido.getId());
+		
+		sql.executeUpdate();
+		
+	}
 
 }

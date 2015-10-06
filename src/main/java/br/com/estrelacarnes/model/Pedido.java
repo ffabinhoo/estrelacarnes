@@ -2,14 +2,17 @@ package br.com.estrelacarnes.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -31,9 +34,14 @@ public class Pedido implements Serializable{
 	
 	private String idEntrega;
 	
+	private Date data;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idCliente")
 	private Cliente cliente = new Cliente();
+	
+	
+	
 	
 	@Transient
 	List<Item> itens = new ArrayList<Item>();
@@ -85,7 +93,16 @@ public class Pedido implements Serializable{
 	public void setItens(List<Item> itens) {
 		this.itens = itens;
 	}
-	
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
+
 	
 	
 	
