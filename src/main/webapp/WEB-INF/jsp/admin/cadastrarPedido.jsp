@@ -2,9 +2,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 <head>
-<meta charset="utf-8">
+<meta charset="iso-8859-1">
 <title>Estrela Carnes</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -74,21 +74,18 @@
 				
 				<div class="row">
 					<div class="span12">
-
-						<%-- <div class="widget">
-							
-							<div class="widget-content">
-								<div class="shortcuts">
-										<a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">${cliente.nome} - ${cliente.celular}</span> </a>
+						<div class="row">
+							<div class="bs-example ${not empty mensagem ? '' : 'hidden'}">
+								<div class="alert alert-${tipo}" id="mensagem">
+									<a href="#" class="close" data-dismiss="alert">&times;</a> <strong>${mensagemNegrito}</strong>
+									${mensagem}
 								</div>
-								<!-- /shortcuts -->
 							</div>
-							<!-- /widget-content -->
 						</div>
-						 --%>
 						<div class="shortcuts align-left">
-							<a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">${pedido.cliente.nome} - ${pedido.cliente.celular}</span> </a>
+							<a href="javascript:;" class="shortcut"><i class="icon-user"></i><span class="shortcut-label">${pedido.cliente.nome} - ${pedido.cliente.celular}</span> </a>
 						</div>
+						
 						<form id="cadastrarPedido" class="form-horizontal" action="${linkTo[AdminController].inserirItem}" method="post">
 						<input type="hidden" id="idPedido" name="idPedido" value="${pedido.id}">
 						<div class="widget widget-table action-table">
@@ -206,7 +203,7 @@
 							
 							<fieldset>
 								<!-- /control-group -->
-							<div class="widget-content">
+							
 							<table class="table table-striped table-bordered">
 								<thead>
 									<tr>
@@ -241,7 +238,7 @@
 								</c:forEach>
 								</tbody>
 								</table>
-							</div>
+							
 							</fieldset>
 							
 						</div>

@@ -97,7 +97,7 @@
 										class="shortcut-label">Adicionar Pedido</span> </a>
 									<a  href="javascript:;" class="shortcut" id="pedidosHoje"><i
 										class="shortcut-icon icon-list-alt" ></i><span
-										class="shortcut-label">Pedidos de Hoje</span> </a>	
+										class="shortcut-label">Pedidos Abertos</span> </a>	
 									<a
 										href="javascript:;" class="shortcut"><i
 										class="shortcut-icon icon-user"></i><span

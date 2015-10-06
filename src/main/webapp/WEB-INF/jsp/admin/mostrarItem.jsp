@@ -2,9 +2,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 <head>
-<meta charset="utf-8">
+<meta charset="iso-8859-1">
 <title>Estrela Carnes</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -60,12 +60,18 @@
 	<div class="main">
 		<div class="main-inner">
 			<div class="container">
+			<div class="row">
+				<div class="bs-example ${not empty mensagem ? '' : 'hidden'}">
+					<div class="alert alert-${tipo}" id="mensagem">
+						<a href="#" class="close" data-dismiss="alert">&times;</a> <strong>${mensagemNegrito}</strong>
+						${mensagem}
+					</div>
+				</div>
+			</div>
 			<form id="cadastrarPedido" class="form-horizontal" action="${linkTo[AdminController].alterarItem}" method="post">	
 				<div class="row">
 					<div class="span12">
-						<div class="shortcuts align-left">
-							<a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">${item.pedido.cliente.nome} - ${item.pedido.cliente.celular}</span> </a>
-						</div>
+						
 						<input type="hidden" id="idPedido" name="idPedido" value="${item.pedido.id}">
 						<input type="hidden" id="idItem" name="idItem" value="${item.id}">
 						<div class="widget widget-table action-table">
@@ -171,7 +177,7 @@
 						
 						
 						<div class="form-actions">
-							<button type="submit" class="btn btn-primary">Alterar Item</button>
+							<button type="submit" id="submit" name="_method" value="PUT" class="btn btn-primary">Alterar Item</button>
 						</div>
 						
 						<!-- /widget-header -->
@@ -218,20 +224,6 @@
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
 	<script>
-		$(function() {
-			
-			
-			$("#idMostrarTitulos").click(function() {
-				$("#idTituloCategoria").toggle("slow");
-				$("#idTituloProduto").toggle("slow");
-				$("#idTituloPreparo").toggle("slow");
-				$("#idTituloObservacao").toggle("slow");
-				$("#idTituloComplemento").toggle("slow");
-				$("#idTituloQuantidade").toggle("slow");
-				
-			});
-		});
-		
 		
 		$( "#quantidade" ).focus(function() {
 			
