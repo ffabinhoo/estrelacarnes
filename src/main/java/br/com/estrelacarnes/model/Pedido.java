@@ -36,6 +36,8 @@ public class Pedido implements Serializable{
 	
 	private Date data;
 	
+	private String observacao;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idCliente")
 	private Cliente cliente = new Cliente();
@@ -100,6 +102,14 @@ public class Pedido implements Serializable{
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 
 

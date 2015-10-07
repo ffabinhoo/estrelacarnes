@@ -23,29 +23,30 @@
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span
-					class="icon-bar"></span> </a> <a class="brand" href="/estrelacarnes">Estrela Carnes - Administração de Pedidos</a>
+				<!-- <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar">a</span>
+					<span class="icon-bar">b</span>
+					<span class="icon-bar">c</span>
+				</a> --> 
+				<a class="brand" href="/estrelacarnes">Estrela Carnes - Administração de Pedidos</a>
 				<div class="nav-collapse">
 					<ul class="nav pull-right">
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> <span
-								class="pull-right ${not empty userInfo.user ? '' : 'hidden'}"> ${userInfo.user.name}</span> <b class="caret"></b></a>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<i class="icon-user"></i> 
+								<span class="pull-right ${not empty userInfo.user ? '' : 'hidden'}"> ${userInfo.user.name}</span> 
+								<b class="caret"></b>
+							</a>
 							<ul class="dropdown-menu">
 								<li><a href="javascript:;">Profile</a></li>
 								<li><a href="${linkTo[IndexController].logout}">logout</a></li>
-
-							</ul></li>
+							</ul>
+						</li>
 					</ul>
-					<!-- <form class="navbar-search pull-right">
-						<input type="text" class="search-query" placeholder="Search">
-					</form> -->
 				</div>
-				<!--/.nav-collapse -->
 			</div>
-			<!-- /container -->
 		</div>
-		<!-- /navbar-inner -->
 	</div>
-	<!-- /navbar -->
 	<div class="subnavbar">
 		<div class="subnavbar-inner">
 			<div class="container">
@@ -54,24 +55,23 @@
 					<li><a href="${linkTo[AdminController].consultarUsuario}" ><i class="icon-star-empty"></i><span>Cadastrar Pedido</span></a>
 					<li><a href="javascript:;" id="idMostrarTitulos"><i class="icon-adjust"></i><span>Mostrar/Esconder Títulos</span>
 					</a></li>
-					<li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-long-arrow-down"></i> <span>Opções</span>
-							<b class="caret"></b></a>
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+					 		<i class="icon-long-arrow-down"></i> <span>Opções</span>
+							<b class="caret"></b>
+						</a>
 						<ul class="dropdown-menu">
 							<li><a href="#">Cadastrar Cliente</a></li>
 							<li><a href="#">Consultar Pedido</a></li>
-
-						</ul></li>
+						</ul>
+					</li>
 				</ul>
 			</div>
-			<!-- /container -->
 		</div>
-		<!-- /subnavbar-inner -->
 	</div>
-	<!-- /subnavbar -->
 	<div class="main">
 		<div class="main-inner">
 			<div class="container">
-				
 				<div class="row">
 					<div class="span12">
 						<div class="row">
@@ -82,8 +82,10 @@
 								</div>
 							</div>
 						</div>
-						<div class="shortcuts align-left">
-							<a href="javascript:;" class="shortcut"><i class="icon-user"></i><span class="shortcut-label">${pedido.cliente.nome} - ${pedido.cliente.celular}</span> </a>
+						<div class="shortcuts">
+							<a href="javascript:;" class="shortcut"><i class="icon-user"></i>
+								<span class="shortcut-label">${pedido.cliente.nome} - ${pedido.cliente.celular}</span> 
+							</a>
 						</div>
 						
 						<form id="cadastrarPedido" class="form-horizontal" action="${linkTo[AdminController].inserirItem}" method="post">
@@ -94,11 +96,11 @@
 								<h3>Quantidade</h3>
 							</div>
 							<div class="widget-content">
-								<div class="controls">
+								<!-- <div class="controls"> -->
 									<input class="span1" id="quantidade" name="quantidade" type="text" value="${quantidade}" required/>
 									<label class="checkbox inline"> <input type="radio" name="tipo" id="tipo" value="KG" ${'KG' == tipo ? 'checked' : ''} required> KG</label>
 									<label class="checkbox inline"><input type="radio" name="tipo" id="tipo" value="UN" ${'UN' == tipo ? 'checked' : ''} required> Unidade</label>
-								</div>
+								<!-- </div> -->
 							</div>
 						</div>
 						
@@ -108,7 +110,7 @@
 								<h3>Categoria</h3>
 							</div>
 							<div class="widget-content">
-								<div class="controls">
+								<!-- <div class="controls"> -->
 									<label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="1" ${1 == idCategoria ? 'checked' : ''} required>
 										Bovino
 									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="2" ${2 == idCategoria ? 'checked' : ''} required>
@@ -124,7 +126,7 @@
 									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="7" ${7 == idCategoria ? 'checked' : ''} required>
 										Linguiça
 									</label>
-								</div>
+								<!-- </div> -->
 							</div>
 						</div>
 						
@@ -133,7 +135,7 @@
 								<i class="icon-th-list"></i>
 								<h3>Produto</h3>
 							</div>
-							<div class="controls">
+							<!-- <div class="controls"> -->
 								<div class="row">
 									<div class="col-sm-3 col-md-6 col-lg-12">
 									<c:forEach var="produto" items="${listaProdutos}" varStatus="i">
@@ -146,7 +148,7 @@
 									</c:forEach>
 									</div>
 								</div>
-							</div>
+							<!-- </div> -->
 						</div>
 						<div class="widget widget-table action-table" >
 							<div class="widget-header" id="idTituloPreparo">
@@ -154,12 +156,12 @@
 								<h3>Preparo</h3>
 							</div>
 							<div class="widget-content">
-								<div class="controls">
+								<!-- <div class="controls"> -->
 									<c:forEach var="preparo" items="${listaPreparos}">
 										<label class="checkbox inline"> <input type="radio" id="preparo" name="preparo" value="${preparo.id}" />${preparo.nome}
 										</label>
 									</c:forEach>
-								</div>
+								<!-- </div> -->
 							</div>
 						</div>
 						
@@ -169,12 +171,12 @@
 								<h3>Complemento</h3>
 							</div>
 							<div class="widget-content">
-								<div class="controls">
+								<!-- <div class="controls"> -->
 									<c:forEach var="complemento" items="${listaComplementos}">
 										<label class="checkbox inline"> <input type="radio" id="complemento" name="complemento" value="${complemento.id}" />${complemento.nome}
 										</label>
 									</c:forEach>
-								</div>
+								<!-- </div> -->
 							</div>
 						</div>
 						
@@ -184,26 +186,18 @@
 								<h3>Observação</h3>
 							</div>
 							<div class="widget-content">
-								<div class="controls">
-									<textarea rows="5" cols="5" class="span4" id="observacao" name="observacao"></textarea>
-								</div>
+								<textarea rows="5" cols="5" class="span4" id="observacao" name="observacao"></textarea>
 							</div>
 						</div>
-						
-						
 						
 						<div class="form-actions">
 							<button type="submit" class="btn btn-primary">Incluir Item</button>
 						</div>
-						
-						</form>
+				</form>
 						
 						<!-- /widget-header -->
 						<div class="widget-content">
-							
 							<fieldset>
-								<!-- /control-group -->
-							
 							<table class="table table-striped table-bordered">
 								<thead>
 									<tr>
@@ -262,25 +256,19 @@
 						
 						
 					</div>
+					
+					<!-- <div class="span2">
+						teste
+					</div> -->
 				</div>
 				
-				
-							<div class="pull-right">
-							<button type="submit" class="btn btn-primary">Fechar Pedido</button>
-							<button class="btn">Cancelar</button>
-							</div>
-				
-				<!-- /span6 -->
-
-				<!-- /span6 -->
+				<div class="pull-right">
+					<button type="submit" class="btn btn-primary">Fechar Pedido</button>
+					<button class="btn">Cancelar</button>
+				</div>
 			</div>
-			<!-- /row -->
 		</div>
-		<!-- /container -->
 	</div>
-	<!-- /main-inner -->
-	</div>
-	<!-- /main -->
 	<div class="extra">
 		<div class="extra-inner">
 			<div class="container">
