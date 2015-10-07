@@ -18,6 +18,18 @@
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+<style>
+#divBotaoItem {
+    float: right;
+    margin: 0px 0 0px 0px;
+}
+#divBotaoItemLista {
+    margin: 5px 0 0px 0px;
+    font: 10px/1.2em 'Open Sans';
+}
+#divSpan10 {
+}
+</style>
 </head>
 <body>
 	<div class="navbar navbar-fixed-top">
@@ -73,7 +85,7 @@
 		<div class="main-inner">
 			<div class="container">
 				<div class="row">
-					<div class="span10">
+					<div class="span10" id="divSpan10">
 						<div class="row">
 							<div class="bs-example ${not empty mensagem ? '' : 'hidden'}">
 								<div class="alert alert-${tipomsg}" id="mensagem">
@@ -192,7 +204,14 @@
 							<button type="submit" class="btn btn-primary">Incluir Item</button>
 					</div>
 						<div class="span2" id="divBotaoItem">
-							<button type="submit" class="btn btn-primary">Incluir Item</button>
+							<div class="widget-content">
+								<button type="submit" class="btn btn-primary">Incluir Item</button> <br/>
+								<div id="divBotaoItemLista">
+									<c:forEach var="item" items="${listaItensPedido}" varStatus="n">
+										${n.index + 1} - ${item.produto.nome} <br/>
+									</c:forEach>
+								</div>
+							</div>	
 						</div>	
 				</div>
 					
@@ -248,8 +267,7 @@
 				</div>
 				</div>
 				<div class="span2">
-				Espaço
-				
+				Espaçosss				
 				</div>
 		</div>
 		</div>
