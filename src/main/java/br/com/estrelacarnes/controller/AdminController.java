@@ -83,7 +83,7 @@ public class AdminController {
 		pedidoDAO.alterarItem(item);
 
 		result.include("idPedido", pedidoobj.getId());
-		result.include("tipo", "success");
+		result.include("tipomsg", "success");
 		result.include("mensagemNegrito", "Item ");
 		result.include("mensagem", "alterado com sucesso.");
 		//result.redirectTo(AdminController.class).mostrarItem(item.getId(), tipo, quantidade, item.getCategoria().getId().toString());

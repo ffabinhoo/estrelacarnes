@@ -73,10 +73,10 @@
 		<div class="main-inner">
 			<div class="container">
 				<div class="row">
-					<div class="span12">
+					<div class="span10">
 						<div class="row">
 							<div class="bs-example ${not empty mensagem ? '' : 'hidden'}">
-								<div class="alert alert-${tipo}" id="mensagem">
+								<div class="alert alert-${tipomsg}" id="mensagem">
 									<a href="#" class="close" data-dismiss="alert">&times;</a> <strong>${mensagemNegrito}</strong>
 									${mensagem}
 								</div>
@@ -189,15 +189,20 @@
 								<textarea rows="5" cols="5" class="span4" id="observacao" name="observacao"></textarea>
 							</div>
 						</div>
-						
-						<div class="form-actions">
 							<button type="submit" class="btn btn-primary">Incluir Item</button>
-						</div>
-				</form>
-						
-						<!-- /widget-header -->
-						<div class="widget-content">
-							<fieldset>
+					</div>
+						<div class="span2" id="divBotaoItem">
+							<button type="submit" class="btn btn-primary">Incluir Item</button>
+						</div>	
+				</div>
+					
+				
+		</form>
+		<div class="container">
+			<div class="row">	
+				<div class="span10">
+					<div class="widget-content">
+						<fieldset>
 							<table class="table table-striped table-bordered">
 								<thead>
 									<tr>
@@ -236,38 +241,22 @@
 							</fieldset>
 							
 						</div>
-							
-							
-							<!-- <div class="input-prepend input-append">
-								<span class="add-on"><input type="radio"
-									id="quantidadekg" name="quantidade" value="1"></span> <input
-									class="span1" id="kilograma" type="text" disabled> <span
-									class="add-on">KG</span>
-							</div>
-							<br />
-							<div class="input-prepend input-append">
-								<span class="add-on"><input type="radio"
-									id="quantidadeun" name="quantidade" value="2"></span> <input
-									class="span1" id="unidade" type="text" disabled> <span
-									class="add-on">UN</span>
-							</div> -->
-
-						<!-- /widget-content -->
-						
-						
-					</div>
-					
-					<!-- <div class="span2">
-						teste
-					</div> -->
-				</div>
 				
 				<div class="pull-right">
 					<button type="submit" class="btn btn-primary">Fechar Pedido</button>
 					<button class="btn">Cancelar</button>
 				</div>
-			</div>
+				</div>
+				<div class="span2">
+				Espaço
+				
+				</div>
 		</div>
+		</div>
+		</div>
+		</div>
+		
+		
 	</div>
 	<div class="extra">
 		<div class="extra-inner">
