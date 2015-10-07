@@ -37,6 +37,8 @@ public interface PedidoDAO {
 	void excluirPedido(Pedido pedido);
 
 	void excluirItensPedido(Pedido pedido);
+
+	void alterarItem(Item item);
 	
 	
 	

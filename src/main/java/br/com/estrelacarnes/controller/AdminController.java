@@ -54,8 +54,42 @@ public class AdminController {
 	
 	
 	@Put("/item/alterar")
-	public void alterarItem(String id){
-		System.out.println("alterar item" + id);
+	public void alterarItem(String idItem, String quantidade, String tipo, String produto, String complemento, String preparo, String observacao, Integer idPedido){
+		System.out.println("alterar item" + idItem);
+		Item item = new Item();
+		item = pedidoDAO.mostrarItem(Integer.valueOf(idItem));
+		Produto produtoobj = new Produto();
+		Pedido pedidoobj = new Pedido();
+		produtoobj.setId(Integer.valueOf(produto));
+		if (complemento != null){
+			Complemento complementoobj = new Complemento();
+			complementoobj.setId(Integer.valueOf(complemento));
+			item.setComplemento(complementoobj);
+		}
+		if (preparo!= null){
+			Preparo preparoobj = new Preparo();
+			preparoobj.setId(Integer.valueOf(preparo));
+			item.setPreparo(preparoobj);
+		}
+		
+		item.setObservacao(observacao);
+		item.setProduto(produtoobj);
+		item.setQuantidade(quantidade);
+		item.setTipo(tipo);
+		
+		pedidoobj.setId(idPedido);
+		item.setPedido(pedidoobj);
+		
+		pedidoDAO.alterarItem(item);
+
+		result.include("idPedido", pedidoobj.getId());
+		result.include("tipo", "success");
+		result.include("mensagemNegrito", "Item ");
+		result.include("mensagem", "alterado com sucesso.");
+		//result.redirectTo(AdminController.class).mostrarItem(item.getId(), tipo, quantidade, item.getCategoria().getId().toString());
+		result.redirectTo(AdminController.class).cadastrarPedido(pedidoobj.getId(), "KG", "1", "0");
+		
+		
 	}
 	
 	@Post("/consultarUsuario")
@@ -156,12 +190,7 @@ public class AdminController {
 		Item item = new Item();
 		Categoria categoriaobj = new Categoria();
 		Produto produtoobj = new Produto();
-		
-		
 		Pedido pedidoobj = new Pedido();
-		//Cliente clienteobj = new Cliente();
-		//clienteobj.setId(1);
-		//pedidoobj.setCliente(clienteobj);
 		categoriaobj.setId(Integer.valueOf(categoria));
 		produtoobj.setId(Integer.valueOf(produto));
 		if (complemento != null){
@@ -179,32 +208,17 @@ public class AdminController {
 			item.setPreparo(null);
 		}
 		
-		
-		
 		item.setCategoria(categoriaobj);
-		
 		item.setObservacao(observacao);
-		
 		item.setProduto(produtoobj);
-		
 		item.setQuantidade(quantidade);
 		item.setTipo(tipo);
-		
-		
-		/*if (pedido==null){
-			
-			pedidoobj = pedidoDAO.abrirPedido(pedidoobj);
-		}else{
-			pedidoobj.setId(pedido);
-			pedidoobj = pedidoDAO.load(pedidoobj);
-		}*/
 		
 		pedidoobj.setId(idPedido);
 		item.setPedido(pedidoobj);
 		
 		pedidoDAO.inserirItem(item);
-		
-		
+
 		result.include("idPedido", pedidoobj.getId());
 		result.redirectTo(AdminController.class).cadastrarPedido(pedidoobj.getId(), tipo, quantidade, categoria);
 	}
@@ -223,6 +237,15 @@ public class AdminController {
 		pedidoDAO.excluirItensPedido(pedido);
 		pedidoDAO.excluirPedido(pedido);
 		result.redirectTo(AdminController.class).principal();
+		
+	}
+	
+	@Get("cliente/{idCliente}")
+	public void mostrarCliente(Integer idCliente){
+		Cliente cliente = new Cliente();
+		cliente.setId(idCliente);
+		clienteDAO.load(cliente);
+		result.include("cliente", cliente);
 		
 	}
 	

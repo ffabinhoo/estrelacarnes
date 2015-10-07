@@ -120,4 +120,10 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 		
 	}
 
+	@Override
+	public void alterarItem(Item item) {
+		Item obj = this.entityManager.merge(item);
+		this.entityManager.merge(obj);
+	}
+
 }
