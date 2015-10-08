@@ -203,14 +203,15 @@
 						</div>
 							<button type="submit" class="btn btn-primary">Incluir Item</button>
 					</div>
-						<div class="span2 hidden-phone" id="divBotaoItem">
+						<div class="span2-fluid" id="divBotaoItem">
 							<div class="widget-content">
 								<button type="submit" class="btn btn-primary">Incluir Item</button> <br/>
 								<div id="divBotaoItemLista">
 									<c:forEach var="item" items="${listaItensPedido}" varStatus="n">
-										${item.quantidade} ${item.tipo} - ${item.produto.nome} <br/>
+										${item.quantidade} ${item.tipo} - ${item.produto.nome}<br/>
 									</c:forEach>
 								</div>
+								
 							</div>	
 						</div>	
 				</div>
