@@ -6,11 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
-import org.apache.commons.lang3.text.WordUtils;
 
 @Entity
 public class Cliente implements Serializable{
@@ -22,15 +18,9 @@ public class Cliente implements Serializable{
 	
 	private String nome;
 	
-	private String endereco;
-	
-	private String descricao;
-	
-	private String latitude;
-	
-	private String longitude;
-	
-	private String cep;
+
+	@OneToMany(mappedBy = "cliente", targetEntity=Endereco.class, fetch=FetchType.EAGER)
+	private List<Endereco> enderecos;
 	
 	private String assinante;
 	
@@ -74,14 +64,7 @@ public class Cliente implements Serializable{
 		this.nome = nome;
 	}
 
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
+	
 	public String getAssinante() {
 		return assinante;
 	}
@@ -156,38 +139,7 @@ public class Cliente implements Serializable{
 		this.destaque = destaque;
 	}
 
-	public String getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
-
-	public String getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
-
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	public String getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
-	}
-
+	
 	public String getCelular() {
 		return celular;
 	}
@@ -202,6 +154,14 @@ public class Cliente implements Serializable{
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+
+	public List<Endereco> getEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(List<Endereco> enderecos) {
+		this.enderecos = enderecos;
 	}
 
 	

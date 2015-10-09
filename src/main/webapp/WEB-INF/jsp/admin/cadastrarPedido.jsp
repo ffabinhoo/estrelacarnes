@@ -1,6 +1,8 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -40,7 +42,7 @@
 					<span class="icon-bar">b</span>
 					<span class="icon-bar">c</span>
 				</a> --> 
-				<a class="brand" href="/estrelacarnes">Estrela Carnes - Administração de Pedidos</a>
+				<a class="brand" href="/estrelacarnes"><!-- Estrela Carnes - Administração de Pedidos -->Titulo</a>
 				<div class="nav-collapse">
 					<ul class="nav pull-right">
 						<li class="dropdown">
@@ -95,7 +97,7 @@
 							</div>
 						</div>
 						<div class="shortcuts">
-							<a href="javascript:;" class="shortcut"><i class="icon-user"></i>
+							<a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}" class="shortcut"><i class="icon-user"></i>
 								<span class="shortcut-label">${pedido.cliente.nome} - ${pedido.cliente.celular}</span> 
 							</a>
 						</div>
@@ -155,7 +157,7 @@
 											<br /> 
 										</c:if>
 										<div class="span2">
-											<input type="radio" id="produto" name="produto" value="${produto.id}" required/>${produto.nome.trim()}
+											<label><input type="radio" id="produto" name="produto" value="${produto.id}" required/>${fn:toLowerCase(produto.nome.trim())}</label>
 										</div>
 									</c:forEach>
 									</div>
@@ -170,7 +172,7 @@
 							<div class="widget-content">
 								<!-- <div class="controls"> -->
 									<c:forEach var="preparo" items="${listaPreparos}">
-										<label class="checkbox inline"> <input type="radio" id="preparo" name="preparo" value="${preparo.id}" />${preparo.nome}
+										<label class="checkbox inline"> <input type="radio" id="preparo" name="preparo" value="${preparo.id}" />${fn:toLowerCase(preparo.nome)}
 										</label>
 									</c:forEach>
 								<!-- </div> -->
@@ -185,7 +187,7 @@
 							<div class="widget-content">
 								<!-- <div class="controls"> -->
 									<c:forEach var="complemento" items="${listaComplementos}">
-										<label class="checkbox inline"> <input type="radio" id="complemento" name="complemento" value="${complemento.id}" />${complemento.nome}
+										<label class="checkbox inline"> <input type="radio" id="complemento" name="complemento" value="${complemento.id}" />${fn:toLowerCase(complemento.nome)}
 										</label>
 									</c:forEach>
 								<!-- </div> -->

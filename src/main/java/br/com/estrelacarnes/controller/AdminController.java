@@ -240,14 +240,19 @@ public class AdminController {
 		
 	}
 	
-	@Get("cliente/{idCliente}")
-	public void mostrarCliente(Integer idCliente){
-		Cliente cliente = new Cliente();
-		cliente.setId(idCliente);
-		clienteDAO.load(cliente);
-		result.include("cliente", cliente);
-		
+	
+	
+	@Get("/pedido/mostrar/{pedido.id}")
+	public void fecharPedido(Pedido pedido){
+		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
+		result.include("pedido", pedidoObj);
 	}
+	
+	@Get("/pedido/layout")
+	public void layout(){
+				
+	}
+	
 	
 
 }
