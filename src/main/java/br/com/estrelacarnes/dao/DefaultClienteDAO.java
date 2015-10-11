@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import br.com.estrelacarnes.model.Cliente;
+import br.com.estrelacarnes.model.Pedido;
 
 public class DefaultClienteDAO implements ClienteDAO, Serializable{
 	
@@ -60,6 +61,12 @@ public class DefaultClienteDAO implements ClienteDAO, Serializable{
 	public List<Cliente> consultarUsuarioPorTelefone(String telefone) {
 		return entityManager.createQuery("select c from Cliente c where c.celular like '%" + telefone + "%'", Cliente.class).getResultList();
 		
+	}
+
+	@Override
+	public void excluirCliente(Cliente cliente) {
+		Cliente obj = this.entityManager.merge(cliente);
+		this.entityManager.remove(obj);
 	}
 
 }

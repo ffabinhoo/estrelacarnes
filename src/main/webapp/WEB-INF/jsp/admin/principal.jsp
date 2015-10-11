@@ -127,7 +127,7 @@
 										<c:forEach var="pedido" items="${listaPedidosAbertos}">
 										<tr>
 											<td style="width: 200px;">${pedido.id}</td>
-											<td>${pedido.cliente.nome} - ${pedido.cliente.celular}</td>
+											<td><a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}">${pedido.cliente.nome} - ${pedido.cliente.celular}</a></td>
 											<td><fmt:formatDate pattern="dd/MM HH:mm" value="${pedido.data}" /></td>
 											<td class="td-actions" style="width: 200px;">
 												<form id="formVerPedido" method="get" action="cadastrarPedido/${pedido.id}/KG/1/0" 

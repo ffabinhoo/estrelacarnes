@@ -64,102 +64,156 @@
 		<div class="main-inner">
 			<div class="container">
 				<div class="row">
-					<div class="span12">
-						<div class="control-group">											
-							<label class="control-label" for="firstname">Nome</label>
-							<div class="controls">
-								<input class="span6" id="firstname" value="${cliente.nome}" type="text">
-							</div>
-							<label class="control-label" for="firstname">CPF</label>
-							<div class="controls">
-								<input class="span6" id="firstname" value="${cliente.cpf}" type="text">
-							</div>
-							<label class="control-label" for="firstname">Telefone Fixo</label>
-							<div class="controls">
-								<input class="span6" id="firstname" value="${cliente.telefone}" type="text">
-							</div>
-							<label class="control-label" for="firstname">Telefone Celular</label>
-							<div class="controls">
-								<input class="span6" id="firstname" value="${cliente.celular}" type="text">
-							</div>
-							<label class="control-label" for="firstname">e-mail</label>
-							<div class="controls">
-								<input class="span6" id="firstname" value="${cliente.email}" type="email">
-							</div>  				
+					<div class="bs-example ${not empty mensagem ? '' : 'hidden'}">
+						<div class="alert alert-${tipomsg}" id="mensagem">
+							<a href="#" class="close" data-dismiss="alert">&times;</a> <strong>${mensagemNegrito}</strong> ${mensagem}
 						</div>
 					</div>
+				</div>
+				<div class="row">
 					<div class="span12">
-						<c:if test="${cliente.enderecos.size() > 0}">
-						<div class="widget widget-table action-table" id="listaClientes">
-							<div class="widget-header">
-								<i class="icon-th-list"></i>
-								<h3>Endereços</h3>
-							</div>
-							<!-- /widget-header -->
-							<div class="widget-content">
-								<table class="table table-striped table-bordered">
-									<thead>
+						<form id="formAlterarCliente" method="post" action="${linkTo[ClienteController].alterarCliente}" style="float: left; padding: 1px;">
+							<input class="span6" id="id" name="cliente.id" value="${cliente.id}" type="hidden">
+							<div class="control-group">
+								<label class="control-label" for="cliente.nome">Nome</label>
+								<div class="controls">
+									<input class="span6" name="cliente.nome" value="${cliente.nome}" type="text">
+								</div>
+								<label class="control-label" for="cliente.cpf">CPF</label>
+								<div class="controls">
+									<input class="span6" name="cliente.cpf" value="${cliente.cpf}" type="text">
+								</div>
+								<%-- <label class="control-label" for="cep">CEP</label>
+							<div class="controls">
+								<input class="span6" id="cep" value="${cliente.cep}" type="text">
+								<a href="" class="btn btn-small btn-primary" id="linkbuscacep" onclick="montaurl();">Buscar CEP</a>
+							</div> --%>
+								<label class="control-label" for="cliente.telefone">Telefone Fixo</label>
+								<div class="controls">
+									<input class="span6" name="cliente.telefone" value="${cliente.telefone}" type="text">
+								</div>
+								<label class="control-label" name="cliente.celular">Telefone Celular</label>
+								<div class="controls">
+									<input class="span6" name="cliente.celular" value="${cliente.celular}" type="text">
+								</div>
+								<label class="control-label" for="cliente.email">e-mail</label>
+								<div class="controls">
+									<input class="span6" name="cliente.email" value="${cliente.email}" type="email">
+								</div>
+								<div class="form-actions">
+									<button name="_method" value="PUT" class="btn btn-primary btn-small" id="alterarCliente">
+									Salvar Alterações</button>
+
+									<button class="btn btn-small" id="voltarCliente" type="button">Voltar</button>
+								</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+			<div id="confirmCliente" class="modal hide fade">
+				<div class="modal-body">Confirma exclusão do Pedido?</div>
+				<div class="modal-footer">
+					<button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Excluir</button>
+					<button type="button" data-dismiss="modal" class="btn">Cancelar</button>
+				</div>
+			</div>
+			<div class="span12">
+				<c:if test="${cliente.enderecos.size() > 0}">
+					<div class="widget widget-table action-table" id="listaClientes">
+						<div class="widget-header">
+							<i class="icon-th-list"></i>
+							<h3>Endereços</h3>
+						</div>
+						<!-- /widget-header -->
+						<div class="widget-content">
+							<table class="table table-striped table-bordered">
+								<thead>
+									<tr>
+										<th>Endereço</th>
+										<th>Cidade / UF</th>
+										<th>CEP</th>
+										<th class="td-actions"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="endereco" items="${cliente.enderecos}">
 										<tr>
-											<th>Endereço</th>
-											<th>Cidade / UF</th>
-											<th>CEP</th>
-											<th class="td-actions"></th>
+
+											<td>${endereco.endereco}</td>
+											<td>${endereco.cidade}/${endereco.uf}</td>
+											<td>${endereco.cep}</td>
+											<td class="td-actions" style="width: 200px;">
+												<form id="formMostrarEndereco" method="get" action="${linkTo[ClienteController].mostrarEndereco}${endereco.id}"
+													style="float: left; padding: 1px;">
+													<button name="_method" value="PUT" class="button btn btn-danger btn-small" id="mostrarEndereco">Salvar Alterações</button>
+												</form>
+												<form id="formExcluirEndereco" method="get" action="${linkTo[ClienteController].excluirEndereco}${endereco.id}"
+													style="float: left; padding: 1px;">
+													<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirPEndereco">Excluir</button>
+												</form>
+											</td>
 										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="endereco" items="${cliente.enderecos}">
-											<tr>
-											
-												<td>${endereco.endereco}</td>
-												<td>${endereco.cidade} / ${endereco.uf}</td>
-												<td>${endereco.cep}</td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
+									</c:forEach>
+								</tbody>
+							</table>
 						</div>
-					</c:if>
 					</div>
-				</div>
+				</c:if>
 			</div>
 		</div>
-		</div>
-		<!-- /main -->
-		<div class="extra">
-			<div class="extra-inner">
-				<div class="container">
-					<div class="row">
-						<div class="span3">
-							<h4>Sobre Estrela Carnes</h4>
+	</div>
+	</div>
+	</div>
+	<!-- /main -->
+	<div class="extra">
+		<div class="extra-inner">
+			<div class="container">
+				<div class="row">
+					<div class="span3">
+						<h4>Sobre Estrela Carnes</h4>
 
-						</div>
-						<!-- /span3 -->
-						<div class="span3">
-							<h4>Suporte</h4>
-
-						</div>
-						<!-- /span3 -->
-						<div class="span3"></div>
-						<!-- /span3 -->
-						<div class="span3"></div>
-						<!-- /span3 -->
 					</div>
-					<!-- /row -->
-				</div>
-				<!-- /container -->
-			</div>
-			<!-- /extra-inner -->
-		</div>
-		
+					<!-- /span3 -->
+					<div class="span3">
+						<h4>Suporte</h4>
 
-		<script src="/estrelacarnes/js/jquery-1.7.2.min.js"></script>
-		<script src="/estrelacarnes/js/excanvas.min.js"></script>
-		<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
-		<script src="/estrelacarnes/js/bootstrap.js"></script>
-		<script>
-		
-			
-		</script>
+					</div>
+					<!-- /span3 -->
+					<div class="span3"></div>
+					<!-- /span3 -->
+					<div class="span3"></div>
+					<!-- /span3 -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /extra-inner -->
+	</div>
+
+
+	<script src="/estrelacarnes/js/jquery-1.7.2.min.js"></script>
+	<script src="/estrelacarnes/js/excanvas.min.js"></script>
+	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
+	<script src="/estrelacarnes/js/bootstrap.js"></script>
+	<script>
+		$('button[id="excluirCliente"]').on('click', function(e) {
+			var $form = $(this).closest('form');
+			e.preventDefault();
+			$('#confirmCliente').modal({
+				backdrop : 'static',
+				keyboard : false
+			}).one('click', '#delete', function() {
+				$form.trigger('submit'); // submit the form
+			});
+			// .one() is NOT a typo of .on()
+		});
+
+		document.getElementById("voltarCliente").onclick = function() {
+			var url = '/estrelacarnes';
+			window.location.href = url;
+		};
+	</script>
 </body>
 </html>
