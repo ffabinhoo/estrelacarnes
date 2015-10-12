@@ -51,14 +51,7 @@
 			<div class="container">
 				<ul class="mainnav">
 					<li class="active"><a href="/estrelacarnes"><i class="icon-dashboard"></i><span>Painel de Controle</span> </a></li>
-					<li><a href="${linkTo[AdminController].cadastrarPedido}"><i class="icon-star-empty"></i><span>Cadastrar Pedido</span></a>
-					<li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-long-arrow-down"></i> <span>Opções</span>
-							<b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Cadastrar Cliente</a></li>
-							<li><a href="#">Consultar Pedido</a></li>
-
-						</ul></li>
+					<li><a href="${linkTo[ClienteController].cadastrarCliente}"><i class="icon-user"></i><span>Cadastrar Cliente</span></a></li>
 				</ul>
 			</div>
 			<!-- /container -->
@@ -70,11 +63,25 @@
 		<div class="main-inner">
 			<div class="container">
 				<div class="row">
+					<div class="bs-example ${not empty mensagem ? '' : 'hidden'}">
+						<div class="alert alert-${tipomsg}" id="mensagem">
+							<a href="#" class="close" data-dismiss="alert">&times;</a> <strong>${mensagemNegrito}</strong> ${mensagem}
+						</div>
+					</div>
+				</div>
+				<div class="row">
 					<div class="span12">
 						<div class="widget widget-table action-table" id="buscaUsuario">
 							<form action="${linkTo[AdminController].consultarUsuario}" method="post" id="formConsulta">
-								<input type="text" class="" placeholder="Telefone" id="telefone" name="telefone" value=""> <a href="#" id="idBusca"><i
-									class="icon-search"></i></a>
+								
+								<input type="text" class="" placeholder="Nome" id="nome" name="nome" value=""> <!-- <a href="#" id="idBuscaNome"><i
+									class="icon-search"></i></a> --><br />
+									<input type="text" class="" placeholder="Telefone" id="telefone" name="telefone" value=""> <!-- <a href="#" id="idBusca"><i
+									class="icon-search"></i></a> --><br />
+									<div class="form-actions">
+										<button  class="btn btn-primary btn-small" id="buscar">Buscar</button>
+										<button class="btn btn-small" id="voltarCliente" type="button">Voltar</button>
+								</div>	
 							</form>
 						</div>
 					</div>
@@ -100,14 +107,30 @@
 										<c:forEach var="cliente" items="${listaCliente}">
 											<tr>
 											
-												<td>${cliente.nome}</td>
+												<td><a href="${linkTo[ClienteController].mostrarCliente}${cliente.id}">${cliente.nome}</a></td>
 												<td>${cliente.celular}</td>
 												<td>${cliente.cpf}</td>
-												<form action="${linkTo[AdminController].cadastrarPedidoNovo}" method="post" id="formAbrirPedido">
-													<input type="hidden" id="idCliente" name="idCliente" value="${cliente.id}">
-													<td class="td-actions"><button class="button btn btn-success btn-small" id="abrirPedido">Abrir Pedido</button></td>
-												</form>
+												<td class="td-actions" style="width: 200px;">
+													<form action="${linkTo[AdminController].cadastrarPedidoNovo}" method="post" id="formAbrirPedido" style="float: left; padding: 1px;">
+														<input type="hidden" id="idCliente" name="idCliente" value="${cliente.id}">
+														<button class="button btn btn-success btn-small" id="abrirPedido">Abrir Pedido</button>
+													</form>
+													<form id="formExcluirCliente" method="get" action="${linkTo[ClienteController].excluirCliente}${cliente.id}" 
+														style="float: left; padding: 1px;">
+														<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirCliente">Excluir</button>
+													</form>
+												</td>
 											</tr>
+										<div id="confirm" class="modal hide fade">
+										  <div class="modal-body">
+										    Confirma exclusão do Cliente?<br />
+										    (Todo o Histórico do cliente também será excluído)
+										  </div>
+										  <div class="modal-footer">
+										    <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Excluir</button>
+										    <button type="button" data-dismiss="modal" class="btn">Cancelar</button>
+										  </div>
+										</div>
 										</c:forEach>
 									</tbody>
 								</table>
@@ -146,6 +169,7 @@
 			</div>
 			<!-- /extra-inner -->
 		</div>
+		</div>
 
 		<script src="/estrelacarnes/js/jquery-1.7.2.min.js"></script>
 		<script src="/estrelacarnes/js/excanvas.min.js"></script>
@@ -153,14 +177,21 @@
 		<script src="/estrelacarnes/js/bootstrap.js"></script>
 		<script>
 		$(function() {
-			$("#telefone").focus();
+			$("#nome").focus();
 		});
-			$(document).ready(function() {
-				$('#idBusca').on('click', function() {
-					var telefone = $('#telefone').val();
-					//window.submit = "/estrelacarnes/consultarUsuario/";
-					$("#formConsulta").submit();
-				});
+			
+			document.getElementById("voltarCliente").onclick = function() {
+				var url = '/estrelacarnes';
+				window.location.href = url;
+			};
+			$('button[name="_method"]').on('click', function(e){
+			    var $form=$(this).closest('form'); 
+			    e.preventDefault();
+			    $('#confirm').modal({ backdrop: 'static', keyboard: false })
+			        .one('click', '#delete', function() {
+			            $form.trigger('submit'); // submit the form
+			        });
+			        // .one() is NOT a typo of .on()
 			});
 			
 		</script>

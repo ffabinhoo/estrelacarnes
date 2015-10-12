@@ -58,19 +58,21 @@
 		<div class="subnavbar-inner">
 			<div class="container">
 				<ul class="mainnav">
-					<li class="active"><a href="/estrelacarnes"><i class="icon-dashboard"></i><span>Pedidos</span>
+					<li class="active"><a href="/estrelacarnes"><i class="icon-dashboard"></i><span>Painel de Controle</span>
 					</a></li>
+					<li><a href="${linkTo[ClienteController].cadastrarCliente}"><i class="icon-user"></i><span>Cadastrar Cliente</span></a></li>
 					<!-- <li><a href="#"><i class="icon-list-alt"></i><span>Relatórios</span>
 					</a></li> -->
-					<li class="dropdown"><a href="javascript:;"
+					<!-- <li class="dropdown"><a href="javascript:;"
 						class="dropdown-toggle" data-toggle="dropdown"> <i
 							class="icon-long-arrow-down"></i> <span>Opções</span> <b
 							class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><a href="#">Cadastrar Cliente</a></li>
 							<li><a href="#">Consultar Pedido</a></li>
+							
 
-						</ul></li>
+						</ul></li> -->
 				</ul>
 			</div>
 			<!-- /container -->
@@ -99,9 +101,10 @@
 										class="shortcut-icon icon-list-alt" ></i><span
 										class="shortcut-label">Pedidos Abertos</span> </a>	
 									<a
-										href="javascript:;" class="shortcut"><i
+										href="${linkTo[AdminController].consultarUsuario}" class="shortcut"><i
 										class="shortcut-icon icon-user"></i><span
-										class="shortcut-label">Cadastrar Usuário</span> </a>
+										class="shortcut-label">Consultar Cliente</span> </a>
+										
 								</div>
 								<!-- /shortcuts -->
 							</div>

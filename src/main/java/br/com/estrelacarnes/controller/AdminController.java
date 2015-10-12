@@ -1,5 +1,6 @@
 package br.com.estrelacarnes.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -93,10 +94,19 @@ public class AdminController {
 	}
 	
 	@Post("/consultarUsuario")
-	public void consultarUsuario(String telefone){
-		List<Cliente> listaCliente = clienteDAO.consultarUsuarioPorTelefone(telefone);
+	public void consultarUsuario(String telefone, String nome){
+		List<Cliente> listaCliente = new ArrayList<Cliente>();
+		if (telefone == null && nome == null){
+			listaCliente = clienteDAO.listarTodosUsuarios();
+		}
+		
+		if (telefone != null){
+			listaCliente = clienteDAO.consultarUsuarioPorTelefone(telefone);
+		} 
+		if (nome != null){
+			listaCliente = clienteDAO.consultarUsuarioPorNome(nome);
+		}
 		result.include("listaCliente", listaCliente);
-		//result.redirectTo(AdminController.class).consultarUsuario(telefone);
 	}
 	
 	@Get("/consultarUsuario")

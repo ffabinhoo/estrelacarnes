@@ -5,9 +5,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import br.com.estrelacarnes.model.Cliente;
-import br.com.estrelacarnes.model.Pedido;
+import br.com.estrelacarnes.model.Endereco;
 
 public class DefaultClienteDAO implements ClienteDAO, Serializable{
 	
@@ -65,8 +66,57 @@ public class DefaultClienteDAO implements ClienteDAO, Serializable{
 
 	@Override
 	public void excluirCliente(Cliente cliente) {
+		cliente = load(cliente);
 		Cliente obj = this.entityManager.merge(cliente);
 		this.entityManager.remove(obj);
+	}
+
+	@Override
+	public void inserir(Cliente cliente) {
+		this.entityManager.persist(cliente);
+		
+	}
+
+	@Override
+	public List<Cliente> consultarUsuarioPorNome(String nome) {
+		return entityManager.createQuery("select c from Cliente c where LOWER(c.nome) like '%" + nome.toLowerCase() + "%'", Cliente.class).getResultList();
+	}
+
+	@Override
+	public void inserirEndereco(Endereco endereco) {
+		this.entityManager.persist(endereco);
+		
+	}
+
+	@Override
+	public List<Cliente> listarTodosUsuarios() {
+		return entityManager.createQuery("select c from Cliente c", Cliente.class).getResultList();
+	}
+
+	@Override
+	public void excluirEnderecoCliente(Cliente cliente) {
+		Query sql = this.entityManager
+				.createQuery("delete from Endereco i where i.cliente.id = " + cliente.getId());
+		
+		sql.executeUpdate();
+		
+	}
+
+	@Override
+	public void excluirItensCliente(Cliente cliente) {
+		Query sql = this.entityManager
+				.createQuery("delete from Item i where i.pedido.cliente.id = " + cliente.getId());
+		
+		sql.executeUpdate();
+		
+	}
+
+	@Override
+	public void excluirPedidosCliente(Cliente cliente) {
+		Query sql = this.entityManager
+				.createQuery("delete from Pedido i where i.pedido.cliente.id = " + cliente.getId());
+		
+		sql.executeUpdate();
 	}
 
 }

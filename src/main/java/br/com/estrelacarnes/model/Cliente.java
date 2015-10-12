@@ -3,10 +3,15 @@ package br.com.estrelacarnes.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Cliente implements Serializable{
@@ -14,6 +19,8 @@ public class Cliente implements Serializable{
 	private static final long serialVersionUID = 2899932356197002126L;
 	
 	@Id
+	@GenericGenerator(name="idCliente", strategy="increment")
+	@GeneratedValue(generator="idCliente")
 	private Integer id;
 	
 	private String nome;
@@ -21,6 +28,9 @@ public class Cliente implements Serializable{
 
 	@OneToMany(mappedBy = "cliente", targetEntity=Endereco.class, fetch=FetchType.EAGER)
 	private List<Endereco> enderecos;
+	
+	@Transient
+	private Endereco endereco;
 	
 	private String assinante;
 	
@@ -162,6 +172,14 @@ public class Cliente implements Serializable{
 
 	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	

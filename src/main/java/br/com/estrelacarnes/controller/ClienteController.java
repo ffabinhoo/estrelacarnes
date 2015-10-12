@@ -1,9 +1,17 @@
 package br.com.estrelacarnes.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
+import javax.persistence.RollbackException;
+
+import org.hibernate.exception.ConstraintViolationException;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
+import br.com.caelum.vraptor.InterceptionException;
+import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
@@ -42,6 +50,28 @@ public class ClienteController {
 		this.validator = validator;
 	}
 	
+	@Get("cliente")
+	public void cadastrarCliente(){
+		
+	}
+	
+	@Post("/cliente/inserirCliente")
+	public void inserirCliente(Cliente cliente){
+		List<Endereco> lista = new ArrayList<Endereco>();
+		cliente.setEnderecos(lista);
+		Endereco endereco = cliente.getEndereco();
+		endereco.setStatus("A");
+		cliente.getEnderecos().add(endereco);
+		clienteDAO.inserir(cliente);
+		endereco.setCliente(cliente);
+		clienteDAO.inserirEndereco(endereco);
+		
+		result.include("tipomsg", "success");
+		result.include("mensagemNegrito", "Cliente ");
+		result.include("mensagem", "inserido com sucesso.");
+		result.redirectTo(ClienteController.class).mostrarCliente(cliente);
+	}
+	
 	@Get("cliente/{cliente.id}")
 	public void mostrarCliente(Cliente cliente){
 		cliente = clienteDAO.load(cliente);
@@ -51,19 +81,48 @@ public class ClienteController {
 	
 	@Get("cliente/excluir/{cliente.id}")
 	public void excluirCliente(Cliente cliente){
+		try {
+		clienteDAO.excluirEnderecoCliente(cliente);
 		clienteDAO.excluirCliente(cliente);
-		result.redirectTo(AdminController.class).principal();
+		result.redirectTo(AdminController.class).consultarUsuario();
+		}catch (ConstraintViolationException e) {
+			result.include("tipo", "error");
+			result.include("mensagemNegrito", "Erro.");
+			result.include("mensagem", "Não é possível excluir Cliente que tenha histórico de Pedidos e Itens.");
+			result.redirectTo(AdminController.class).consultarUsuario();
+		}catch (InterceptionException e2){
+			result.include("tipo", "error");
+			result.include("mensagemNegrito", "Erro.");
+			result.include("mensagem", "Não é possível excluir Cliente que tenha histórico de Pedidos e Itens.");
+			result.redirectTo(AdminController.class).consultarUsuario();
+		}catch (RollbackException e3){
+			result.include("tipo", "error");
+			result.include("mensagemNegrito", "Erro.");
+			result.include("mensagem", "Não é possível excluir Cliente que tenha histórico de Pedidos e Itens.");
+			result.redirectTo(AdminController.class).consultarUsuario();
+		}
+		
+		
 	}
 	
-	@Get("/cliente/{cliente.id}/buscarCEP/{cep}")
-	public void buscarCEP(String cep) {
-		WebResource resource = Client.create().resource("http://www.agendafoodtruck.com.br/buscaCep/rest/cep/" + cep);
+	@Post("/cliente/buscarCEP")
+	public void buscarCEP(Cliente cliente) {
+		WebResource resource = Client.create().resource("http://104.236.248.13:8080/buscaCep/rest/cep/" + cliente.getEndereco().getCep());
         ClientResponse response = resource.type("application/x-www-form-urlencoded").get(ClientResponse.class); 
         CepResult cepResult = response.getEntity(CepResult.class);
+        
 		try {
-			result.include("endereco", cepResult.getLogradouro());
-			result.include("cep", cep);
+			cliente.getEndereco().setCep(cliente.getEndereco().getCep());
+			cliente.getEndereco().setEndereco(cepResult.getLogradouro());
+			cliente.getEndereco().setComplemento(cepResult.getComplemento());
+			cliente.getEndereco().setBairro(cepResult.getBairro());
+			cliente.getEndereco().setCidade(cepResult.getCidade());
+			cliente.getEndereco().setUf(cepResult.getUf());
+			
+			result.include("cliente", cliente);
+			
 			result.include("localizacao", cepResult.getLat() +"," + cepResult.getLng());
+			result.redirectTo(ClienteController.class).cadastrarCliente();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -76,6 +135,11 @@ public class ClienteController {
 		result.include("mensagemNegrito", "Cliente ");
 		result.include("mensagem", "alterado com sucesso.");
 		result.redirectTo(ClienteController.class).mostrarCliente(cliente);
+	}
+	
+	@Get("endereco/cadastrar")
+	public void cadastrarEndereco(){
+		
 	}
 	
 	@Get("endereco/excluir/{endereco.id}")
