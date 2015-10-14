@@ -26,7 +26,6 @@ public class DefaultClienteDAO implements ClienteDAO, Serializable{
 	
 	@Override
 	public void add(Cliente cliente) {
-		
 		this.entityManager.persist(cliente);
 	}
 
@@ -44,13 +43,11 @@ public class DefaultClienteDAO implements ClienteDAO, Serializable{
 	public void delete(Cliente cliente) {
 		Cliente obj = this.entityManager.merge(cliente);
 		this.entityManager.remove(obj);
-		
 	}
 
 	@Override
 	public void atualizar(Cliente cliente) {
 		this.entityManager.merge(cliente);
-		
 	}
 	
 	public Integer retornaMaxId(){
@@ -61,7 +58,6 @@ public class DefaultClienteDAO implements ClienteDAO, Serializable{
 	@Override
 	public List<Cliente> consultarUsuarioPorTelefone(String telefone) {
 		return entityManager.createQuery("select c from Cliente c where c.celular like '%" + telefone + "%'", Cliente.class).getResultList();
-		
 	}
 
 	@Override
@@ -74,7 +70,6 @@ public class DefaultClienteDAO implements ClienteDAO, Serializable{
 	@Override
 	public void inserir(Cliente cliente) {
 		this.entityManager.persist(cliente);
-		
 	}
 
 	@Override
@@ -85,7 +80,6 @@ public class DefaultClienteDAO implements ClienteDAO, Serializable{
 	@Override
 	public void inserirEndereco(Endereco endereco) {
 		this.entityManager.persist(endereco);
-		
 	}
 
 	@Override
@@ -97,16 +91,13 @@ public class DefaultClienteDAO implements ClienteDAO, Serializable{
 	public void excluirEnderecoCliente(Cliente cliente) {
 		Query sql = this.entityManager
 				.createQuery("delete from Endereco i where i.cliente.id = " + cliente.getId());
-		
 		sql.executeUpdate();
-		
 	}
 
 	@Override
 	public void excluirItensCliente(Cliente cliente) {
 		Query sql = this.entityManager
 				.createQuery("delete from Item i where i.pedido.cliente.id = " + cliente.getId());
-		
 		sql.executeUpdate();
 		
 	}
@@ -115,7 +106,13 @@ public class DefaultClienteDAO implements ClienteDAO, Serializable{
 	public void excluirPedidosCliente(Cliente cliente) {
 		Query sql = this.entityManager
 				.createQuery("delete from Pedido i where i.pedido.cliente.id = " + cliente.getId());
-		
+		sql.executeUpdate();
+	}
+
+	@Override
+	public void excluirEndereco(Endereco endereco) {
+		Query sql = this.entityManager
+				.createQuery("delete from Endereco i where i.endereco.id = " + endereco.getId());
 		sql.executeUpdate();
 	}
 

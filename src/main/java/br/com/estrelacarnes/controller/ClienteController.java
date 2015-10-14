@@ -9,6 +9,7 @@ import javax.persistence.RollbackException;
 import org.hibernate.exception.ConstraintViolationException;
 
 import br.com.caelum.vraptor.Controller;
+import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.InterceptionException;
 import br.com.caelum.vraptor.Post;
@@ -21,6 +22,7 @@ import br.com.estrelacarnes.dao.PedidoDAO;
 import br.com.estrelacarnes.interceptor.UserInfo;
 import br.com.estrelacarnes.model.Cliente;
 import br.com.estrelacarnes.model.Endereco;
+import br.com.estrelacarnes.model.Item;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -142,9 +144,17 @@ public class ClienteController {
 		
 	}
 	
-	@Get("endereco/excluir/{endereco.id}")
-	public void excluirEndereco(Endereco endereco){
-		System.out.println("endereco exlcuir");
+	@Get("endereco/excluir/{endereco.id}/{cliente.id}")
+	public void excluirEndereco(Endereco endereco, Cliente cliente){
+		/*
+		 * Item itemobj = pedidoDAO.mostrarItem(item.getId());
+		Integer pedido = itemobj.getPedido().getId();
+		pedidoDAO.excluirItem(item);
+		result.redirectTo(AdminController.class).cadastrarPedido(pedido, "KG", "1","0");
+		 */
+		//cliente = endereco.getCliente();
+		clienteDAO.excluirEndereco(endereco);
+		result.redirectTo(ClienteController.class).mostrarCliente(cliente);
 	}
 	
 	@Get("endereco/endereco/{endereco.id}")

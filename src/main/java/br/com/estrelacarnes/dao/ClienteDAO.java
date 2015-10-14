@@ -36,6 +36,8 @@ public interface ClienteDAO {
 	void excluirItensCliente(Cliente cliente);
 
 	void excluirPedidosCliente(Cliente cliente);
+
+	void excluirEndereco(Endereco endereco);
 	
 	
 }

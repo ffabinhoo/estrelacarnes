@@ -247,11 +247,11 @@
 										<td class="td-actions">
 											<form id="formItem" method="post" action="${linkTo[AdminController].editarItem}" style="float: left; padding: 5px;">
 												<input type="hidden" id="idItem" name="idItem" value="${item.id}" >
-												<button class="button btn btn-success btn-small" id="editarItem">Editar</button>
+												<button class="button btn btn-success btn-small" id="editarItem">Editar Item</button>
 											</form>
 											<form id="formItem" method="post" action="${linkTo[AdminController].excluirItem}${item.id}" style="float: left; padding: 5px;">
 												<input type="hidden" id="idItem" name="idItem" value="${item.id}" >
-												<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirItem">Excluir</button>
+												<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirItem">Excluir Item</button>
 												<!-- <a href="" class="btn btn-danger btn-small"><i	class="btn-icon-only icon-remove"></i></a> -->
 											</form>
 										</td>

@@ -135,11 +135,11 @@
 											<td class="td-actions" style="width: 200px;">
 												<form id="formVerPedido" method="get" action="cadastrarPedido/${pedido.id}/KG/1/0" 
 													style="float: left; padding: 1px;">
-													<button class="button btn btn-success btn-small" id="verPedido">Editar</button>
+													<button class="button btn btn-success btn-small" id="verPedido">Editar Pedido</button>
 												</form>
 												<form id="formExcluirPedido" method="get" action="${linkTo[AdminController].excluirPedido}${pedido.id}" 
 													style="float: left; padding: 1px;">
-													<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirPedido">Excluir</button>
+													<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirPedido">Excluir Pedido</button>
 												</form>
 											</td>
 										

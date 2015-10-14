@@ -117,7 +117,7 @@
 													</form>
 													<form id="formExcluirCliente" method="get" action="${linkTo[ClienteController].excluirCliente}${cliente.id}" 
 														style="float: left; padding: 1px;">
-														<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirCliente">Excluir</button>
+														<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirCliente">Excluir Cliente</button>
 													</form>
 												</td>
 											</tr>

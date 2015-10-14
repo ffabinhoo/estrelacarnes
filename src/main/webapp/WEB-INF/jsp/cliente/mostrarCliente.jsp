@@ -147,11 +147,12 @@
 											<td class="td-actions" style="width: 200px;">
 												<form id="formMostrarEndereco" method="get" action="${linkTo[ClienteController].mostrarEndereco}${endereco.id}"
 													style="float: left; padding: 1px;">
-													<button name="_method" value="PUT" class="button btn btn-danger btn-small" id="mostrarEndereco">Salvar Alterações</button>
+													<button name="_method" value="PUT" class="button btn btn-success btn-small" id="mostrarEndereco">Editar</button>
 												</form>
-												<form id="formExcluirEndereco" method="get" action="${linkTo[ClienteController].excluirEndereco}${endereco.id}"
+												<%-- <form id="formExcluirEndereco" method="post" action="${linkTo[ClienteController].excluirEndereco}${endereco.id}/${cliente.id}" --%>
+												<form id="formExcluirEndereco" method="get" action="/estrelacarnes/endereco/excluir/${endereco.id}/${cliente.id}"
 													style="float: left; padding: 1px;">
-													<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirPEndereco">Excluir</button>
+													<button name="excluirEndereco" class="button btn btn-danger btn-small" id="excluirEndereco">Excluir</button>
 												</form>
 											</td>
 										</tr>
@@ -163,8 +164,6 @@
 				</c:if>
 			</div>
 		</div>
-	</div>
-	</div>
 	</div>
 	<!-- /main -->
 	<div class="extra">
