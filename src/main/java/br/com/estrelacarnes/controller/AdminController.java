@@ -252,7 +252,9 @@ public class AdminController {
 	
 	
 	
-	@Get("/pedido/mostrar/{pedido.id}")
+	
+	
+	@Post("/pedido/fechar/{pedido.id}")
 	public void fecharPedido(Pedido pedido){
 		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
 		result.include("pedido", pedidoObj);

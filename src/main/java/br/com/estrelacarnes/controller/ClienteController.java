@@ -74,6 +74,23 @@ public class ClienteController {
 		result.redirectTo(ClienteController.class).mostrarCliente(cliente);
 	}
 	
+	@Post("/endereco/inserirEndereco")
+	public void inserirEndereco(Cliente cliente){
+		List<Endereco> lista = new ArrayList<Endereco>();
+		cliente.setEnderecos(lista);
+		Endereco endereco = cliente.getEndereco();
+		endereco.setStatus("A");
+		cliente.getEnderecos().add(endereco);
+		//clienteDAO.inserir(cliente);
+		endereco.setCliente(cliente);
+		clienteDAO.inserirEndereco(endereco);
+		
+		result.include("tipomsg", "success");
+		result.include("mensagemNegrito", "Endereço ");
+		result.include("mensagem", "inserido com sucesso.");
+		result.redirectTo(ClienteController.class).mostrarCliente(cliente);
+	}
+	
 	@Get("cliente/{cliente.id}")
 	public void mostrarCliente(Cliente cliente){
 		cliente = clienteDAO.load(cliente);
@@ -130,6 +147,29 @@ public class ClienteController {
 		}
 	}
 	
+	@Post("/endereco/buscarEnderecoCEP")
+	public void buscarEnderecoCEP(Cliente cliente) {
+		WebResource resource = Client.create().resource("http://104.236.248.13:8080/buscaCep/rest/cep/" + cliente.getEndereco().getCep());
+        ClientResponse response = resource.type("application/x-www-form-urlencoded").get(ClientResponse.class); 
+        CepResult cepResult = response.getEntity(CepResult.class);
+        
+		try {
+			cliente.getEndereco().setCep(cliente.getEndereco().getCep());
+			cliente.getEndereco().setEndereco(cepResult.getLogradouro());
+			cliente.getEndereco().setComplemento(cepResult.getComplemento());
+			cliente.getEndereco().setBairro(cepResult.getBairro());
+			cliente.getEndereco().setCidade(cepResult.getCidade());
+			cliente.getEndereco().setUf(cepResult.getUf());
+			
+			result.include("cliente", cliente);
+			
+			result.include("localizacao", cepResult.getLat() +"," + cepResult.getLng());
+			result.redirectTo(ClienteController.class).cadastrarEndereco(cliente);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Put("cliente/alterar")
 	public void alterarCliente(Cliente cliente){
 		clienteDAO.atualizar(cliente);
@@ -139,9 +179,10 @@ public class ClienteController {
 		result.redirectTo(ClienteController.class).mostrarCliente(cliente);
 	}
 	
-	@Get("endereco/cadastrar")
-	public void cadastrarEndereco(){
-		
+	@Get("endereco/cadastrar/{cliente.id}")
+	public void cadastrarEndereco(Cliente cliente){
+		cliente = clienteDAO.load(cliente);
+		result.include("cliente", cliente);
 	}
 	
 	@Get("endereco/excluir/{endereco.id}/{cliente.id}")
@@ -157,11 +198,5 @@ public class ClienteController {
 		result.redirectTo(ClienteController.class).mostrarCliente(cliente);
 	}
 	
-	@Get("endereco/endereco/{endereco.id}")
-	public void mostrarEndereco(Endereco endereco){
-		System.out.println("mostrar exlcuir");
-		//cliente = clienteDAO.load(cliente);
-		//result.include("cliente", cliente);
-		
-	}
+	
 }

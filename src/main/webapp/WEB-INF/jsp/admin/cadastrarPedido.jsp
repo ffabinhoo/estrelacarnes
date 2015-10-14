@@ -265,7 +265,9 @@
 						</div>
 				
 				<div class="pull-right">
-					<button type="submit" class="btn btn-primary">Fechar Pedido</button>
+					<form id="formExcluirPedido" method="post" action="${linkTo[AdminController].fecharPedido}${pedido.id}">
+						<button type="submit" class="btn btn-primary">Fechar Pedido</button>
+					</form>
 					<button class="btn">Cancelar</button>
 				</div>
 				</div>

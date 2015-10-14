@@ -70,104 +70,73 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="span12">
-						<form id="formAlterarCliente" method="post" action="${linkTo[ClienteController].alterarCliente}" style="float: left; padding: 1px;">
-							<input class="span6" id="id" name="cliente.id" value="${cliente.id}" type="hidden">
+				<form id="formCadastrarCliente" method="post" action="${linkTo[ClienteController].inserirEndereco}" style="float: left; padding: 1px;">
+				<div class="row" >
+					<div class="span6" style="background-color:">
+						
 							<div class="control-group">
-								<label class="control-label" for="cliente.nome">Nome</label>
+								<label class="control-label" for="cliente.nome">Nome *</label>
 								<div class="controls">
-									<input class="span6" name="cliente.nome" value="${cliente.nome}" type="text">
+									<input class="span6" name="cliente.nome" value="${cliente.nome}" type="text" disabled>
 								</div>
-								<label class="control-label" name="cliente.celular">Telefone Celular</label>
+								<label class="control-label" id="cliente.celular" >Telefone Celular *</label>
 								<div class="controls">
-									<input class="span6" name="cliente.celular" value="${cliente.celular}" type="text">
+									<input class="span6" name="cliente.celular" value="${cliente.celular}" type="text" disabled>
 								</div>
-								<label class="control-label" for="cliente.telefone">Telefone Residencial</label>
+																
+								<label class="control-label" for="cliente.cpf" >CPF/CNPJ</label>
 								<div class="controls">
-									<input class="span6" name="cliente.telefone" value="${cliente.telefone}" type="text">
+									<input class="span6" name="cliente.cpf" value="${cliente.cpf}" type="text" disabled>
 								</div>
-								<label class="control-label" for="cliente.cpf">CPF</label>
-								<div class="controls">
-									<input class="span6" name="cliente.cpf" value="${cliente.cpf}" type="text">
-								</div>
-								<%-- <label class="control-label" for="cep">CEP</label>
-							<div class="controls">
-								<input class="span6" id="cep" value="${cliente.cep}" type="text">
-								<a href="" class="btn btn-small btn-primary" id="linkbuscacep" onclick="montaurl();">Buscar CEP</a>
-							</div> --%>
 								
-								<label class="control-label" for="cliente.email">e-mail</label>
+								<h2>Endereço</h2>
+								
 								<div class="controls">
-									<input class="span6" name="cliente.email" value="${cliente.email}" type="email">
+									<label class="control-label" for="cep">CEP</label>
+									<input class="span6" id="cep" name="cliente.endereco.cep" value="${cliente.endereco.cep}" type="text" required="required">
+									<!-- <a href="" class="btn btn-small btn-primary" id="linkbuscacep" onclick="montaurl();">Buscar CEP</a> -->
+										<button name="buscarCep" value="buscarCep" class="btn btn-primary btn-small" id="buscarCep">
+									Buscar CEP</button>
 								</div>
+								<label class="control-label" id="endereco" >Endereco</label>
+								<div class="controls">
+									<input class="span6" name="cliente.endereco.endereco" value="${cliente.endereco.endereco}" type="text" >
+								</div>
+								<label class="control-label" id="complemento" >Complemento</label>
+								<div class="controls">
+									<input class="span6" name="cliente.endereco.complemento" value="${cliente.endereco.complemento}" type="text" >
+								</div>
+								<label class="control-label" id="bairro" >Bairro</label>
+								<div class="controls">
+									<input class="span6" name="cliente.endereco.bairro" value="${cliente.endereco.bairro}" type="text" >
+								</div>
+								<label class="control-label" id="cidade" >Cidade</label>
+								<div class="controls">
+									<input class="span6" name="cliente.endereco.cidade" value="${cliente.endereco.cidade}" type="text" >
+								</div>
+								<label class="control-label" id="uf" >UF</label>
+								<div class="controls">
+									<input class="span6" name="cliente.endereco.uf" value="${cliente.endereco.uf}" type="text" >
+								</div>
+								
 								<div class="form-actions">
-									<button name="_method" value="PUT" class="btn btn-primary btn-small" id="alterarCliente">
+									<button name="inserir" value="inserir" class="btn btn-primary btn-small" id="inserirCliente">
 									Salvar Alterações</button>
-									<button class="btn btn-small" id="voltarCliente" type="button">Voltar</button>
-									<c:if test="${cliente.enderecos.size() == 0}">
-											<button class="btn btn-small btn-primary pull-right" id="cadastrarEndereco" type="button">Cadastrar Endereço</button>
-									</c:if>
-								</div>
-						</form>
 
+									<button class="btn btn-small" id="voltarCliente" type="button">Voltar</button>
+								</div>
+							</div>
 					</div>
-				</div>
+					</div>
+				</form>
 			</div>
 			
 			<div class="span12">
-				<c:if test="${cliente.enderecos.size() > 0}">
-					<div class="widget widget-table action-table" id="listaClientes">
-						<div class="widget-header">
-							<i class="icon-th-list"></i>
-							<h3>Endereços</h3>
-						</div>
-						<!-- /widget-header -->
-						<div class="widget-content">
-							<table class="table table-striped table-bordered">
-								<thead>
-									<tr>
-										<th>Endereço</th>
-										<th>Cidade / UF</th>
-										<th>CEP</th>
-										<th class="td-actions"></th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach var="endereco" items="${cliente.enderecos}">
-										<tr>
-
-											<td>${endereco.endereco}</td>
-											<td>${endereco.cidade}/${endereco.uf}</td>
-											<td>${endereco.cep}</td>
-											<td class="td-actions" style="width: 200px;">
-												<form id="formMostrarEndereco" method="get" action="${linkTo[ClienteController].mostrarEndereco}${endereco.id}"
-													style="float: left; padding: 1px;">
-													<button name="_method" value="PUT" class="button btn btn-success btn-small" id="mostrarEndereco">Editar endereço</button>
-												</form>
-												<%-- <form id="formExcluirEndereco" method="post" action="${linkTo[ClienteController].excluirEndereco}${endereco.id}/${cliente.id}" --%>
-												<form id="formExcluirEndereco" method="get" action="/estrelacarnes/endereco/excluir/${endereco.id}/${cliente.id}"
-													style="float: left; padding: 1px;">
-													<button name="excluirEndereco" class="button btn btn-danger btn-small" id="excluirEndereco" >Excluir endereço</button>
-												</form>
-											</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</c:if>
 				
 			</div>
 		</div>
-		<div id="confirmCliente" class="modal hide fade">
-				<div class="modal-body">Confirma exclusão do Pedido?</div>
-				<div class="modal-footer">
-					<button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Excluir</button>
-					<button type="button" data-dismiss="modal" class="btn">Cancelar</button>
-				</div>
-		</div>
+	</div>
+	</div>
 	</div>
 	<!-- /main -->
 	<div class="extra">
@@ -202,27 +171,16 @@
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
 	<script>
-		$('button[id="excluirCliente"]').on('click', function(e) {
-			var $form = $(this).closest('form');
-			e.preventDefault();
-			$('#confirmCliente').modal({
-				backdrop : 'static',
-				keyboard : false
-			}).one('click', '#delete', function() {
-				$form.trigger('submit'); // submit the form
-			});
-			// .one() is NOT a typo of .on()
-		});
-
 		document.getElementById("voltarCliente").onclick = function() {
 			var url = '/estrelacarnes';
 			window.location.href = url;
 		};
-		document.getElementById("cadastrarEndereco").onclick = function() {
-			var idCliente = $('#id').val();
-			var url = '/estrelacarnes/endereco/cadastrar/' + idCliente;
-			window.location.href = url;
-		};
+		$( "#buscarCep" ).click(function() {
+			$('#formCadastrarCliente').attr('action', "/estrelacarnes/endereco/buscarEnderecoCEP");
+			  $( "#formCadastrarCliente" ).submit();
+		});
+
+		
 	</script>
 </body>
 </html>
