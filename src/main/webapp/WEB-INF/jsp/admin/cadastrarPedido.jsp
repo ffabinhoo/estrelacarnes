@@ -263,12 +263,14 @@
 							</fieldset>
 							
 						</div>
-				
+				<div class="form-actions">
 				<div class="pull-right">
 					<form id="formExcluirPedido" method="post" action="${linkTo[AdminController].fecharPedido}${pedido.id}">
 						<button type="submit" class="btn btn-primary">Fechar Pedido</button>
+						<button class="btn btn-small" id="voltarPedido" type="button">Voltar</button>
 					</form>
-					<button class="btn">Cancelar</button>
+					
+				</div>
 				</div>
 				</div>
 				<div class="span2">
@@ -395,7 +397,11 @@
 				var telefone = $('#telefone').val();
 				window.location = "/estrelacarnes/consultarUsuario/" + telefone;
 			});
-		}); 
+		});
+		 document.getElementById("voltarPedido").onclick = function() {
+				var url = '/estrelacarnes';
+				window.location.href = url;
+			}; 
 	</script>   	
 	
 

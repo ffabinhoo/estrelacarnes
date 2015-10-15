@@ -141,11 +141,10 @@
 											<td>${endereco.cidade}/${endereco.uf}</td>
 											<td>${endereco.cep}</td>
 											<td class="td-actions" style="width: 200px;">
-												<form id="formMostrarEndereco" method="get" action="${linkTo[ClienteController].mostrarEndereco}${endereco.id}"
+												<form id="formMostrarEndereco" method="get" action="/estrelacarnes/endereco/mostrar/${endereco.id}/${cliente.id}"
 													style="float: left; padding: 1px;">
-													<button name="_method" value="PUT" class="button btn btn-success btn-small" id="mostrarEndereco">Editar endereço</button>
+													<button class="button btn btn-success btn-small" id="mostrarEndereco">Editar endereço</button>
 												</form>
-												<%-- <form id="formExcluirEndereco" method="post" action="${linkTo[ClienteController].excluirEndereco}${endereco.id}/${cliente.id}" --%>
 												<form id="formExcluirEndereco" method="get" action="/estrelacarnes/endereco/excluir/${endereco.id}/${cliente.id}"
 													style="float: left; padding: 1px;">
 													<button name="excluirEndereco" class="button btn btn-danger btn-small" id="excluirEndereco" >Excluir endereço</button>

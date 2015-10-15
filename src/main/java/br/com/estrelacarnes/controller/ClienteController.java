@@ -98,6 +98,8 @@ public class ClienteController {
 		
 	}
 	
+	
+	
 	@Get("cliente/excluir/{cliente.id}")
 	public void excluirCliente(Cliente cliente){
 		try {
@@ -162,6 +164,12 @@ public class ClienteController {
 			cliente.getEndereco().setUf(cepResult.getUf());
 			
 			result.include("cliente", cliente);
+			result.include("cep", cliente.getEndereco().getCep());
+			result.include("endereco", cliente.getEndereco().getEndereco());
+			result.include("complemento", cliente.getEndereco().getComplemento());
+			result.include("bairro", cliente.getEndereco().getBairro());
+			result.include("cidade", cliente.getEndereco().getCidade());
+			result.include("uf", cliente.getEndereco().getUf());
 			
 			result.include("localizacao", cepResult.getLat() +"," + cepResult.getLng());
 			result.redirectTo(ClienteController.class).cadastrarEndereco(cliente);
@@ -196,6 +204,18 @@ public class ClienteController {
 		//cliente = endereco.getCliente();
 		clienteDAO.excluirEndereco(endereco);
 		result.redirectTo(ClienteController.class).mostrarCliente(cliente);
+	}
+	
+	@Get("endereco/mostrar/{endereco.id}/{cliente.id}")
+	public void mostrarEndereco(Endereco endereco, Cliente cliente){
+		cliente = clienteDAO.load(cliente);
+		result.include("cliente", cliente);
+		result.include("cep", cliente.getEnderecos().get(0).getCep());
+		result.include("endereco", cliente.getEnderecos().get(0).getEndereco());
+		result.include("complemento", cliente.getEnderecos().get(0).getComplemento());
+		result.include("bairro", cliente.getEnderecos().get(0).getBairro());
+		result.include("cidade", cliente.getEnderecos().get(0).getCidade());
+		result.include("uf", cliente.getEnderecos().get(0).getUf());
 	}
 	
 	
