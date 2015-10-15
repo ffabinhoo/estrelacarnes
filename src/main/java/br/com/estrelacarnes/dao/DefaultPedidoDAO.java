@@ -126,4 +126,18 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 		this.entityManager.merge(obj);
 	}
 
+	@Override
+	public Pedido alterarPedido(Pedido pedidoObj) {
+		return this.entityManager.merge(pedidoObj);
+		
+	}
+
+	@Override
+	public List<Pedido> listarPedidos(String parametro) {
+		List<Pedido> lista = new ArrayList<Pedido>();
+		String sql = "select p from Pedido p where p.status = '"+parametro+"' order by p.id asc";
+		lista = entityManager.createQuery(sql, Pedido.class).getResultList();
+		return lista;
+	}
+
 }

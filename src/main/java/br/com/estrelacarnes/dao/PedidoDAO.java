@@ -39,6 +39,10 @@ public interface PedidoDAO {
 	void excluirItensPedido(Pedido pedido);
 
 	void alterarItem(Item item);
+
+	Pedido alterarPedido(Pedido pedidoObj);
+
+	List<Pedido> listarPedidos(String fechados);
 	
 	
 	

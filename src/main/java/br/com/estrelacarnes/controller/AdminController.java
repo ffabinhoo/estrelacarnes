@@ -53,6 +53,13 @@ public class AdminController {
 	    
 	}
 	
+	@Get("/pedido/consultar/fechados")
+	public void consultarPedidosFechados(){
+		String fechados = "F";
+		List<Pedido> listaPedidosFechados = pedidoDAO.listarPedidos(fechados);
+		result.include("listaPedidosFechados", listaPedidosFechados);
+	}
+	
 	
 	@Put("/item/alterar")
 	public void alterarItem(String idItem, String quantidade, String tipo, String produto, String complemento, String preparo, String observacao, Integer idPedido){
@@ -251,13 +258,20 @@ public class AdminController {
 	}
 	
 	
+	@Get("/pedido/resumoPedidoFechado/{pedido.id}")
+	public void resumoPedidoFechado(Pedido pedido){
+		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
+		result.include("pedido", pedidoObj);
+	}
 	
 	
 	
 	@Post("/pedido/fechar/{pedido.id}")
 	public void fecharPedido(Pedido pedido){
 		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
-		result.include("pedido", pedidoObj);
+		pedidoObj.setStatus("F");
+		pedidoDAO.alterarPedido(pedidoObj);
+		result.redirectTo(AdminController.class).resumoPedidoFechado(pedidoObj);
 	}
 	
 	@Get("/pedido/layout")
