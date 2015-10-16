@@ -310,17 +310,17 @@
 							</div>
 							<div class="form-actions">
 								<div class="pull-right">
-									<form id="formFecharPedido" method="post"
-										action="${linkTo[AdminController].fecharPedido}${pedido.id}">
+									<form id="formEnviarPedido" method="post"
+										action="${linkTo[AdminController].enviarPedido}${pedido.id}">
 										<c:if test="${listaItensPedido.size() > 0}">
-											<button id="fecharPedido" name="fecharPedido" class="btn btn-primary">Fechar Pedido</button>
+											<button id="enviarPedido" name="enviarPedido" class="btn btn-primary">Enviar Pedido</button>
 										</c:if>
 										<button class="btn btn-small" id="voltarPedido" type="button">Voltar</button>
 									</form>
 
 								</div>
 								<div id="confirm" class="modal hide fade">
-									<div class="modal-body"><h3>Confirma fechar o Pedido?</h3>
+									<div class="modal-body"><h3>Confirma enviar o Pedido?</h3>
 									<br />
 									Cliente: ${pedido.cliente.nome} <br />
 									Data e hora abertura do Pedido: <fmt:formatDate pattern="dd/MM HH:mm" value="${pedido.data}" /> <br /> 
@@ -462,7 +462,7 @@
 				window.location.href = url;
 		};
 
-		$('button[name="fecharPedido"]').on('click', function(e){
+		$('button[name="enviarPedido"]').on('click', function(e){
 		    var $form=$(this).closest('form'); 
 		    e.preventDefault();
 		    $('#confirm').modal({ backdrop: 'static', keyboard: false })

@@ -258,20 +258,20 @@ public class AdminController {
 	}
 	
 	
-	@Get("/pedido/resumoPedidoFechado/{pedido.id}")
-	public void resumoPedidoFechado(Pedido pedido){
+	@Get("/pedido/resumoPedido/{pedido.id}")
+	public void resumoPedido(Pedido pedido){
 		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
 		result.include("pedido", pedidoObj);
 	}
 	
 	
 	
-	@Post("/pedido/fechar/{pedido.id}")
-	public void fecharPedido(Pedido pedido){
+	@Post("/pedido/enviar/{pedido.id}")
+	public void enviarPedido(Pedido pedido){
 		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
-		pedidoObj.setStatus("F");
+		//pedidoObj.setStatus("F");
 		pedidoDAO.alterarPedido(pedidoObj);
-		result.redirectTo(AdminController.class).resumoPedidoFechado(pedidoObj);
+		result.redirectTo(AdminController.class).resumoPedido(pedidoObj);
 	}
 	
 	@Get("/pedido/layout")
