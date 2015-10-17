@@ -116,4 +116,14 @@ public class DefaultClienteDAO implements ClienteDAO, Serializable{
 		sql.executeUpdate();
 	}
 
+	@Override
+	public Endereco consultarEndereco(Endereco endereco) {
+		return this.entityManager.find(Endereco.class, endereco.getId());
+	}
+
+	@Override
+	public void alterarEndereco(Endereco endereco) {
+		this.entityManager.merge(endereco);
+	}
+
 }
