@@ -32,8 +32,7 @@
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-				<a class="brand" href="/estrelacarnes"> <!-- Estrela Carnes - Administração de Pedidos -->Titulo
-				</a>
+				<a class="brand" href="/estrelacarnes">Estrela Carnes - Administração de Pedidos</a>
 				<div class="nav-collapse">
 					<ul class="nav pull-right">
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -54,21 +53,10 @@
 		<div class="subnavbar-inner">
 			<div class="container">
 				<ul class="mainnav">
-					<li class="active"><a href="/estrelacarnes"><i
-							class="icon-dashboard"></i><span>Painel de Controle</span> </a></li>
-					<li><a href="${linkTo[AdminController].consultarUsuario}"><i
-							class="icon-star-empty"></i><span>Cadastrar Pedido</span></a>
-					<li><a href="javascript:;" id="idMostrarTitulos"><i
-							class="icon-adjust"></i><span>Mostrar/Esconder Títulos</span> </a></li>
-					<li class="dropdown"><a href="javascript:;"
-						class="dropdown-toggle" data-toggle="dropdown"> <i
-							class="icon-long-arrow-down"></i> <span>Opções</span> <b
-							class="caret"></b>
-					</a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Cadastrar Cliente</a></li>
-							<li><a href="#">Consultar Pedido</a></li>
-						</ul></li>
+					<li class="active"><a href="/estrelacarnes"><i class="icon-dashboard"></i><span>Painel de Controle</span></a></li>
+					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-star-empty"></i><span>Cadastrar Pedido</span></a></li>
+					<li><a href="${linkTo[ClienteController].cadastrarCliente}"><i class="icon-user"></i><span>Cadastrar Cliente</span></a></li>
+					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-search"></i><span>Consultar Cliente</span></a></li>
 				</ul>
 			</div>
 		</div>
@@ -102,13 +90,11 @@
 								<h4>Telefone: ${pedido.cliente.celular}</h4>
 
 								<h4>&nbsp;</h4> --%>
-								<div class="plan-features">
-									<ul>
-										<li><strong>Cliente: </strong>${pedido.cliente.nome} | 
-											<strong>CPF: </strong>${pedido.cliente.cpf} | 
-											<strong>Celular: </strong>${pedido.cliente.celular}
-										</li>
-									</ul>
+								<div class="shortcuts">
+									<a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}"
+										class="shortcut"><i class="icon-user"></i> <span
+										class="shortcut-label">${pedido.cliente.nome} -
+											${pedido.cliente.celular}</span> </a>
 								</div>
 							</div>
 						</div>
@@ -142,7 +128,7 @@
 															<div class="plan">
 																<div class="plan-header">
 																	<div class="plan-title">${endereco.endereco}
-																		${endereco.complemento} ${endereco.numero}</div>
+																		${endereco.complemento} </div>
 																</div>
 																<div class="plan-features">
 																	<ul>

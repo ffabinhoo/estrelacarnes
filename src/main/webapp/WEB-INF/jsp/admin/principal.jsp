@@ -6,14 +6,11 @@
 <head>
 <meta charset="utf-8">
 <title>Estrela Carnes</title>
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-<link
-	href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
-	rel="stylesheet">
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
 <link href="css/font-awesome.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 <link href="css/pages/dashboard.css" rel="stylesheet">
@@ -26,17 +23,12 @@
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-				<a class="btn btn-navbar" data-toggle="collapse"
-					data-target=".nav-collapse"><span class="icon-bar"></span><span
-					class="icon-bar"></span><span class="icon-bar"></span> </a> <a
-					class="brand" href="/estrelacarnes">Estrela Carnes - Administração
-					de Pedidos</a>
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span
+					class="icon-bar"></span> </a> <a class="brand" href="/estrelacarnes">Estrela Carnes - Administração de Pedidos</a>
 				<div class="nav-collapse">
 					<ul class="nav pull-right">
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown"><i class="icon-user"></i> <span
-								class="pull-right ${not empty userInfo.user ? '' : 'hidden'}">
-									${userInfo.user.name}</span> <b class="caret"></b></a>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> <span
+								class="pull-right ${not empty userInfo.user ? '' : 'hidden'}"> ${userInfo.user.name}</span> <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="javascript:;">Profile</a></li>
 								<li><a href="${linkTo[IndexController].logout}">logout</a></li>
@@ -58,9 +50,10 @@
 		<div class="subnavbar-inner">
 			<div class="container">
 				<ul class="mainnav">
-					<li class="active"><a href="/estrelacarnes"><i class="icon-dashboard"></i><span>Painel de Controle</span>
-					</a></li>
+					<li class="active"><a href="/estrelacarnes"><i class="icon-dashboard"></i><span>Painel de Controle</span></a></li>
+					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-star-empty"></i><span>Cadastrar Pedido</span></a></li>
 					<li><a href="${linkTo[ClienteController].cadastrarCliente}"><i class="icon-user"></i><span>Cadastrar Cliente</span></a></li>
+					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-search"></i><span>Consultar Cliente</span></a></li>
 					<!-- <li><a href="#"><i class="icon-list-alt"></i><span>Relatórios</span>
 					</a></li> -->
 					<!-- <li class="dropdown"><a href="javascript:;"
@@ -94,17 +87,12 @@
 							<!-- /widget-header -->
 							<div class="widget-content">
 								<div class="shortcuts">
-									<a href="${linkTo[AdminController].consultarUsuario}" class="shortcut"><i
-										class="shortcut-icon icon-star-empty"></i><span
-										class="shortcut-label">Adicionar Pedido</span> </a>
-									<a  href="javascript:;" class="shortcut" id="pedidosHoje"><i
-										class="shortcut-icon icon-list-alt" ></i><span
-										class="shortcut-label">Pedidos Abertos</span> </a>	
-									<a
-										href="${linkTo[AdminController].consultarUsuario}" class="shortcut"><i
-										class="shortcut-icon icon-user"></i><span
+									<a href="${linkTo[AdminController].consultarUsuario}" class="shortcut"><i class="shortcut-icon icon-star-empty"></i><span
+										class="shortcut-label">Adicionar Pedido</span> </a> <a href="javascript:;" class="shortcut" id="pedidosHoje"><i
+										class="shortcut-icon icon-list-alt"></i><span class="shortcut-label">Pedidos Abertos</span> </a> <a
+										href="${linkTo[AdminController].consultarUsuario}" class="shortcut"><i class="shortcut-icon icon-search"></i><span
 										class="shortcut-label">Consultar Cliente</span> </a>
-										
+
 								</div>
 								<!-- /shortcuts -->
 							</div>
@@ -120,7 +108,7 @@
 								<table class="table table-striped table-bordered">
 									<thead>
 										<tr>
-											<th>Número do Pedido</th>
+											<th>Nº do Pedido</th>
 											<th>Cliente - Celular</th>
 											<th>Data</th>
 											<th class="td-actions"></th>
@@ -128,33 +116,45 @@
 									</thead>
 									<tbody>
 										<c:forEach var="pedido" items="${listaPedidosAbertos}">
-										<tr>
-											<td style="width: 200px;">${pedido.id}</td>
-											<td><a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}">${pedido.cliente.nome} - ${pedido.cliente.celular}</a></td>
-											<td><fmt:formatDate pattern="dd/MM HH:mm" value="${pedido.data}" /></td>
-											<td class="td-actions" style="width: 200px;">
-												<form id="formVerPedido" method="get" action="cadastrarPedido/${pedido.id}/KG/1/0" 
-													style="float: left; padding: 1px;">
-													<button class="button btn btn-success btn-small" id="verPedido">Editar Pedido</button>
-												</form>
-												<form id="formExcluirPedido" method="get" action="${linkTo[AdminController].excluirPedido}${pedido.id}" 
-													style="float: left; padding: 1px;">
-													<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirPedido">Excluir Pedido</button>
-												</form>
-											</td>
-										
-										</tr>
-										<div id="confirm" class="modal hide fade">
-										  <div class="modal-body">
-										    Confirma exclusão do Pedido?
-										  </div>
-										  <div class="modal-footer">
-										    <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Excluir</button>
-										    <button type="button" data-dismiss="modal" class="btn">Cancelar</button>
-										  </div>
-										</div>
+											<tr>
+												<td style="width: 100px;">${pedido.id}</td>
+												<td><a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}">${pedido.cliente.nome} - ${pedido.cliente.celular}</a></td>
+												<td><fmt:formatDate pattern="dd/MM HH:mm" value="${pedido.data}" /></td>
+												<td class="td-actions" style="width: 200px;">
+													<form id="formVerPedido" method="get" action="cadastrarPedido/${pedido.id}/KG/1/0" style="float: left; padding: 1px;">
+														<button class="button btn btn-success btn-small" id="verPedido">Editar</button>
+													</form>
+													<form id="formExcluirPedido" method="get" action="${linkTo[AdminController].excluirPedido}${pedido.id}"
+														style="float: left; padding: 1px;">
+														<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirPedido">Excluir</button>
+													</form>
+													<form id="formEnviarPedido" method="post" action="${linkTo[AdminController].enviarPedido}${pedido.id}" 
+														style="float: left; padding: 1px;">
+															<button id="enviarPedido" name="enviarPedido" class="button btn-small btn-primary">Enviar</button>
+													</form>
+												</td>
+
+											</tr>
+											<div id="confirm" class="modal hide fade">
+												<div class="modal-body">Confirma exclusão do Pedido?</div>
+												<div class="modal-footer">
+													<button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Excluir</button>
+													<button type="button" data-dismiss="modal" class="btn">Cancelar</button>
+												</div>
+											</div>
+											<div id="confirmEnviar" class="modal hide fade">
+												<div class="modal-body"><h3>Confirma enviar o Pedido?</h3>
+												<br />
+												</div>
+												
+												<div class="modal-footer">
+													<button type="button" data-dismiss="modal"
+														class="btn btn-primary" id="confirmar">Confirmar</button>
+													<button type="button" data-dismiss="modal" class="btn">Cancelar</button>
+												</div>
+											</div>
 										</c:forEach>
-										
+
 									</tbody>
 								</table>
 							</div>
@@ -162,7 +162,7 @@
 						</div>
 					</div>
 					<!-- /span6 -->
-					
+
 					<!-- /span6 -->
 				</div>
 				<!-- /row -->
@@ -206,28 +206,35 @@
 	<script src="js/excanvas.min.js"></script>
 	<script src="js/chart.min.js" type="text/javascript"></script>
 	<script src="js/bootstrap.js"></script>
-	<script language="javascript" type="text/javascript"
-		src="js/full-calendar/fullcalendar.min.js"></script>
+	<script language="javascript" type="text/javascript" src="js/full-calendar/fullcalendar.min.js"></script>
 
 	<script src="js/base.js"></script>
-<script>
-$(function(){
-    $("#listaPedidosHoje").show();
-		$( "#pedidosHoje" ).click(function() {
-		  	$( "#listaPedidosHoje" ).toggle( "slow" );
+	<script>
+		$(function() {
+			$("#listaPedidosHoje").show();
+			$("#pedidosHoje").click(function() {
+				$("#listaPedidosHoje").toggle("slow");
+			});
 		});
-});
-$('button[name="_method"]').on('click', function(e){
-    var $form=$(this).closest('form'); 
-    e.preventDefault();
-    $('#confirm').modal({ backdrop: 'static', keyboard: false })
-        .one('click', '#delete', function() {
-            $form.trigger('submit'); // submit the form
-        });
-        // .one() is NOT a typo of .on()
-});
-
-</script>
+		$('button[name="_method"]').on('click', function(e) {
+			var $form = $(this).closest('form');
+			e.preventDefault();
+			$('#confirm').modal({
+				backdrop : 'static',
+				keyboard : false
+			}).one('click', '#delete', function() {
+				$form.trigger('submit'); // submit the form
+			});
+		});
+		 /* $('button[name="enviarPedido"]').on('click', function(e){
+		    var $form=$(this).closest('form'); 
+		    e.preventDefault();
+		    $('#confirmEnviar').modal({ backdrop: 'static', keyboard: false })
+		        .one('click', '#confirmar', function() {
+		            $form.trigger('submit'); // submit the form
+		        });
+		}); */  
+	</script>
 
 </body>
 </html>

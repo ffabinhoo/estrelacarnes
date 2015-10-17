@@ -44,15 +44,10 @@
 		<div class="subnavbar-inner">
 			<div class="container">
 				<ul class="mainnav">
-					<li class="active"><a href="/estrelacarnes"><i class="icon-dashboard"></i><span>Painel de Controle</span> </a></li>
-					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-star-empty"></i><span>Cadastrar Pedido</span></a>
-					<!-- <li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-long-arrow-down"></i> <span>Opções</span>
-							<b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Cadastrar Cliente</a></li>
-							<li><a href="#">Consultar Pedido</a></li>
-
-						</ul></li> -->
+					<li class="active"><a href="/estrelacarnes"><i class="icon-dashboard"></i><span>Painel de Controle</span></a></li>
+					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-star-empty"></i><span>Cadastrar Pedido</span></a></li>
+					<li><a href="${linkTo[ClienteController].cadastrarCliente}"><i class="icon-user"></i><span>Cadastrar Cliente</span></a></li>
+					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-search"></i><span>Consultar Cliente</span></a></li>
 				</ul>
 			</div>
 			<!-- /container -->
@@ -105,9 +100,7 @@
 									<button name="_method" value="PUT" class="btn btn-primary btn-small" id="alterarCliente">
 									Salvar Alterações</button>
 									<button class="btn btn-small" id="voltarCliente" type="button">Voltar</button>
-									<c:if test="${cliente.enderecos.size() == 0}">
-											<button class="btn btn-small btn-primary pull-right" id="cadastrarEndereco" type="button">Cadastrar Endereço</button>
-									</c:if>
+									<button class="btn btn-small btn-primary pull-right" id="cadastrarEndereco" type="button">Cadastrar Endereço</button>
 								</div>
 						</form>
 
@@ -137,7 +130,7 @@
 									<c:forEach var="endereco" items="${cliente.enderecos}">
 										<tr>
 						
-											<td>${endereco.id} - ${endereco.endereco}</td>
+											<td>${endereco.endereco}</td>
 											<td>${endereco.cidade}/${endereco.uf}</td>
 											<td>${endereco.cep}</td>
 											<td class="td-actions" style="width: 200px;">

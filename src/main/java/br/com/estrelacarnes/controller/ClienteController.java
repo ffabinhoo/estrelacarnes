@@ -91,22 +91,7 @@ public class ClienteController {
 		result.redirectTo(ClienteController.class).mostrarCliente(cliente);
 	}
 	
-	@Post("/endereco/alterarEndereco")
-	public void alterarEndereco(Cliente cliente){
-		List<Endereco> lista = new ArrayList<Endereco>();
-		cliente.setEnderecos(lista);
-		Endereco endereco = cliente.getEndereco();
-		endereco.setStatus("A");
-		cliente.getEnderecos().add(endereco);
-		//clienteDAO.inserir(cliente);
-		endereco.setCliente(cliente);
-		clienteDAO.alterarEndereco(endereco);
-		
-		result.include("tipomsg", "success");
-		result.include("mensagemNegrito", "Endereço ");
-		result.include("mensagem", "alterado com sucesso.");
-		result.redirectTo(ClienteController.class).mostrarCliente(cliente);
-	}
+	
 	
 	@Get("cliente/{cliente.id}")
 	public void mostrarCliente(Cliente cliente){
@@ -208,17 +193,21 @@ public class ClienteController {
 			cliente.getEndereco().setBairro(cepResult.getBairro());
 			cliente.getEndereco().setCidade(cepResult.getCidade());
 			cliente.getEndereco().setUf(cepResult.getUf());
+			cliente.getEndereco().setId(endereco.getId());
 			
-			result.include("cliente", cliente);
+			/*result.include("cliente", cliente);
 			result.include("cep", cliente.getEndereco().getCep());
 			result.include("endereco", cliente.getEndereco().getEndereco());
 			result.include("complemento", cliente.getEndereco().getComplemento());
 			result.include("bairro", cliente.getEndereco().getBairro());
 			result.include("cidade", cliente.getEndereco().getCidade());
-			result.include("uf", cliente.getEndereco().getUf());
+			result.include("uf", cliente.getEndereco().getUf());*/
+			
+			result.include("endereco", cliente.getEndereco());
+			result.include("cliente", cliente);
 			
 			result.include("localizacao", cepResult.getLat() +"," + cepResult.getLng());
-			result.redirectTo(ClienteController.class).editarEndereco(endereco, cliente);
+			result.redirectTo(ClienteController.class).editarEndereco(cliente.getEndereco(), cliente);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -245,25 +234,55 @@ public class ClienteController {
 		result.redirectTo(ClienteController.class).mostrarCliente(cliente);
 	}
 	
-	@Get("endereco/mostrar/{endereco.id}/{cliente.id}")
+	/*@Get("endereco/mostrar/{endereco.id}/{cliente.id}")
 	public void mostrarEndereco(Endereco endereco, Cliente cliente){
 		cliente = clienteDAO.load(cliente);
 		endereco = clienteDAO.consultarEndereco(endereco);
 		result.include("cliente", cliente);
+		result.include("endereco", endereco);
 		result.include("cep", endereco.getCep());
-		result.include("endereco", endereco.getEndereco());
 		result.include("complemento", endereco.getComplemento());
 		result.include("bairro", endereco.getBairro());
 		result.include("cidade", endereco.getCidade());
 		result.include("uf", endereco.getUf());
-	}
+	}*/
 	
 	@Get("endereco/editar/{endereco.id}/{cliente.id}")
 	public void editarEndereco(Endereco endereco, Cliente cliente){
-		cliente = clienteDAO.load(cliente);
-		endereco = clienteDAO.consultarEndereco(endereco);
-		result.include("cliente", cliente);
-		result.include("endereco", endereco);
+		
+		if (cliente.getEndereco()==null){
+			cliente = clienteDAO.load(cliente);
+			endereco = clienteDAO.consultarEndereco(endereco);
+			result.include("cliente", cliente);
+			result.include("endereco", endereco);
+		}else{
+			cliente = clienteDAO.load(cliente);
+			cliente.setEndereco(endereco);
+			cliente.getEndereco().setId(endereco.getId());
+			result.include("cliente", cliente);
+			result.include("endereco", endereco);
+		}
+		/*result.include("cep",  cliente.getEndereco().getCep());
+		result.include("complemento", cliente.getEndereco().getComplemento());
+		result.include("bairro", cliente.getEndereco().getBairro());
+		result.include("cidade", cliente.getEndereco().getCidade());
+		result.include("uf", cliente.getEndereco().getUf());*/
+	}
+	
+	@Post("/endereco/alterarEndereco")
+	public void alterarEndereco(Cliente cliente){
+		List<Endereco> lista = new ArrayList<Endereco>();
+		cliente.setEnderecos(lista);
+		Endereco endereco = cliente.getEndereco();
+		endereco.setStatus("A");
+		cliente.getEnderecos().add(endereco);
+		endereco.setCliente(cliente);
+		clienteDAO.alterarEndereco(endereco);
+		
+		result.include("tipomsg", "success");
+		result.include("mensagemNegrito", "Endereço ");
+		result.include("mensagem", "alterado com sucesso.");
+		result.redirectTo(ClienteController.class).mostrarCliente(cliente);
 	}
 	
 	

@@ -63,6 +63,7 @@
 				<form id="formEditarEndereco" method="post" action="${linkTo[ClienteController].alterarEndereco}" style="float: left; padding: 1px;">
 					<input id="id" name="cliente.id" value="${cliente.id}" type="hidden">
 					<input id="idEndereco" name="endereco.id" value="${endereco.id}" type="hidden">
+					<input id="idEnderecoCliente" name="cliente.endereco.id" value="${cliente.endereco.id}" type="hidden">
 					<div class="row" >
 					<div class="span6" style="background-color:">
 							<div class="control-group">
@@ -84,29 +85,29 @@
 								
 								<div class="controls">
 									<label class="control-label" for="cep">CEP</label>
-									<input class="span6" id="cep" name="cliente.endereco.cep" value="${cep}" type="text" required="required">
+									<input class="span6" id="cep" name="cliente.endereco.cep" value="${endereco.cep}" type="text" required="required">
 										<button name="buscarCep" value="buscarCep" class="btn btn-primary btn-small" id="buscarCep">
 									Buscar CEP</button>
 								</div>
 								<label class="control-label" id="endereco" >Endereco</label>
 								<div class="controls">
-									<input class="span6" name="cliente.endereco.endereco" value="${endereco}" type="text" >
+									<input class="span6" name="cliente.endereco.endereco" value="${endereco.endereco}" type="text" >
 								</div>
 								<label class="control-label" id="complemento" >Complemento</label>
 								<div class="controls">
-									<input class="span6" name="cliente.endereco.complemento" value="${complemento}" type="text" >
+									<input class="span6" name="cliente.endereco.complemento" value="${endereco.complemento}" type="text" >
 								</div>
 								<label class="control-label" id="bairro" >Bairro</label>
 								<div class="controls">
-									<input class="span6" name="cliente.endereco.bairro" value="${bairro}" type="text" >
+									<input class="span6" name="cliente.endereco.bairro" value="${endereco.bairro}" type="text" >
 								</div>
 								<label class="control-label" id="cidade" >Cidade</label>
 								<div class="controls">
-									<input class="span6" name="cliente.endereco.cidade" value="${cidade}" type="text" >
+									<input class="span6" name="cliente.endereco.cidade" value="${endereco.cidade}" type="text" >
 								</div>
 								<label class="control-label" id="uf" >UF</label>
 								<div class="controls">
-									<input class="span6" name="cliente.endereco.uf" value="${uf}" type="text" >
+									<input class="span6" name="cliente.endereco.uf" value="${endereco.uf}" type="text" >
 								</div>
 								
 								<div class="form-actions">
