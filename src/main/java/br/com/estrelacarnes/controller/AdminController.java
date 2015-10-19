@@ -19,6 +19,8 @@ import br.com.estrelacarnes.interceptor.UserInfo;
 import br.com.estrelacarnes.model.Categoria;
 import br.com.estrelacarnes.model.Cliente;
 import br.com.estrelacarnes.model.Complemento;
+import br.com.estrelacarnes.model.Endereco;
+import br.com.estrelacarnes.model.Entrega;
 import br.com.estrelacarnes.model.Item;
 import br.com.estrelacarnes.model.Pedido;
 import br.com.estrelacarnes.model.Preparo;
@@ -277,6 +279,12 @@ public class AdminController {
 	@Get("/pedido/layout")
 	public void layout(){
 				
+	}
+	
+	@Post("/pedido/entrega/{pedido.id}")
+	public void prepararEntrega(Pedido pedido, Endereco endereco, Entrega entrega){
+		pedido.setStatus("E");
+		pedidoDAO.alterarPedido(pedido);
 	}
 	
 	

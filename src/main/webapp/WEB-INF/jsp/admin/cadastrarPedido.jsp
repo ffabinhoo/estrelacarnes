@@ -258,6 +258,7 @@
 												<th>Produto</th>
 												<th>Preparo</th>
 												<th>Complemento</th>
+												<th>Observação</th>
 												<th class="td-actions"></th>
 											</tr>
 										</thead>
@@ -269,6 +270,7 @@
 													<td>${item.produto.nome}</td>
 													<td>${item.preparo.nome}</td>
 													<td>${item.complemento.nome}</td>
+													<td>${item.observacao}</td>
 													<td class="td-actions">
 														<form id="formItem" method="post"
 															action="${linkTo[AdminController].editarItem}"

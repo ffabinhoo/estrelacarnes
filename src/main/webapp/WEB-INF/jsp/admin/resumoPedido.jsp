@@ -1,5 +1,4 @@
-<%@page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -9,15 +8,11 @@
 <head>
 <meta charset="iso-8859-1">
 <title>Estrela Carnes</title>
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link href="/estrelacarnes/css/bootstrap.min.css" rel="stylesheet">
-<link href="/estrelacarnes/css/bootstrap-responsive.min.css"
-	rel="stylesheet">
-<link
-	href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
-	rel="stylesheet">
+<link href="/estrelacarnes/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
 <link href="/estrelacarnes/css/font-awesome.css" rel="stylesheet">
 <link href="/estrelacarnes/css/style.css" rel="stylesheet">
 <link href="/estrelacarnes/css/pages/dashboard.css" rel="stylesheet">
@@ -26,7 +21,8 @@
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
+<style type="text/css">
+</style>
 </head>
 <body>
 	<div class="navbar navbar-fixed-top">
@@ -35,10 +31,8 @@
 				<a class="brand" href="/estrelacarnes">Estrela Carnes - Administração de Pedidos</a>
 				<div class="nav-collapse">
 					<ul class="nav pull-right">
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown"> <i class="icon-user"></i> <span
-								class="pull-right ${not empty userInfo.user ? '' : 'hidden'}">
-									${userInfo.user.name}</span> <b class="caret"></b>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-user"></i> <span
+								class="pull-right ${not empty userInfo.user ? '' : 'hidden'}"> ${userInfo.user.name}</span> <b class="caret"></b>
 						</a>
 							<ul class="dropdown-menu">
 								<li><a href="javascript:;">Profile</a></li>
@@ -69,8 +63,7 @@
 						<div class="row">
 							<div class="bs-example ${not empty mensagem ? '' : 'hidden'}">
 								<div class="alert alert-${tipomsg}" id="mensagem">
-									<a href="#" class="close" data-dismiss="alert">&times;</a> <strong>${mensagemNegrito}</strong>
-									${mensagem}
+									<a href="#" class="close" data-dismiss="alert">&times;</a> <strong>${mensagemNegrito}</strong> ${mensagem}
 								</div>
 							</div>
 						</div>
@@ -84,152 +77,181 @@
 								<h3>Cliente</h3>
 							</div>
 							<div class="widget-content">
-								<%-- <h4>&nbsp;</h4>
-								<h4>Cliente: ${pedido.cliente.nome}</h4>
-								<h4>CPF: ${pedido.cliente.cpf}</h4>
-								<h4>Telefone: ${pedido.cliente.celular}</h4>
-
-								<h4>&nbsp;</h4> --%>
 								<div class="shortcuts">
-									<a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}"
-										class="shortcut"><i class="icon-user"></i> <span
-										class="shortcut-label">${pedido.cliente.nome} -
-											${pedido.cliente.celular}</span> </a>
+									<a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}" class="shortcut"><i class="icon-user"></i> <span
+										class="shortcut-label">${pedido.cliente.nome} - ${pedido.cliente.celular}</span> </a>
 								</div>
 							</div>
 						</div>
 					</div>
+					<form id="formEnviarPedido" method="post" action="${linkTo[AdminController].prepararEntrega}${pedido.id}">
+						<div class="span12">
+							<div class="widget">
+								<div class="widget-header">
+									<i class="icon-th-large"></i>
+									<h3>Escolha Tipo de Envio</h3>
+								</div>
+								<div class="widget-content">
+									<label class="radio inline"> <input type="radio" id="tipoEntrega" name="entrega.tipoEntrega" value="1" required> Delivery
+									</label> <label class="radio inline"> <input type="radio" id="tipoEntrega" name="entrega.tipoEntrega" value="2" required> Pick-up
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="span12">
 
-					<c:forEach var="endereco" items="${pedido.cliente.enderecos}">
-						<%-- <tr>
-											<td>${endereco.endereco}</td>
-											<td>${endereco.complemento}</td>
-											<td>${endereco.bairro}</td>
-											<td>${endereco.cidade}</td>
-											<td>${endereco.uf}</td>
-										</tr> --%>
-					</c:forEach>
-
-					<div class="main">
-						<div class="main-inner">
-							<div class="container">
-								<div class="row">
-									<div class="span12">
-										<div class="widget">
-											<div class="widget-header">
-												<i class="icon-th-large"></i>
-												<h3>Escolha o Endereço de Envio</h3>
-											</div>
-											<div class="widget-content">
-												<div class="pricing-plans plans-3">
-													<c:forEach var="endereco"
-														items="${pedido.cliente.enderecos}">
-														<div class="plan-container">
-															<div class="plan">
-																<div class="plan-header">
-																	<div class="plan-title">${endereco.endereco}
-																		${endereco.complemento} </div>
+							<div class="main">
+								<div class="main-inner">
+									<div class="container">
+										<div class="row">
+											<div class="span12">
+												<div class="widget">
+													<div class="widget-header">
+														<i class="icon-th-large"></i>
+														<h3>Escolha o Endereço de Envio</h3>
+													</div>
+													<div class="widget-content">
+														<div class="pricing-plans plans-3">
+															<c:forEach var="endereco" items="${pedido.cliente.enderecos}">
+															<input type="hidden" value="${endereco.id}" id="idEndereco" name="idEndereco">
+																<div class="plan-container">
+																	<div class="plan">
+																		<div class="plan-header">
+																			<div class="plan-title">${endereco.endereco}${endereco.complemento}</div>
+																		</div>
+																		<div class="plan-features">
+																			<ul>
+																				<li></li>
+																				<li><strong>Bairro: </strong>${endereco.bairro}</li>
+																				<li><strong>CEP: </strong>${endereco.cep}</li>
+																				<li><strong>Cidade: </strong>${endereco.cidade} / ${endereco.uf}</li>
+																			</ul>
+																		</div>
+																		<div class="plan-actions">
+																			<a href="" class="btn" id="enviarPedido" >Enviar</a>
+																		</div>
+																	</div>
 																</div>
-																<div class="plan-features">
-																	<ul>
-																		<li></li>
-																		<li><strong>Bairro: </strong>${endereco.bairro}</li>
-																		<li><strong>CEP: </strong>${endereco.cep}</li>
-																		<li><strong>Cidade: </strong>${endereco.cidade} /
-																			${endereco.uf}</li>
-																	</ul>
-																</div>
-																<!-- /plan-features -->
-																<div class="plan-actions">
-																	<a href="javascript:;" class="btn">Enviar</a>
-																</div>
-															</div>
+															</c:forEach>
 														</div>
-													</c:forEach>
+													</div>
 												</div>
 											</div>
+
 										</div>
 									</div>
 								</div>
 							</div>
+					</form>
+				</div>
+
+				<div class="span12">
+					<div class="widget-header">
+						<i class="icon-list-alt"></i>
+						<h3>Resumo do Pedido</h3>
+					</div>
+					<!-- /widget-header -->
+					<div class="widget-content">
+						<div class="widget big-stats-container">
+							<table class="table table-striped table-bordered">
+								<thead>
+									<tr>
+										<th>Quantidade/Unidade</th>
+										<th>Categoria</th>
+										<th>Produto</th>
+										<th>Preparo</th>
+										<th>Complemento</th>
+										<th>Observação</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="item" items="${pedido.itens}">
+										<tr>
+											<td>${item.quantidade}${item.tipo}</td>
+											<td>${item.categoria.nome}</td>
+											<td>${item.produto.nome}</td>
+											<td>${item.preparo.nome}</td>
+											<td>${item.complemento.nome}</td>
+											<td>${item.observacao}</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
 						</div>
 					</div>
-					<div class="row">
-						<div class="span12">
-							<div class="widget widget-nopad">
-								<div class="widget-header">
-									<i class="icon-list-alt"></i>
-									<h3>Resumo do Pedido</h3>
-								</div>
-								<!-- /widget-header -->
-								<div class="widget-content">
-									<div class="widget big-stats-container">
-										<table class="table table-striped table-bordered">
-											<thead>
-												<tr>
-													<th>Quantidade/Unidade</th>
-													<th>Categoria</th>
-													<th>Produto</th>
-													<th>Preparo</th>
-													<th>Complemento</th>
-													<th>Observação</th>
-												</tr>
-											</thead>
-											<tbody>
-												<c:forEach var="item" items="${pedido.itens}">
-													<tr>
-														<td>${item.quantidade}${item.tipo}</td>
-														<td>${item.categoria.nome}</td>
-														<td>${item.produto.nome}</td>
-														<td>${item.preparo.nome}</td>
-														<td>${item.complemento.nome}</td>
-														<td>${item.observacao}</td>
-													</tr>
-												</c:forEach>
-											</tbody>
-										</table>
+					<div class="form-actions">
+						<div class="pull-right">
+							<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${pedido.id}/KG/1/0" style="float: left; padding: 1px;">
+								<button class="button btn btn-success btn-small" id="verPedido">Editar Pedido</button>
+								<button class="btn btn-small" id="voltarPedido" type="button">Voltar</button>
+							</form>
 
-									</div>
-								</div>
-							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>
-		<div class="extra">
-			<div class="extra-inner">
-				<div class="container">
-					<div class="row">
-						<div class="span3">
-							<h4>Sobre Estrela Carnes</h4>
+	</div>
+	<div class="extra">
+		<div class="extra-inner">
+			<div class="container">
+				<div class="row">
+					<div class="span3">
+						<h4>Sobre Estrela Carnes</h4>
 
-						</div>
-						<!-- /span3 -->
-						<div class="span3">
-							<h4>Suporte</h4>
-
-						</div>
-						<!-- /span3 -->
-						<div class="span3"></div>
-						<!-- /span3 -->
-						<div class="span3"></div>
-						<!-- /span3 -->
 					</div>
-					<!-- /row -->
-				</div>
-				<!-- /container -->
-			</div>
-			<!-- /extra-inner -->
-		</div>
+					<!-- /span3 -->
+					<div class="span3">
+						<h4>Suporte</h4>
 
-		<script src="/estrelacarnes/js/jquery-1.7.2.min.js"></script>
-		<script src="/estrelacarnes/js/excanvas.min.js"></script>
-		<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
-		<script src="/estrelacarnes/js/bootstrap.js"></script>
-		<script>
-			
-		</script>
+					</div>
+					<!-- /span3 -->
+					<div class="span3"></div>
+					<!-- /span3 -->
+					<div class="span3"></div>
+					<!-- /span3 -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /extra-inner -->
+	</div>
+
+	<script src="/estrelacarnes/js/jquery-1.7.2.min.js"></script>
+	<script src="/estrelacarnes/js/excanvas.min.js"></script>
+	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
+	<script src="/estrelacarnes/js/bootstrap.js"></script>
+	<script>
+		document.getElementById("voltarPedido").onclick = function() {
+			var url = '/estrelacarnes';
+			window.location.href = url;
+		};
+		/* document.getElementById("enviarPedido").onclick = function() {
+			alert('oi');
+			form.submit();
+		}; */
+		/* $('.enviarPedido').click(function(e) {
+		    e.preventDefault(); // prevent the link's default behaviour
+		    alert('oiieeee');
+		    $('#formEnviarPedido').submit(); // trigget the submit handler
+		}); */
+		$(document)
+				.ready(
+						function() {
+							$(".btn")
+									.click(
+											function(e) {
+												e.preventDefault();
+												var tipoEntrega = $(
+														'input[name=entrega.tipoEntrega]:checked',
+														'#formEnviarPedido')
+														.val();
+												var idEndereco = $('#idEndereco').val();
+												alert(idEndereco);
+												//$('#formEnviarPedido').submit();
+											});
+						});
+	</script>
 </body>
 </html>
