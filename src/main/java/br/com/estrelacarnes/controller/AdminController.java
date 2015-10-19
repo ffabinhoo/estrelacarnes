@@ -12,8 +12,10 @@ import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.estrelacarnes.dao.ClienteDAO;
+import br.com.estrelacarnes.dao.EntregaDAO;
 import br.com.estrelacarnes.dao.PedidoDAO;
 import br.com.estrelacarnes.interceptor.UserInfo;
 import br.com.estrelacarnes.model.Categoria;
@@ -33,17 +35,19 @@ public class AdminController {
 	private final PedidoDAO pedidoDAO;
 	private final UserInfo userInfo;
 	private final ClienteDAO clienteDAO;
+	private final EntregaDAO entregaDAO;
 	
 	protected AdminController() {
-		this(null, null, null, null, null);
+		this(null, null, null, null, null, null);
 	}
 	
 	@Inject
-	public AdminController(Result result, PedidoDAO pedidoDAO, ClienteDAO clienteDAO, UserInfo userInfo,
+	public AdminController(Result result, PedidoDAO pedidoDAO, ClienteDAO clienteDAO, EntregaDAO entregaDAO, UserInfo userInfo,
 			Validator validator) {
 		this.result = result;
 		this.pedidoDAO = pedidoDAO;
 		this.clienteDAO = clienteDAO;
+		this.entregaDAO = entregaDAO;
 		this.userInfo = userInfo;
 		this.validator = validator;
 	}
@@ -281,12 +285,44 @@ public class AdminController {
 				
 	}
 	
-	@Post("/pedido/entrega/{pedido.id}")
+	@Post("/pedido/entrega")
 	public void prepararEntrega(Pedido pedido, Endereco endereco, Entrega entrega){
-		pedido.setStatus("E");
-		pedidoDAO.alterarPedido(pedido);
+		//validator.addIf(entrega.getTipoEntrega() == null, new SimpleMessage("Tipo entrega", "A Tipo de Entrega deve ser preenchido"));	
+				//validator.onErrorForwardTo(this).erro(pedido);
+		String tipoEntrega = entrega.getTipoEntrega();
+		if (tipoEntrega==null||endereco==null ||entrega==null){
+			result.include("tipomsg", "error");
+			result.include("mensagemNegrito", "Erro! ");
+			result.include("mensagem", "Selecione o Tipo de Entrega do Pedido ");
+		}
+		if (tipoEntrega!=null){
+			pedido = pedidoDAO.load(pedido.getId());
+			endereco = clienteDAO.consultarEndereco(endereco);
+			entrega.setCliente(pedido.getCliente());
+			entrega.setEndereco(endereco);
+			entrega.setPedido(pedido);
+			entrega.setData(new Date());
+			pedido.setStatus("E");
+			
+			entregaDAO.incluir(entrega);
+			pedido.setIdEntrega(entrega.getId().toString());
+			pedido = pedidoDAO.alterarPedido(pedido);
+			result.include("pedido", pedido);
+			
+		}
+		result.redirectTo(AdminController.class).principal();
+		
+		
 	}
 	
+	/*@Get("/erro")
+	public void erro(Pedido pedido){
+		result.include("tipomsg", "error");
+		result.include("mensagemNegrito", "Erro! ");
+		result.include("mensagem", "Selecione o Tipo de Entrega do Pedido ");
+		result.redirectTo(AdminController.class).resumoPedido(pedido);
+	}
 	
+	*/
 
 }

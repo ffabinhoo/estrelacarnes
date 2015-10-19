@@ -84,71 +84,9 @@
 							</div>
 						</div>
 					</div>
-					<form id="formEnviarPedido" method="post" action="${linkTo[AdminController].prepararEntrega}">
-						<input type="hidden" value="" id="idEndereco" name="endereco.id">
-						<input type="hidden" value="" id="idTipoEntrega" name="entrega.tipoEntrega">
-						<input type="hidden" value="${pedido.id}" id="idPedido" name="pedido.id">
-						<div class="span12">
-							<div class="widget">
-								<div class="widget-header">
-									<i class="icon-th-large"></i>
-									<h3>Escolha Tipo de Entrega</h3>
-								</div>
-								<div class="widget-content">
-									<label class="radio inline"> <input type="radio" id="tipoEntrega" name="entrega.tipoEntrega" value="P" checked> Pick-up
-									</label>
-									<label class="radio inline"> <input type="radio" id="tipoEntrega" name="entrega.tipoEntrega" value="D" > Delivery
-									</label> 
-								</div>
-							</div>
-						</div>
-						<div class="span12">
-
-							<div class="main">
-								<div class="main-inner">
-									<div class="container">
-										<div class="row">
-											<div class="span12">
-												<div class="widget">
-													<div class="widget-header">
-														<i class="icon-th-large"></i>
-														<h3>Escolha o Endereço de Envio</h3>
-													</div>
-													<div class="widget-content">
-														<div class="pricing-plans plans-3">
-															<c:forEach var="endereco" items="${pedido.cliente.enderecos}">
-															
-																<div class="plan-container">
-																	<div class="plan">
-																		<div class="plan-header">
-																			<div class="plan-title">${endereco.endereco}${endereco.complemento}</div>
-																		</div>
-																		<div class="plan-features">
-																			<ul>
-																				<li></li>
-																				<li><strong>Bairro: </strong>${endereco.bairro}</li>
-																				<li><strong>CEP: </strong>${endereco.cep}</li>
-																				<li><strong>Cidade: </strong>${endereco.cidade} / ${endereco.uf}</li>
-																			</ul>
-																		</div>
-																		<div class="plan-actions">
-																			<a href="" class="btn" id="enviarPedido" name="${endereco.id}" >Enviar</a>
-																		</div>
-																	</div>
-																</div>
-															</c:forEach>
-														</div>
-													</div>
-												</div>
-											</div>
-
-										</div>
-									</div>
-								</div>
-							</div>
-					</form>
+					
 				</div>
-
+				<h1>PEDIDO ENVIADO</h1>
 				<div class="span12">
 					<div class="widget-header">
 						<i class="icon-list-alt"></i>
@@ -227,36 +165,7 @@
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
 	<script>
-		document.getElementById("voltarPedido").onclick = function() {
-			var url = '/estrelacarnes';
-			window.location.href = url;
-		};
-		/* document.getElementById("enviarPedido").onclick = function() {
-			alert('oi');
-			form.submit();
-		}; */
-		/* $('.enviarPedido').click(function(e) {
-		    e.preventDefault(); // prevent the link's default behaviour
-		    alert('oiieeee');
-		    $('#formEnviarPedido').submit(); // trigget the submit handler
-		}); */
-		$(document)
-				.ready(
-						function() {
-							$("a.btn")
-									.click(
-											function(e) {
-												e.preventDefault();
-												var tipoEntrega = $(
-														'input[name=entrega.tipoEntrega]:checked',
-														'#formEnviarPedido')
-														.val();
-												 var idEndereco = this.name;
-												 $("#idTipoEntrega").val(tipoEntrega);
-												 $("#idEndereco").val(idEndereco);
-												$('#formEnviarPedido').submit();
-											});
-						});
+		
 	</script>
 </body>
 </html>
