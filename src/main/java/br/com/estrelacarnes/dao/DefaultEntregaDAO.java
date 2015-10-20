@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 
 import br.com.estrelacarnes.model.Categoria;
 import br.com.estrelacarnes.model.Entrega;
+import br.com.estrelacarnes.model.Pedido;
 
 public class DefaultEntregaDAO implements EntregaDAO, Serializable{
 	
@@ -28,6 +29,13 @@ public class DefaultEntregaDAO implements EntregaDAO, Serializable{
 	public void incluir(Entrega entrega) {
 		this.entityManager.persist(entrega);
 	}
+
+	@Override
+	public Entrega load(Entrega entrega) {
+		return this.entityManager.find(Entrega.class, entrega.getId());
+	}
+
+	
 
 	
 

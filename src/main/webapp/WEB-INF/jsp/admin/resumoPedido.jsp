@@ -86,7 +86,7 @@
 					</div>
 					<form id="formEnviarPedido" method="post" action="${linkTo[AdminController].prepararEntrega}">
 						<input type="hidden" value="" id="idEndereco" name="endereco.id">
-						<input type="hidden" value="" id="idTipoEntrega" name="entrega.tipoEntrega">
+						<input type="hidden" value="" id="idTipoEntrega" name="tipoEntrega">
 						<input type="hidden" value="${pedido.id}" id="idPedido" name="pedido.id">
 						<div class="span12">
 							<div class="widget">
@@ -95,9 +95,9 @@
 									<h3>Escolha Tipo de Entrega</h3>
 								</div>
 								<div class="widget-content">
-									<label class="radio inline"> <input type="radio" id="tipoEntrega" name="entrega.tipoEntrega" value="P" checked> Pick-up
+									<label class="radio inline"> <input type="radio" id="ctipoEntrega" name="ctipoEntrega" value="P" > Pick-up
 									</label>
-									<label class="radio inline"> <input type="radio" id="tipoEntrega" name="entrega.tipoEntrega" value="D" > Delivery
+									<label class="radio inline"> <input type="radio" id="ctipoEntrega" name="ctipoEntrega" value="D" > Delivery
 									</label> 
 								</div>
 							</div>
@@ -248,13 +248,16 @@
 											function(e) {
 												e.preventDefault();
 												var tipoEntrega = $(
-														'input[name=entrega.tipoEntrega]:checked',
+														'input[name=entrega.ctipoEntrega]:checked',
 														'#formEnviarPedido')
 														.val();
 												 var idEndereco = this.name;
 												 $("#idTipoEntrega").val(tipoEntrega);
 												 $("#idEndereco").val(idEndereco);
-												$('#formEnviarPedido').submit();
+												 
+													
+													$('#formEnviarPedido').submit();
+												
 											});
 						});
 	</script>

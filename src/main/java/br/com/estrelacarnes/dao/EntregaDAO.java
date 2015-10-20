@@ -6,4 +6,6 @@ public interface EntregaDAO {
 
 	void incluir(Entrega entrega);
 
+	Entrega load(Entrega entrega);
+
 }

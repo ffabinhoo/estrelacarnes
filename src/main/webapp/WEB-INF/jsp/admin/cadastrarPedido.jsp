@@ -51,7 +51,7 @@
 					<span class="icon-bar">c</span>
 				</a> -->
 				<a class="brand" href="/estrelacarnes">
-					<!-- Estrela Carnes - Administração de Pedidos -->Titulo
+					Estrela Carnes - Administração de Pedidos
 				</a>
 				<div class="nav-collapse">
 					<ul class="nav pull-right">
@@ -253,7 +253,7 @@
 									<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th>Quantidade/Unidade</th>
+												<th>Qtd/Unid</th>
 												<th>Categoria</th>
 												<th>Produto</th>
 												<th>Preparo</th>

@@ -286,34 +286,47 @@ public class AdminController {
 	}
 	
 	@Post("/pedido/entrega")
-	public void prepararEntrega(Pedido pedido, Endereco endereco, Entrega entrega){
+	public void prepararEntrega(Pedido pedido, Endereco endereco, String tipoEntrega){
 		//validator.addIf(entrega.getTipoEntrega() == null, new SimpleMessage("Tipo entrega", "A Tipo de Entrega deve ser preenchido"));	
 				//validator.onErrorForwardTo(this).erro(pedido);
-		String tipoEntrega = entrega.getTipoEntrega();
-		if (tipoEntrega==null||endereco==null ||entrega==null){
+		//tipoEntrega = entrega.getTipoEntrega();
+		if (tipoEntrega==null){
 			result.include("tipomsg", "error");
 			result.include("mensagemNegrito", "Erro! ");
 			result.include("mensagem", "Selecione o Tipo de Entrega do Pedido ");
+			result.redirectTo(AdminController.class).resumoPedido(pedido);
 		}
 		if (tipoEntrega!=null){
 			pedido = pedidoDAO.load(pedido.getId());
 			endereco = clienteDAO.consultarEndereco(endereco);
+			Entrega entrega = new Entrega();
 			entrega.setCliente(pedido.getCliente());
 			entrega.setEndereco(endereco);
 			entrega.setPedido(pedido);
+			entrega.setTipoEntrega(tipoEntrega);
 			entrega.setData(new Date());
 			pedido.setStatus("E");
 			
 			entregaDAO.incluir(entrega);
 			pedido.setIdEntrega(entrega.getId().toString());
 			pedido = pedidoDAO.alterarPedido(pedido);
-			result.include("pedido", pedido);
-			
+			result.redirectTo(AdminController.class).pedidoEnviado(pedido);
 		}
-		result.redirectTo(AdminController.class).principal();
+		
 		
 		
 	}
+	@Get("/pedido/pedidoEnviado/{pedido.id}")
+	public void pedidoEnviado(Pedido pedido){
+		Entrega entrega = new Entrega();
+		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
+		
+		entrega.setId(Integer.valueOf(pedidoObj.getIdEntrega()));
+		entrega = entregaDAO.load(entrega);
+		result.include("pedido", pedidoObj);
+		result.include("entrega", entrega);
+	}
+	
 	
 	/*@Get("/erro")
 	public void erro(Pedido pedido){

@@ -87,11 +87,13 @@
 							<!-- /widget-header -->
 							<div class="widget-content">
 								<div class="shortcuts">
-									<a href="${linkTo[AdminController].consultarUsuario}" class="shortcut"><i class="shortcut-icon icon-star-empty"></i><span
-										class="shortcut-label">Adicionar Pedido</span> </a> <a href="javascript:;" class="shortcut" id="pedidosHoje"><i
-										class="shortcut-icon icon-list-alt"></i><span class="shortcut-label">Pedidos Abertos</span> </a> <a
-										href="${linkTo[AdminController].consultarUsuario}" class="shortcut"><i class="shortcut-icon icon-search"></i><span
-										class="shortcut-label">Consultar Cliente</span> </a>
+									 
+										<a href="javascript:;" class="shortcut" id="pedidosHoje"><i class="shortcut-icon icon-list-alt"></i>
+										<span class="shortcut-label">Pedidos Abertos</span> </a>
+										<a href="${linkTo[AdminController].consultarUsuario}" class="shortcut"><i class="shortcut-icon icon-inbox"></i>
+									<span class="shortcut-label">Pedidos Fechados</span> </a>
+										 <a href="${linkTo[AdminController].consultarUsuario}" class="shortcut"><i class="shortcut-icon icon-search"></i>
+										 <span class="shortcut-label">Consultar Pedidos</span> </a>
 
 								</div>
 								<!-- /shortcuts -->
@@ -118,7 +120,8 @@
 										<c:forEach var="pedido" items="${listaPedidosAbertos}">
 											<tr>
 												<td style="width: 100px;">${pedido.id}</td>
-												<td><a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}">${pedido.cliente.nome} - ${pedido.cliente.celular}</a></td>
+												<td><a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}">
+													${pedido.cliente.nome} - ${pedido.cliente.celular}</a></td>
 												<td><fmt:formatDate pattern="dd/MM HH:mm" value="${pedido.data}" /></td>
 												<td class="td-actions" style="width: 200px;">
 													<form id="formVerPedido" method="get" action="cadastrarPedido/${pedido.id}/KG/1/0" style="float: left; padding: 1px;">

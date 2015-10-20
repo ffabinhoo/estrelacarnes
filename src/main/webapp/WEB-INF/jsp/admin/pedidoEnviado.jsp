@@ -71,6 +71,7 @@
 				</div>
 				<div class="row">
 					<div class="span12">
+						<h1>PEDIDO ENVIADO - ${entrega.tipoEntrega}</h1>
 						<div class="widget widget-nopad">
 							<div class="widget-header">
 								<i class="icon-list-alt"></i>
@@ -86,7 +87,7 @@
 					</div>
 					
 				</div>
-				<h1>PEDIDO ENVIADO</h1>
+				
 				<div class="span12">
 					<div class="widget-header">
 						<i class="icon-list-alt"></i>
@@ -124,7 +125,6 @@
 					<div class="form-actions">
 						<div class="pull-right">
 							<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${pedido.id}/KG/1/0" style="float: left; padding: 1px;">
-								<button class="button btn btn-success btn-small" id="verPedido">Editar Pedido</button>
 								<button class="btn btn-small" id="voltarPedido" type="button">Voltar</button>
 							</form>
 
@@ -165,7 +165,10 @@
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
 	<script>
-		
+	document.getElementById("voltarPedido").onclick = function() {
+		var url = '/estrelacarnes';
+		window.location.href = url;
+	};
 	</script>
 </body>
 </html>
