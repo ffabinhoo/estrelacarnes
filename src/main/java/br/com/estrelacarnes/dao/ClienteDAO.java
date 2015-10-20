@@ -2,6 +2,8 @@ package br.com.estrelacarnes.dao;
 
 import java.util.List;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 import br.com.estrelacarnes.model.Cliente;
 import br.com.estrelacarnes.model.Endereco;
 

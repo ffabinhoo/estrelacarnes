@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import br.com.estrelacarnes.model.Cliente;
 import br.com.estrelacarnes.model.Endereco;
 
+
 public class DefaultClienteDAO implements ClienteDAO, Serializable{
 	
 	private static final long serialVersionUID = -4756737758015483441L;
@@ -113,7 +114,9 @@ public class DefaultClienteDAO implements ClienteDAO, Serializable{
 	public void excluirEndereco(Endereco endereco) {
 		Query sql = this.entityManager
 				.createQuery("delete from Endereco i where i.endereco.id = " + endereco.getId());
+		
 		sql.executeUpdate();
+		
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package br.com.estrelacarnes.controller;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,6 @@ import javax.persistence.RollbackException;
 import org.hibernate.exception.ConstraintViolationException;
 
 import br.com.caelum.vraptor.Controller;
-import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.InterceptionException;
 import br.com.caelum.vraptor.Post;
@@ -18,12 +18,14 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.estrelacarnes.cep.CepResult;
 import br.com.estrelacarnes.dao.ClienteDAO;
+import br.com.estrelacarnes.dao.EntregaDAO;
 import br.com.estrelacarnes.dao.PedidoDAO;
 import br.com.estrelacarnes.interceptor.UserInfo;
 import br.com.estrelacarnes.model.Cliente;
 import br.com.estrelacarnes.model.Endereco;
-import br.com.estrelacarnes.model.Item;
+import br.com.estrelacarnes.model.Entrega;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -37,17 +39,19 @@ public class ClienteController {
 	private final PedidoDAO pedidoDAO;
 	private final UserInfo userInfo;
 	private final ClienteDAO clienteDAO;
+	private final EntregaDAO entregaDAO;
 	
 	protected ClienteController() {
-		this(null, null, null, null, null);
+		this(null, null, null, null, null, null);
 	}
 	
 	@Inject
-	public ClienteController(Result result, PedidoDAO pedidoDAO, ClienteDAO clienteDAO, UserInfo userInfo,
+	public ClienteController(Result result, PedidoDAO pedidoDAO, ClienteDAO clienteDAO, EntregaDAO entregaDAO,  UserInfo userInfo,
 			Validator validator) {
 		this.result = result;
 		this.pedidoDAO = pedidoDAO;
 		this.clienteDAO = clienteDAO;
+		this.entregaDAO = entregaDAO;
 		this.userInfo = userInfo;
 		this.validator = validator;
 	}
@@ -230,22 +234,32 @@ public class ClienteController {
 	
 	@Get("endereco/excluir/{endereco.id}/{cliente.id}")
 	public void excluirEndereco(Endereco endereco, Cliente cliente){
-		clienteDAO.excluirEndereco(endereco);
+		List<Entrega> lista = entregaDAO.consultarEnderecoEntrega(endereco);
+		
+		if (lista.size()>0){
+			result.include("tipomsg", "error");
+			result.include("mensagemNegrito", "Erro.");
+			result.include("mensagem", "Não é possível excluir Endereço que tenha histórico de Pedidos");
+		}else{
+			clienteDAO.excluirEndereco(endereco);
+		}
+		
+		/*try{
+			clienteDAO.excluirEndereco(endereco);
+		}catch (MySQLIntegrityConstraintViolationException e4){
+			result.include("tipomsg", "error");
+			result.include("mensagemNegrito", "Erro.");
+			result.include("mensagem", "Não é possível excluir Endereço que tenha histórico de Pedidos");
+			
+		} catch (Exception e) {
+			result.include("tipomsg", "error");
+			result.include("mensagemNegrito", "Erro.");
+			result.include("mensagem", "Não é possível excluir Endereço que tenha histórico de Pedidos");
+			
+		}*/
 		result.redirectTo(ClienteController.class).mostrarCliente(cliente);
+		
 	}
-	
-	/*@Get("endereco/mostrar/{endereco.id}/{cliente.id}")
-	public void mostrarEndereco(Endereco endereco, Cliente cliente){
-		cliente = clienteDAO.load(cliente);
-		endereco = clienteDAO.consultarEndereco(endereco);
-		result.include("cliente", cliente);
-		result.include("endereco", endereco);
-		result.include("cep", endereco.getCep());
-		result.include("complemento", endereco.getComplemento());
-		result.include("bairro", endereco.getBairro());
-		result.include("cidade", endereco.getCidade());
-		result.include("uf", endereco.getUf());
-	}*/
 	
 	@Get("endereco/editar/{endereco.id}/{cliente.id}")
 	public void editarEndereco(Endereco endereco, Cliente cliente){
@@ -262,11 +276,6 @@ public class ClienteController {
 			result.include("cliente", cliente);
 			result.include("endereco", endereco);
 		}
-		/*result.include("cep",  cliente.getEndereco().getCep());
-		result.include("complemento", cliente.getEndereco().getComplemento());
-		result.include("bairro", cliente.getEndereco().getBairro());
-		result.include("cidade", cliente.getEndereco().getCidade());
-		result.include("uf", cliente.getEndereco().getUf());*/
 	}
 	
 	@Post("/endereco/alterarEndereco")

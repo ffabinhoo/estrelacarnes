@@ -298,7 +298,11 @@ public class AdminController {
 		}
 		if (tipoEntrega!=null){
 			pedido = pedidoDAO.load(pedido.getId());
-			endereco = clienteDAO.consultarEndereco(endereco);
+			if (endereco.getId()!=null){
+				endereco = clienteDAO.consultarEndereco(endereco);
+			}else{
+				endereco = null;
+			}
 			Entrega entrega = new Entrega();
 			entrega.setCliente(pedido.getCliente());
 			entrega.setEndereco(endereco);

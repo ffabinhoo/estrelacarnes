@@ -1,13 +1,16 @@
 package br.com.estrelacarnes.dao;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import br.com.estrelacarnes.model.Categoria;
+import br.com.estrelacarnes.model.Endereco;
 import br.com.estrelacarnes.model.Entrega;
+import br.com.estrelacarnes.model.Item;
 import br.com.estrelacarnes.model.Pedido;
 
 public class DefaultEntregaDAO implements EntregaDAO, Serializable{
@@ -34,6 +37,16 @@ public class DefaultEntregaDAO implements EntregaDAO, Serializable{
 	public Entrega load(Entrega entrega) {
 		return this.entityManager.find(Entrega.class, entrega.getId());
 	}
+
+	@Override
+	public List<Entrega> consultarEnderecoEntrega(Endereco endereco) {
+		List<Entrega> lista = new ArrayList<Entrega>();
+		String sql = "select i from Entrega i where i.endereco.id = " + endereco.getId() + " ";
+		lista = entityManager.createQuery(sql, Entrega.class).getResultList();
+		return lista;
+	}
+
+	
 
 	
 

@@ -103,8 +103,37 @@
 							</div>
 						</div>
 						<div class="span12">
+							<div class="main" id="enderecoPick">
+								<div class="main-inner">
+									<div class="container">
+										<div class="row">
+											<div class="span12">
+												<div class="widget">
+													<div class="widget-header">
+														<i class="icon-th-large"></i>
+														<h3>Pegar na Loja</h3>
+													</div>
+													<div class="widget-content">
+														<div class="pricing-plans plans-3">
+															<div class="plan-container">
+																	<div class="plan">
+																		
+																		
+																		<div class="plan-actions">
+																			<a href="" class="btn" id="enviarPedido">Enviar</a>
+																		</div>
+																	</div>
+																</div>
+														</div>
+													</div>
+												</div>
+											</div>
 
-							<div class="main">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="main" id="enderecoDelivery">
 								<div class="main-inner">
 									<div class="container">
 										<div class="row">
@@ -121,7 +150,7 @@
 																<div class="plan-container">
 																	<div class="plan">
 																		<div class="plan-header">
-																			<div class="plan-title">${endereco.endereco}${endereco.complemento}</div>
+																			<div class="plan-title">${endereco.endereco} ${endereco.complemento}</div>
 																		</div>
 																		<div class="plan-features">
 																			<ul>
@@ -227,6 +256,21 @@
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
 	<script>
+	$("#enderecoDelivery").hide();
+	$("#enderecoPick").hide();
+
+	$("input[name=ctipoEntrega]").click(function() {
+		var tipoEntrega = $('input[name=ctipoEntrega]:checked',	'#formEnviarPedido').val();
+		if (tipoEntrega == 'D'){
+			$("#enderecoDelivery").show();
+			$("#enderecoPick").hide();						
+		} else {
+			$("#enderecoDelivery").hide();
+			$("#enderecoPick").show();
+		}
+	});
+
+	
 		document.getElementById("voltarPedido").onclick = function() {
 			var url = '/estrelacarnes';
 			window.location.href = url;
