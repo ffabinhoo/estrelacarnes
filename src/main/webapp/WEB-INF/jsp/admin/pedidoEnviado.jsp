@@ -84,7 +84,7 @@
 				</div>
 				<div class="row">
 					<div class="span12">
-						<h1>Pedido para Entrega - ${entrega.tipoEntrega}</h1>
+						
 						<div class="widget widget-nopad">
 							<div class="widget-header">
 								<i class="icon-list-alt"></i>
@@ -101,6 +101,18 @@
 							</div>
 						</div>
 					</div>
+					
+					<div class="span12">
+						<h3>Pedido para Entrega 
+							<c:if test="${entrega.tipoEntrega eq 'D'}">
+								Delivery
+							</c:if>
+							<c:if test="${entrega.tipoEntrega eq 'P'}">
+								Pick-up
+							</c:if>
+						</h3>
+					</div>
+					
 					<c:if test="${entrega.tipoEntrega eq 'D'}">
 					<div class="span12">
 						<div class="widget widget-nopad">

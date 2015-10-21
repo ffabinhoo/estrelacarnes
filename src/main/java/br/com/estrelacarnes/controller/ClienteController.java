@@ -108,28 +108,37 @@ public class ClienteController {
 	
 	@Get("cliente/excluir/{cliente.id}")
 	public void excluirCliente(Cliente cliente){
-		try {
-		clienteDAO.excluirEnderecoCliente(cliente);
-		clienteDAO.excluirCliente(cliente);
-		result.redirectTo(AdminController.class).consultarUsuario();
-		}catch (ConstraintViolationException e) {
-			result.include("tipo", "error");
+		List<Entrega> lista = entregaDAO.consultarEntregasCliente(cliente);
+		
+		if (lista.size()>0){
+			result.include("tipomsg", "error");
 			result.include("mensagemNegrito", "Erro.");
 			result.include("mensagem", "Não é possível excluir Cliente que tenha histórico de Pedidos e Itens.");
-			result.redirectTo(AdminController.class).consultarUsuario();
-		}catch (InterceptionException e2){
-			result.include("tipo", "error");
-			result.include("mensagemNegrito", "Erro.");
-			result.include("mensagem", "Não é possível excluir Cliente que tenha histórico de Pedidos e Itens.");
-			result.redirectTo(AdminController.class).consultarUsuario();
-		}catch (RollbackException e3){
-			result.include("tipo", "error");
-			result.include("mensagemNegrito", "Erro.");
-			result.include("mensagem", "Não é possível excluir Cliente que tenha histórico de Pedidos e Itens.");
-			result.redirectTo(AdminController.class).consultarUsuario();
+		}else{
+		
+			try {
+			clienteDAO.excluirEnderecoCliente(cliente);
+			clienteDAO.excluirCliente(cliente);
+			result.include("tipomsg", "success");
+			result.include("mensagemNegrito", "Cliente ");
+			result.include("mensagem", "excluído com sucesso.");
+			
+			}catch (ConstraintViolationException e) {
+				result.include("tipomsg", "error");
+				result.include("mensagemNegrito", "Erro.");
+				result.include("mensagem", "Não é possível excluir Cliente que tenha histórico de Pedidos e Itens.");
+			}catch (InterceptionException e2){
+				result.include("tipomsg", "error");
+				result.include("mensagemNegrito", "Erro.");
+				result.include("mensagem", "Não é possível excluir Cliente que tenha histórico de Pedidos e Itens.");
+			}catch (RollbackException e3){
+				result.include("tipomsg", "error");
+				result.include("mensagemNegrito", "Erro.");
+				result.include("mensagem", "Não é possível excluir Cliente que tenha histórico de Pedidos e Itens.");
+			}
 		}
 		
-		
+		result.redirectTo(AdminController.class).consultarUsuario();
 	}
 	
 	@Post("/cliente/buscarCEP")

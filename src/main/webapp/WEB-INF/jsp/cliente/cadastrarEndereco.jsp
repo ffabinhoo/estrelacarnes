@@ -79,9 +79,9 @@
 									<input class="span6" name="cliente.celular" value="${cliente.celular}" type="text" disabled>
 								</div>
 																
-								<label class="control-label" for="cliente.cpf" >CPF/CNPJ</label>
+								<label class="control-label" for="cliente.cpf" >CPF</label>
 								<div class="controls">
-									<input class="span6" name="cliente.cpf" value="${cliente.cpf}" type="text" disabled>
+									<input class="span6" name="cliente.cpf" value="${cliente.cpf}" id="cpf" type="text" disabled>
 								</div>
 								
 								<h2>Endereço</h2>
@@ -162,6 +162,7 @@
 
 
 	<script src="/estrelacarnes/js/jquery-1.7.2.min.js"></script>
+	<script src="/estrelacarnes/js/jquery.maskedinput.min.js"></script>
 	<script src="/estrelacarnes/js/excanvas.min.js"></script>
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
@@ -174,6 +175,11 @@
 			$('#formCadastrarEndereco').attr('action', "/estrelacarnes/endereco/buscarEnderecoCEP");
 			  $( "#formCadastrarEndereco" ).submit();
 		});
+		$(function() {
+			
+			$("#cpf").mask("999.999.999-99");
+			$("#cep").mask("99999-999");
+	});
 
 		
 	</script>

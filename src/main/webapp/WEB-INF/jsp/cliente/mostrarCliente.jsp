@@ -84,13 +84,9 @@
 								</div>
 								<label class="control-label" for="cliente.cpf">CPF</label>
 								<div class="controls">
-									<input class="span6" name="cliente.cpf" value="${cliente.cpf}" type="text">
+									<input class="span6" name="cliente.cpf" id="cpf" value="${cliente.cpf}" type="text">
 								</div>
-								<%-- <label class="control-label" for="cep">CEP</label>
-							<div class="controls">
-								<input class="span6" id="cep" value="${cliente.cep}" type="text">
-								<a href="" class="btn btn-small btn-primary" id="linkbuscacep" onclick="montaurl();">Buscar CEP</a>
-							</div> --%>
+								
 								
 								<label class="control-label" for="cliente.email">e-mail</label>
 								<div class="controls">
@@ -184,6 +180,7 @@
 
 
 	<script src="/estrelacarnes/js/jquery-1.7.2.min.js"></script>
+	<script src="/estrelacarnes/js/jquery.maskedinput.min.js"></script>
 	<script src="/estrelacarnes/js/excanvas.min.js"></script>
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
@@ -199,6 +196,11 @@
 			var url = '/estrelacarnes/endereco/cadastrar/' + idCliente;
 			window.location.href = url;
 		};
+		$(function() {
+			
+			$("#cpf").mask("999.999.999-99");
+			$("#cep").mask("99999-999");
+	});
 	</script>
 </body>
 </html>

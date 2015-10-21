@@ -92,7 +92,7 @@
 										<span class="shortcut-label">Pedidos Abertos</span> </a>
 										<a href="${linkTo[AdminController].consultarUsuario}" class="shortcut"><i class="shortcut-icon icon-inbox"></i>
 									<span class="shortcut-label">Pedidos Fechados</span> </a>
-										 <a href="${linkTo[AdminController].consultarUsuario}" class="shortcut"><i class="shortcut-icon icon-search"></i>
+										 <a href="${linkTo[AdminController].consultarPedido}" class="shortcut"><i class="shortcut-icon icon-search"></i>
 										 <span class="shortcut-label">Consultar Pedidos</span> </a>
 
 								</div>

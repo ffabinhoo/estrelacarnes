@@ -59,6 +59,16 @@ public class AdminController {
 	    
 	}
 	
+	@Get("/pedido/consultar")
+	public void consultarPedido(){
+		
+	}
+	
+	@Post("/pedido/consultar")
+	public void consultarPedido(String status, String inicio, String fim){
+		System.out.println(inicio + fim);
+	}
+	
 	@Get("/pedido/consultar/fechados")
 	public void consultarPedidosFechados(){
 		String fechados = "F";

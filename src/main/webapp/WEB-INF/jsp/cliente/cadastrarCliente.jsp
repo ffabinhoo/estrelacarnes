@@ -83,9 +83,9 @@
 									<input class="span6" name="cliente.telefone" value="${cliente.telefone}" type="text">
 								</div>
 								
-								<label class="control-label" for="cliente.cpf" >CPF/CNPJ</label>
+								<label class="control-label" for="cpf" >CPF</label>
 								<div class="controls">
-									<input class="span6" name="cliente.cpf" value="${cliente.cpf}" type="text">
+									<input class="span6" name="cliente.cpf" id="cpf" value="${cliente.cpf}" type="text">
 								</div>
 								
 								<h2>Endereço</h2>
@@ -126,18 +126,7 @@
 								</div>
 							</div>
 					</div>
-					<%-- <div class="span5" style="background-color:">
-						<div class="control-group">
-								<label class="control-label" for="cliente.nome">Nome</label>
-								<div class="controls">
-									<input class="span6" name="cliente.nome" value="${cliente.nome}" type="text" required>
-								</div>
-								<label class="control-label" for="cliente.cpf" >CPF</label>
-								<div class="controls">
-									<input class="span6" name="cliente.cpf" value="${cliente.cpf}" type="text" required>
-								</div>
-						</div>
-					</div> --%>
+					
 					
 					</div>
 				</form>
@@ -184,7 +173,8 @@
 	</div>
 
 
-	<script src="/estrelacarnes/js/jquery-1.7.2.min.js"></script>
+	<script src="/estrelacarnes/js/jquery-1.8.3.min.js"></script>
+	<script src="/estrelacarnes/js/jquery.maskedinput.min.js"></script>
 	<script src="/estrelacarnes/js/excanvas.min.js"></script>
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
@@ -196,6 +186,11 @@
 		$( "#buscarCep" ).click(function() {
 			$('#formCadastrarCliente').attr('action', "/estrelacarnes/cliente/buscarCEP");
 			  $( "#formCadastrarCliente" ).submit();
+		});
+		 $(function() {
+			
+				$("#cpf").mask("999.999.999-99");
+				$("#cep").mask("99999-999");
 		});
 
 		/* function montaurl(){
