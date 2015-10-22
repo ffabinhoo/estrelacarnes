@@ -14,6 +14,7 @@
 <link href="/estrelacarnes/css/font-awesome.css" rel="stylesheet">
 <link href="/estrelacarnes/css/style.css" rel="stylesheet">
 <link href="/estrelacarnes/css/pages/dashboard.css" rel="stylesheet">
+<link href="/estrelacarnes/css/jquery.datetimepicker.css" rel="stylesheet">
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -74,22 +75,43 @@
 				</div>
 				<div class="row">
 					<div class="span12">
-						<div class="widget widget-table action-table" id="buscaUsuario">
-							<form action="${linkTo[AdminController].consultarUsuario}" method="post" id="formConsulta">
+						<div class="widget widget-table action-table" id="divConsultarPedido">
+							<form action="${linkTo[AdminController].consultarPedido}" method="post" id="formConsulta">
 								
-								<input type="text" class="" placeholder="Nome" id="nome" name="nome" value=""> <!-- <a href="#" id="idBuscaNome"><i
-									class="icon-search"></i></a> --><br />
-									<input type="text" class="" placeholder="Telefone" id="telefone" name="telefone" value=""> <!-- <a href="#" id="idBusca"><i
-									class="icon-search"></i></a> --><br />
-									<div class="form-actions">
-										<button  class="btn btn-primary btn-small" id="buscar">Buscar</button>
-										<button class="btn btn-small" id="voltarCliente" type="button">Voltar</button>
+								<div class="control-group">	
+									<label class="control-label" for="status">Status do Pedido</label>	
+									<div class="controls">
+										<label class="radio inline"> <input type="radio" id="status" name="status" value="A" ${'A' == statusBusca ? 'checked' : ''}>Aberto
+										</label>
+										<label class="radio inline"> <input type="radio" id="status" name="status" value="E" ${'E' == statusBusca ? 'checked' : ''}>Fechado
+										</label>
+									</div>
+								</div>
+								
+								<div class="control-group">	
+								<label class="control-label" for="status">Data do Pedido</label>	
+									<div class="form-group form-group-sm">
+										<div id="inicio">
+											<input type="text" name="inicio" id="datetimepicker" value="${inicio}"></input>
+										</div>
+									</div>
+									<div class="form-group form-group-sm">
+										<div id="fim">
+											<input type="text" name="fim" id="datetimepicker2" value="${fim}"></input>
+										</div>
+									</div>
+								</div>	 
+								
+								<br />
+								<div class="form-actions">
+									<button  class="btn btn-primary btn-small" id="buscar">Buscar</button>
+									<button class="btn btn-small" id="voltarCliente" type="button">Voltar</button>
 								</div>	
 							</form>
 						</div>
 					</div>
 					<!-- /row -->
-					<c:if test="${listaCliente.size() > 0}">
+					<c:if test="${listaPedidosEnviados.size() > 0}">
 						<div class="widget widget-table action-table" id="listaClientes">
 							<div class="widget-header">
 								<i class="icon-th-list"></i>
@@ -101,27 +123,41 @@
 									<thead>
 										<tr>
 											<th>Nome do Cliente</th>
-											<th>Telefone</th>
-											<th>CPF</th>
+											<th>Data do Pedido</th>
+											<th>Entrega</th>
 											<th class="td-actions"></th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="cliente" items="${listaCliente}">
+										<c:forEach var="pedido" items="${listaPedidos}">
 											<tr>
 											
-												<td><a href="${linkTo[ClienteController].mostrarCliente}${cliente.id}">${cliente.nome}</a></td>
-												<td>${cliente.celular}</td>
-												<td>${cliente.cpf}</td>
-												<td class="td-actions" style="width: 200px;">
-													<form action="${linkTo[AdminController].cadastrarPedidoNovo}" method="post" id="formAbrirPedido" style="float: left; padding: 1px;">
-														<input type="hidden" id="idCliente" name="idCliente" value="${cliente.id}">
-														<button class="button btn btn-success btn-small" id="abrirPedido">Abrir Pedido</button>
-													</form>
-													<form id="formExcluirCliente" method="get" action="${linkTo[ClienteController].excluirCliente}${cliente.id}" 
+												<td><a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}">${pedido.cliente.nome}</a></td>
+												<td><fmt:formatDate pattern="dd/MM HH:mm" value="${pedido.data}" /></td>
+												
+												<td>
+													<c:if test="${pedido.tipoEntrega eq 'D'}">
+														Delivery
+													</c:if>
+													<c:if test="${pedido.tipoEntrega eq 'P'}">
+														Pick-up
+													</c:if>
+													<c:if test="${pedido.tipoEntrega eq null}">
+														Pedido em Aberto
+													</c:if>
+												</td>
+												<td class="td-actions" style="width: 50px;">
+													<c:if test="${pedido.idEntrega eq null}">
+														<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${pedido.id}/KG/1/0" style="float: left; padding: 1px;">
+															<button class="button btn btn-success btn-small" id="verPedido">Editar</button>
+														</form>
+													</c:if>
+													<c:if test="${pedido.idEntrega ne null}">
+													<form id="formEnviarPedido" method="get" action="${linkTo[AdminController].pedidoEnviado}${pedido.id}" 
 														style="float: left; padding: 1px;">
-														<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirCliente">Excluir Cliente</button>
+															<button id="enviarPedido" name="enviarPedido" class="button btn-small btn-primary">Detalhes</button>
 													</form>
+													</c:if>
 												</td>
 											</tr>
 										<div id="confirm" class="modal hide fade">
@@ -175,12 +211,18 @@
 		</div>
 
 		<script src="/estrelacarnes/js/jquery-1.7.2.min.js"></script>
+		<script src="/estrelacarnes/js/jquery.datetimepicker.js"></script>
 		<script src="/estrelacarnes/js/excanvas.min.js"></script>
 		<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 		<script src="/estrelacarnes/js/bootstrap.js"></script>
 		<script>
-		$(function() {
-			$("#nome").focus();
+		jQuery('#datetimepicker').datetimepicker({
+			timepicker:false,
+			format : 'd/m/Y'
+		});
+		jQuery('#datetimepicker2').datetimepicker({
+			timepicker:false,
+			format : 'd/m/Y'
 		});
 			
 			document.getElementById("voltarCliente").onclick = function() {
@@ -194,9 +236,7 @@
 			        .one('click', '#delete', function() {
 			            $form.trigger('submit'); // submit the form
 			        });
-			        // .one() is NOT a typo of .on()
 			});
-			
 		</script>
 </body>
 </html>

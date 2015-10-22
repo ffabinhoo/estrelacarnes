@@ -55,6 +55,18 @@ public class DefaultEntregaDAO implements EntregaDAO, Serializable{
 		return lista;
 	}
 
+	@Override
+	public void alterar(Entrega entrega) {
+		this.entityManager.merge(entrega);
+		
+	}
+
+	@Override
+	public void excluir(Entrega entrega) {
+		this.entityManager.remove(entrega);
+		
+	}
+
 	
 
 	

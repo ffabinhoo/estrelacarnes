@@ -167,13 +167,19 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 					    int month = cal.get(Calendar.MONTH);
 					    month = month+1;
 					    String months = "";
+					    String days = "";
 					    if (month <10){
 					    	months = "0" + month; 
 					    }else{
 					    	months = month + "";
 					    }
 					    int day = cal.get(Calendar.DAY_OF_MONTH);
-					    inicio = months + "/" + day + "/" + year;
+					    if (day <10){
+					    	days = "0" + day; 
+					    }else{
+					    	days = day + "";
+					    }
+					    inicio = months + "/" + days + "/" + year;
 						String sqlInicio = " and  DATE_FORMAT(p.data, '%m/%d/%y') >= '"+inicio+"' ";
 						sql = sql.concat(sqlInicio);
 					} catch (ParseException e) {
@@ -190,18 +196,24 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 						Calendar cal = Calendar.getInstance();
 						
 					    cal.setTime(datafim);
-					    cal.add(Calendar.DAY_OF_MONTH, -1);
+					    //cal.add(Calendar.DAY_OF_MONTH, -1);
 					    int year = cal.get(Calendar.YEAR);
 					    int month = cal.get(Calendar.MONTH);
+					    int day = cal.get(Calendar.DAY_OF_MONTH);
 					    month = month+1;
 					    String months = "";
+					    String days = "";
 					    if (month <10){
 					    	months = "0" + month; 
 					    }else{
 					    	months = month + "";
 					    }
-					    int day = cal.get(Calendar.DAY_OF_MONTH);
-					    inicio = months + "/" + day + "/" + year;
+					    if (day <10){
+					    	days = "0" + day; 
+					    }else{
+					    	days = day + "";
+					    }
+					    fim = months + "/" + days + "/" + year;
 						String sqlFim = " and  DATE_FORMAT(p.data, '%m/%d/%y') <= '"+fim+"' ";
 						sql = sql.concat(sqlFim);
 					} catch (ParseException e) {

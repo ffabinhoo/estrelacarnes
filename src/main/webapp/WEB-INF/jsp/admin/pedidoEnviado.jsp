@@ -55,14 +55,11 @@
 		<div class="subnavbar-inner">
 			<div class="container">
 				<ul class="mainnav">
-					<li class="active"><a href="/estrelacarnes"><i
-							class="icon-dashboard"></i><span>Painel de Controle</span></a></li>
-					<li><a href="${linkTo[AdminController].consultarUsuario}"><i
-							class="icon-star-empty"></i><span>Cadastrar Pedido</span></a></li>
-					<li><a href="${linkTo[ClienteController].cadastrarCliente}"><i
-							class="icon-user"></i><span>Cadastrar Cliente</span></a></li>
-					<li><a href="${linkTo[AdminController].consultarUsuario}"><i
-							class="icon-search"></i><span>Consultar Cliente</span></a></li>
+					<li class="active"><a href="/estrelacarnes"><i class="icon-dashboard"></i><span>Painel de Controle</span></a></li>
+					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-star-empty"></i><span>Cadastrar Pedido</span></a></li>
+					<li><a href="${linkTo[AdminController].consultarPedido}"><i class="icon-search"></i><span>Consultar Pedido</span></a></li>
+					<li><a href="${linkTo[ClienteController].cadastrarCliente}"><i class="icon-user"></i><span>Cadastrar Cliente</span></a></li>
+					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-zoom-in"></i><span>Consultar Cliente</span></a></li>
 				</ul>
 			</div>
 		</div>
@@ -105,14 +102,16 @@
 					<div class="span12">
 						<h3>Pedido para Entrega 
 							<c:if test="${entrega.tipoEntrega eq 'D'}">
-								Delivery
+								Delivery - <fmt:formatDate pattern="dd/MM HH:mm" value="${entrega.data}" />
 							</c:if>
 							<c:if test="${entrega.tipoEntrega eq 'P'}">
-								Pick-up
+								Pick-up - <fmt:formatDate pattern="dd/MM HH:mm" value="${entrega.data}" />
 							</c:if>
 						</h3>
 					</div>
-					
+					<div class="span12">
+						<br/>
+					</div>
 					<c:if test="${entrega.tipoEntrega eq 'D'}">
 					<div class="span12">
 						<div class="widget widget-nopad">

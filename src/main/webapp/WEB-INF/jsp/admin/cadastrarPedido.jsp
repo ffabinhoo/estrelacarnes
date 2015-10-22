@@ -75,8 +75,9 @@
 				<ul class="mainnav">
 					<li class="active"><a href="/estrelacarnes"><i class="icon-dashboard"></i><span>Painel de Controle</span></a></li>
 					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-star-empty"></i><span>Cadastrar Pedido</span></a></li>
+					<li><a href="${linkTo[AdminController].consultarPedido}"><i class="icon-search"></i><span>Consultar Pedido</span></a></li>
 					<li><a href="${linkTo[ClienteController].cadastrarCliente}"><i class="icon-user"></i><span>Cadastrar Cliente</span></a></li>
-					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-search"></i><span>Consultar Cliente</span></a></li>
+					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-zoom-in"></i><span>Consultar Cliente</span></a></li>
 				</ul>
 			</div>
 		</div>
@@ -304,13 +305,13 @@
 									<form id="formEnviarPedido" method="post"
 										action="${linkTo[AdminController].enviarPedido}${pedido.id}">
 										<c:if test="${listaItensPedido.size() > 0}">
-											<button id="enviarPedido" name="enviarPedido" class="btn btn-primary">Enviar Pedido</button>
+											<button id="enviarPedido" name="enviarPedido" class="btn btn-primary">Próximo</button>
 										</c:if>
 										<button class="btn btn-small" id="voltarPedido" type="button">Voltar</button>
 									</form>
 
 								</div>
-								<div id="confirm" class="modal hide fade">
+								<%-- <div id="confirm" class="modal hide fade">
 									<div class="modal-body"><h3>Confirma enviar o Pedido?</h3>
 									<br />
 									Cliente: ${pedido.cliente.nome} <br />
@@ -324,7 +325,7 @@
 											class="btn btn-primary" id="confirmar">Confirmar</button>
 										<button type="button" data-dismiss="modal" class="btn">Cancelar</button>
 									</div>
-								</div>
+								</div> --%>
 							</div>
 						</div>
 						<div class="span2">
@@ -453,7 +454,7 @@
 				window.location.href = url;
 		};
 
-		$('button[name="enviarPedido"]').on('click', function(e){
+		/* $('button[name="enviarPedido"]').on('click', function(e){
 		    var $form=$(this).closest('form'); 
 		    e.preventDefault();
 		    $('#confirm').modal({ backdrop: 'static', keyboard: false })
@@ -461,7 +462,7 @@
 		            $form.trigger('submit'); // submit the form
 		        });
 		        // .one() is NOT a typo of .on()
-		}); 
+		});  */
 	</script>
 
 

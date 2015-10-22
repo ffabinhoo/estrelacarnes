@@ -52,8 +52,9 @@
 				<ul class="mainnav">
 					<li class="active"><a href="/estrelacarnes"><i class="icon-dashboard"></i><span>Painel de Controle</span></a></li>
 					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-star-empty"></i><span>Cadastrar Pedido</span></a></li>
+					<li><a href="${linkTo[AdminController].consultarPedido}"><i class="icon-search"></i><span>Consultar Pedido</span></a></li>
 					<li><a href="${linkTo[ClienteController].cadastrarCliente}"><i class="icon-user"></i><span>Cadastrar Cliente</span></a></li>
-					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-search"></i><span>Consultar Cliente</span></a></li>
+					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-zoom-in"></i><span>Consultar Cliente</span></a></li>
 					<!-- <li><a href="#"><i class="icon-list-alt"></i><span>Relatórios</span>
 					</a></li> -->
 					<!-- <li class="dropdown"><a href="javascript:;"
@@ -91,7 +92,7 @@
 										<a href="javascript:;" class="shortcut" id="pedidosHoje"><i class="shortcut-icon icon-list-alt"></i>
 										<span class="shortcut-label">Pedidos Abertos</span> </a>
 										<a href="${linkTo[AdminController].consultarUsuario}" class="shortcut"><i class="shortcut-icon icon-inbox"></i>
-									<span class="shortcut-label">Pedidos Fechados</span> </a>
+									<span class="shortcut-label">Pedidos Enviados</span> </a>
 										 <a href="${linkTo[AdminController].consultarPedido}" class="shortcut"><i class="shortcut-icon icon-search"></i>
 										 <span class="shortcut-label">Consultar Pedidos</span> </a>
 
@@ -131,15 +132,17 @@
 														style="float: left; padding: 1px;">
 														<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirPedido">Excluir</button>
 													</form>
-													<form id="formEnviarPedido" method="post" action="${linkTo[AdminController].enviarPedido}${pedido.id}" 
-														style="float: left; padding: 1px;">
-															<button id="enviarPedido" name="enviarPedido" class="button btn-small btn-primary">Enviar</button>
-													</form>
+													<c:if test="${pedido.idEntrega ne null}">
+														<form id="formEnviarPedidoSaida" method="post" action="${linkTo[AdminController].enviarPedidoSaida}${pedido.id}" 
+															style="float: left; padding: 1px;">
+																<button id="enviarPedidoSaida" name="enviarPedidoSaida" class="button btn-small btn-primary">Enviar</button>
+														</form>
+													</c:if>
 												</td>
 
 											</tr>
 											<div id="confirm" class="modal hide fade">
-												<div class="modal-body">Confirma exclusão do Pedido?</div>
+												<div class="modal-body"><h4>Confirma exclusão do Pedido?</h4></div>
 												<div class="modal-footer">
 													<button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Excluir</button>
 													<button type="button" data-dismiss="modal" class="btn">Cancelar</button>
@@ -229,14 +232,14 @@
 				$form.trigger('submit'); // submit the form
 			});
 		});
-		 /* $('button[name="enviarPedido"]').on('click', function(e){
+		 $('button[name="enviarPedidoSaida"]').on('click', function(e){
 		    var $form=$(this).closest('form'); 
 		    e.preventDefault();
 		    $('#confirmEnviar').modal({ backdrop: 'static', keyboard: false })
 		        .one('click', '#confirmar', function() {
 		            $form.trigger('submit'); // submit the form
 		        });
-		}); */  
+		});   
 	</script>
 
 </body>

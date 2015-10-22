@@ -282,7 +282,14 @@ public class AdminController {
 	
 	@Get("/pedido/excluir/{pedido.id}")
 	public void excluirPedido(Pedido pedido){
+		pedido = pedidoDAO.load(pedido);
 		pedidoDAO.excluirItensPedido(pedido);
+		if (pedido.getIdEntrega()!=null){
+			Entrega entrega = new Entrega();
+			entrega.setId(Integer.valueOf(pedido.getIdEntrega()));
+			entrega = entregaDAO.load(entrega);
+			entregaDAO.excluir(entrega);
+		}
 		pedidoDAO.excluirPedido(pedido);
 		result.redirectTo(AdminController.class).principal();
 		
@@ -300,9 +307,17 @@ public class AdminController {
 	@Post("/pedido/enviar/{pedido.id}")
 	public void enviarPedido(Pedido pedido){
 		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
-		//pedidoObj.setStatus("F");
+		pedidoObj.setStatus("A");
 		pedidoDAO.alterarPedido(pedidoObj);
 		result.redirectTo(AdminController.class).resumoPedido(pedidoObj);
+	}
+	
+	@Post("/pedido/enviar/saida/{pedido.id}")
+	public void enviarPedidoSaida(Pedido pedido){
+		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
+		pedidoObj.setStatus("E");
+		pedidoDAO.alterarPedido(pedidoObj);
+		result.redirectTo(AdminController.class).pedidoEnviado(pedidoObj);
 	}
 	
 	@Get("/pedido/layout")
@@ -334,12 +349,17 @@ public class AdminController {
 			entrega.setPedido(pedido);
 			entrega.setTipoEntrega(tipoEntrega);
 			entrega.setData(new Date());
-			pedido.setStatus("E");
+			pedido.setStatus("A");
+			if (pedido.getIdEntrega()==null){
+				entregaDAO.incluir(entrega);
+				pedido.setIdEntrega(entrega.getId().toString());
+			}else{
+				entrega.setId(Integer.valueOf(pedido.getIdEntrega()));
+				entregaDAO.alterar(entrega);
+			}
 			
-			entregaDAO.incluir(entrega);
-			pedido.setIdEntrega(entrega.getId().toString());
 			pedido = pedidoDAO.alterarPedido(pedido);
-			result.redirectTo(AdminController.class).pedidoEnviado(pedido);
+			result.redirectTo(AdminController.class).principal();
 		}
 		
 		
