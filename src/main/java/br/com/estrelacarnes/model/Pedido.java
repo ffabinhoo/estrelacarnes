@@ -43,7 +43,11 @@ public class Pedido implements Serializable{
 	private Cliente cliente = new Cliente();
 	
 	//@OneToOne(fetch = FetchType.EAGER, mappedBy="pedido")
+	//@Transient
 	//private Entrega entrega = new Entrega();
+	
+	@Transient
+	private String tipoEntrega;
 	
 	@Transient
 	List<Item> itens = new ArrayList<Item>();
@@ -110,6 +114,14 @@ public class Pedido implements Serializable{
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+	}
+
+	public String getTipoEntrega() {
+		return tipoEntrega;
+	}
+
+	public void setTipoEntrega(String tipoEntrega) {
+		this.tipoEntrega = tipoEntrega;
 	}
 
 	/*public Entrega getEntrega() {

@@ -80,9 +80,9 @@
 								<div class="control-group">	
 									<label class="control-label" for="status">Status do Pedido</label>	
 									<div class="controls">
-										<label class="radio inline"> <input type="radio" id="status" name="status" value="A" >Aberto
+										<label class="radio inline"> <input type="radio" id="status" name="status" value="A" ${'A' == statusBusca ? 'checked' : ''}>Aberto
 										</label>
-										<label class="radio inline"> <input type="radio" id="status" name="status" value="E" >Fechado
+										<label class="radio inline"> <input type="radio" id="status" name="status" value="E" ${'E' == statusBusca ? 'checked' : ''}>Fechado
 										</label>
 									</div>
 								</div>
@@ -91,12 +91,12 @@
 								<label class="control-label" for="status">Data do Pedido</label>	
 									<div class="form-group form-group-sm">
 										<div id="inicio">
-											<input type="text" name="inicio" id="datetimepicker"></input>
+											<input type="text" name="inicio" id="datetimepicker" value="${inicio}"></input>
 										</div>
 									</div>
 									<div class="form-group form-group-sm">
 										<div id="fim">
-											<input type="text" name="fim" id="datetimepicker2"></input>
+											<input type="text" name="fim" id="datetimepicker2" value="${fim}"></input>
 										</div>
 									</div>
 								</div>	 
@@ -123,7 +123,7 @@
 										<tr>
 											<th>Nome do Cliente</th>
 											<th>Data do Pedido</th>
-											<th>Tipo de Entrega</th>
+											<th>Entrega</th>
 											<th class="td-actions"></th>
 										</tr>
 									</thead>
@@ -132,10 +132,31 @@
 											<tr>
 											
 												<td><a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}">${pedido.cliente.nome}</a></td>
-												<td>${pedido.data}</td>
-												<td>${pedido.idEntrega}</td>
-												<td class="td-actions" style="width: 200px;">
-													
+												<td><fmt:formatDate pattern="dd/MM HH:mm" value="${pedido.data}" /></td>
+												
+												<td>
+													<c:if test="${pedido.tipoEntrega eq 'D'}">
+														Delivery
+													</c:if>
+													<c:if test="${pedido.tipoEntrega eq 'P'}">
+														Pick-up
+													</c:if>
+													<c:if test="${pedido.tipoEntrega eq null}">
+														Pedido em Aberto
+													</c:if>
+												</td>
+												<td class="td-actions" style="width: 50px;">
+													<c:if test="${pedido.idEntrega eq null}">
+														<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${pedido.id}/KG/1/0" style="float: left; padding: 1px;">
+															<button class="button btn btn-success btn-small" id="verPedido">Editar</button>
+														</form>
+													</c:if>
+													<c:if test="${pedido.idEntrega ne null}">
+													<form id="formEnviarPedido" method="get" action="${linkTo[AdminController].pedidoEnviado}${pedido.id}" 
+														style="float: left; padding: 1px;">
+															<button id="enviarPedido" name="enviarPedido" class="button btn-small btn-primary">Detalhes</button>
+													</form>
+													</c:if>
 												</td>
 											</tr>
 										<div id="confirm" class="modal hide fade">

@@ -1,7 +1,11 @@
 package br.com.estrelacarnes.dao;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -140,15 +144,72 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 		return lista;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Pedido> consultarPedido(String status, String inicio, String fim) {
 		List<Pedido> lista = new ArrayList<Pedido>();
-		String sql = "select p from Pedido p where 1 = 1 ";
-				if (status!=""){
+		String sql = "select *, DATE_FORMAT(p.data, '%m-%d-%Y') dataformatada  from Pedido p where 1 = 1 ";
+				if (status != "" && status != null){
 					String sqlStatus = " and  p.status = '"+status+"' ";
 					sql = sql.concat(sqlStatus);
 				}
-		lista = entityManager.createQuery(sql, Pedido.class).getResultList();
+				if (inicio != "" && inicio != null){
+					
+					 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+					Date datainicio = new Date();
+					try {
+						datainicio = dateFormat.parse(inicio);
+						Calendar cal = Calendar.getInstance();
+						
+					    cal.setTime(datainicio);
+					    cal.add(Calendar.DAY_OF_MONTH, -1);
+					    int year = cal.get(Calendar.YEAR);
+					    int month = cal.get(Calendar.MONTH);
+					    month = month+1;
+					    String months = "";
+					    if (month <10){
+					    	months = "0" + month; 
+					    }else{
+					    	months = month + "";
+					    }
+					    int day = cal.get(Calendar.DAY_OF_MONTH);
+					    inicio = months + "/" + day + "/" + year;
+						String sqlInicio = " and  DATE_FORMAT(p.data, '%m/%d/%y') >= '"+inicio+"' ";
+						sql = sql.concat(sqlInicio);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					 
+				}
+				if (fim != "" && fim != null){
+					
+					 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+					Date datafim = new Date();
+					try {
+						datafim = dateFormat.parse(fim);
+						Calendar cal = Calendar.getInstance();
+						
+					    cal.setTime(datafim);
+					    cal.add(Calendar.DAY_OF_MONTH, -1);
+					    int year = cal.get(Calendar.YEAR);
+					    int month = cal.get(Calendar.MONTH);
+					    month = month+1;
+					    String months = "";
+					    if (month <10){
+					    	months = "0" + month; 
+					    }else{
+					    	months = month + "";
+					    }
+					    int day = cal.get(Calendar.DAY_OF_MONTH);
+					    inicio = months + "/" + day + "/" + year;
+						String sqlFim = " and  DATE_FORMAT(p.data, '%m/%d/%y') <= '"+fim+"' ";
+						sql = sql.concat(sqlFim);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					 
+				}
+		lista = entityManager.createNativeQuery(sql, Pedido.class).getResultList();
 		return lista;
 	}
 

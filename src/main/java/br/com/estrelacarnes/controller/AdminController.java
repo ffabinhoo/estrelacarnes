@@ -67,6 +67,20 @@ public class AdminController {
 	@Post("/pedido/consultar")
 	public void consultarPedido(String status, String inicio, String fim){
 		List<Pedido> listaPedidos = pedidoDAO.consultarPedido(status, inicio, fim);
+		
+		for (int i = 0; i < listaPedidos.size(); i++) {
+			Entrega entrega = new Entrega();
+			if (listaPedidos.get(i).getIdEntrega()!=null){
+				entrega.setId(Integer.valueOf(listaPedidos.get(i).getIdEntrega()));
+				entrega = entregaDAO.load(entrega);
+				listaPedidos.get(i).setTipoEntrega(entrega.getTipoEntrega());
+			}
+			
+			
+		}
+		result.include("inicio", inicio);
+		result.include("fim",fim);
+		result.include("statusBusca", status);
 		result.include("listaPedidos", listaPedidos);
 	}
 	
