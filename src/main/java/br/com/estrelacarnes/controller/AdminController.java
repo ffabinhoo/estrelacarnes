@@ -66,7 +66,8 @@ public class AdminController {
 	
 	@Post("/pedido/consultar")
 	public void consultarPedido(String status, String inicio, String fim){
-		System.out.println(inicio + fim);
+		List<Pedido> listaPedidos = pedidoDAO.consultarPedido(status, inicio, fim);
+		result.include("listaPedidos", listaPedidos);
 	}
 	
 	@Get("/pedido/consultar/fechados")

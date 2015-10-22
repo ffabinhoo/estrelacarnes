@@ -140,4 +140,16 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 		return lista;
 	}
 
+	@Override
+	public List<Pedido> consultarPedido(String status, String inicio, String fim) {
+		List<Pedido> lista = new ArrayList<Pedido>();
+		String sql = "select p from Pedido p where 1 = 1 ";
+				if (status!=""){
+					String sqlStatus = " and  p.status = '"+status+"' ";
+					sql = sql.concat(sqlStatus);
+				}
+		lista = entityManager.createQuery(sql, Pedido.class).getResultList();
+		return lista;
+	}
+
 }

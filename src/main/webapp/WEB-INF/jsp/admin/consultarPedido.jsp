@@ -110,7 +110,7 @@
 						</div>
 					</div>
 					<!-- /row -->
-					<c:if test="${listaCliente.size() > 0}">
+					<c:if test="${listaPedidos.size() > 0}">
 						<div class="widget widget-table action-table" id="listaClientes">
 							<div class="widget-header">
 								<i class="icon-th-list"></i>
@@ -122,27 +122,20 @@
 									<thead>
 										<tr>
 											<th>Nome do Cliente</th>
-											<th>Telefone</th>
-											<th>CPF</th>
+											<th>Data do Pedido</th>
+											<th>Tipo de Entrega</th>
 											<th class="td-actions"></th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="cliente" items="${listaCliente}">
+										<c:forEach var="pedido" items="${listaPedidos}">
 											<tr>
 											
-												<td><a href="${linkTo[ClienteController].mostrarCliente}${cliente.id}">${cliente.nome}</a></td>
-												<td>${cliente.celular}</td>
-												<td>${cliente.cpf}</td>
+												<td><a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}">${pedido.cliente.nome}</a></td>
+												<td>${pedido.data}</td>
+												<td>${pedido.idEntrega}</td>
 												<td class="td-actions" style="width: 200px;">
-													<form action="${linkTo[AdminController].cadastrarPedidoNovo}" method="post" id="formAbrirPedido" style="float: left; padding: 1px;">
-														<input type="hidden" id="idCliente" name="idCliente" value="${cliente.id}">
-														<button class="button btn btn-success btn-small" id="abrirPedido">Abrir Pedido</button>
-													</form>
-													<form id="formExcluirCliente" method="get" action="${linkTo[ClienteController].excluirCliente}${cliente.id}" 
-														style="float: left; padding: 1px;">
-														<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirCliente">Excluir Cliente</button>
-													</form>
+													
 												</td>
 											</tr>
 										<div id="confirm" class="modal hide fade">
