@@ -55,6 +55,16 @@ public class AdminController {
 	@Get("/")
 	public void principal() {
 	    List<Pedido> listaPedidosAbertos = pedidoDAO.listarPedidosAbertos();
+	    for (int i = 0; i < listaPedidosAbertos.size(); i++) {
+			Entrega entrega = new Entrega();
+			if (listaPedidosAbertos.get(i).getIdEntrega()!=null){
+				entrega.setId(Integer.valueOf(listaPedidosAbertos.get(i).getIdEntrega()));
+				entrega = entregaDAO.load(entrega);
+				listaPedidosAbertos.get(i).setTipoEntrega(entrega.getTipoEntrega());
+			}
+			
+			
+		}
 	    result.include("listaPedidosAbertos", listaPedidosAbertos);
 	    
 	}
@@ -316,6 +326,12 @@ public class AdminController {
 	public void enviarPedidoSaida(Pedido pedido){
 		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
 		pedidoObj.setStatus("E");
+		
+		Entrega entrega = new Entrega();
+		entrega.setId(Integer.valueOf(pedidoObj.getIdEntrega()));
+		entrega = entregaDAO.load(entrega);
+		entrega.setData(new Date());
+		entregaDAO.alterar(entrega);
 		pedidoDAO.alterarPedido(pedidoObj);
 		result.redirectTo(AdminController.class).pedidoEnviado(pedidoObj);
 	}

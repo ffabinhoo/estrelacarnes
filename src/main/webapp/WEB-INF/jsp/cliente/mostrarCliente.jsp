@@ -67,17 +67,17 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="span12">
+					<div class="span6">
 						<form id="formAlterarCliente" method="post" action="${linkTo[ClienteController].alterarCliente}" style="float: left; padding: 1px;">
-							<input class="span6" id="id" name="cliente.id" value="${cliente.id}" type="hidden">
+							<input id="id" name="cliente.id" value="${cliente.id}" type="hidden">
 							<div class="control-group">
 								<label class="control-label" for="cliente.nome">Nome</label>
-								<div class="controls">
-									<input class="span6" name="cliente.nome" value="${cliente.nome}" type="text">
+								<div class="controls" >
+									<input class="span6" name="cliente.nome" value="${cliente.nome}" type="text" required>
 								</div>
 								<label class="control-label" id="cliente.celular">Telefone Celular</label>
 								<div class="controls">
-									<input class="span6" name="cliente.celular" value="${cliente.celular}" type="text">
+									<input class="span6" name="cliente.celular" value="${cliente.celular}" type="text" required>
 								</div>
 								<label class="control-label" for="cliente.telefone">Telefone Residencial</label>
 								<div class="controls">
@@ -100,8 +100,13 @@
 									<button class="btn btn-small btn-primary pull-right" id="cadastrarEndereco" type="button">Cadastrar Endereço</button>
 								</div>
 						</form>
-
 					</div>
+				</div>
+				<div class="span5">
+					<form action="${linkTo[AdminController].cadastrarPedidoNovo}" method="post" id="formAbrirPedido" style="float: left; padding: 1px;">
+						<input type="hidden" id="idCliente" name="idCliente" value="${cliente.id}">
+						<button class="button btn btn-success " id="abrirPedido">Abrir Pedido</button>
+					</form>
 				</div>
 			</div>
 			

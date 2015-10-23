@@ -91,8 +91,8 @@
 									 
 										<a href="javascript:;" class="shortcut" id="pedidosHoje"><i class="shortcut-icon icon-list-alt"></i>
 										<span class="shortcut-label">Pedidos Abertos</span> </a>
-										<a href="${linkTo[AdminController].consultarUsuario}" class="shortcut"><i class="shortcut-icon icon-inbox"></i>
-									<span class="shortcut-label">Pedidos Enviados</span> </a>
+										<%-- <a href="${linkTo[AdminController].consultarUsuario}" class="shortcut"><i class="shortcut-icon icon-inbox"></i>
+									<span class="shortcut-label">Pedidos Enviados</span> </a> --%>
 										 <a href="${linkTo[AdminController].consultarPedido}" class="shortcut"><i class="shortcut-icon icon-search"></i>
 										 <span class="shortcut-label">Consultar Pedidos</span> </a>
 
@@ -114,6 +114,7 @@
 											<th>Nº do Pedido</th>
 											<th>Cliente - Celular</th>
 											<th>Data</th>
+											<th>Entrega</th>
 											<th class="td-actions"></th>
 										</tr>
 									</thead>
@@ -124,6 +125,18 @@
 												<td><a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}">
 													${pedido.cliente.nome} - ${pedido.cliente.celular}</a></td>
 												<td><fmt:formatDate pattern="dd/MM HH:mm" value="${pedido.data}" /></td>
+												<td>
+													<c:if test="${pedido.tipoEntrega eq 'D'}">
+														Delivery
+													</c:if>
+													<c:if test="${pedido.tipoEntrega eq 'P'}">
+														Pick-up
+													</c:if>
+													<c:if test="${pedido.tipoEntrega eq null}">
+														Não selecionado
+													</c:if>
+												</td>
+												
 												<td class="td-actions" style="width: 200px;">
 													<form id="formVerPedido" method="get" action="cadastrarPedido/${pedido.id}/KG/1/0" style="float: left; padding: 1px;">
 														<button class="button btn btn-success btn-small" id="verPedido">Editar</button>

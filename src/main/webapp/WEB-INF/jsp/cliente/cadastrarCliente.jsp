@@ -92,7 +92,7 @@
 								<h2>Endereço</h2>
 								
 								<div class="controls">
-									<label class="control-label" for="cep">CEP</label>
+									<label class="control-label" for="cep">CEP *</label>
 									<input class="span6" id="cep" name="cliente.endereco.cep" value="${cliente.endereco.cep}" type="text" required="required">
 									<!-- <a href="" class="btn btn-small btn-primary" id="linkbuscacep" onclick="montaurl();">Buscar CEP</a> -->
 										<button name="buscarCep" value="buscarCep" class="btn btn-primary btn-small" id="buscarCep">
@@ -127,6 +127,7 @@
 								</div>
 							</div>
 					</div>
+					
 					
 					
 					</div>
