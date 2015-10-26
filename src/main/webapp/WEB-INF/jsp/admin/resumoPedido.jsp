@@ -96,9 +96,9 @@
 									<h3>Escolha Tipo de Entrega</h3>
 								</div>
 								<div class="widget-content">
-									<label class="radio inline"> <input type="radio" id="ctipoEntrega" name="ctipoEntrega" value="P" > Pick-up
+									<label class="radio inline"> <input type="radio" id="ctipoEntrega" name="ctipoEntrega" value="P" ${'P' == entrega.tipoEntrega ? 'checked' : ''} > Pick-up
 									</label>
-									<label class="radio inline"> <input type="radio" id="ctipoEntrega" name="ctipoEntrega" value="D" > Delivery
+									<label class="radio inline"> <input type="radio" id="ctipoEntrega" name="ctipoEntrega" value="D" ${'D' == entrega.tipoEntrega ? 'checked' : ''}> Delivery
 									</label> 
 								</div>
 							</div>
@@ -257,9 +257,24 @@
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
 	<script>
-	$("#enderecoDelivery").hide();
-	$("#enderecoPick").hide();
+	$(document).ready(function() {
+		$("#enderecoDelivery").hide();
+		$("#enderecoPick").hide();
+		var tipoEntrega = $('input[name=ctipoEntrega]:checked',	'#formEnviarPedido').val();
+		if (tipoEntrega == 'D'){
+			$("#enderecoDelivery").show();
+			$("#enderecoPick").hide();						
+		} 
+		if (tipoEntrega == 'P'){
+			$("#enderecoDelivery").hide();
+			$("#enderecoPick").show();
+		}
+	});
 
+	
+	/* $("#enderecoDelivery").hide();
+	$("#enderecoPick").hide();
+ */
 	$("input[name=ctipoEntrega]").click(function() {
 		var tipoEntrega = $('input[name=ctipoEntrega]:checked',	'#formEnviarPedido').val();
 		if (tipoEntrega == 'D'){

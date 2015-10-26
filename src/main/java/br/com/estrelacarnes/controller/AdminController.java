@@ -309,6 +309,15 @@ public class AdminController {
 	@Get("/pedido/resumoPedido/{pedido.id}")
 	public void resumoPedido(Pedido pedido){
 		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
+		Entrega entrega = new Entrega();
+		if (pedido.getIdEntrega()!=null){
+			entrega.setId(Integer.valueOf(pedidoObj.getIdEntrega()));
+			entrega = entregaDAO.load(entrega);
+			result.include("entrega", entrega);
+		}else{
+			result.include("entrega", entrega);
+		}
+		
 		result.include("pedido", pedidoObj);
 	}
 	
