@@ -149,7 +149,7 @@
 															<c:forEach var="endereco" items="${pedido.cliente.enderecos}">
 															
 																<div class="plan-container">
-																	<div class="plan">
+																	<div class="plan ${endereco.id == entrega.endereco.id ? 'green' : ''}">
 																		<div class="plan-header">
 																			<div class="plan-title">${endereco.endereco} ${endereco.complemento}</div>
 																		</div>
