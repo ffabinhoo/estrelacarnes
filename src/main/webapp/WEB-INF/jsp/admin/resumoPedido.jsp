@@ -176,6 +176,17 @@
 									</div>
 								</div>
 							</div>
+							<div class="widget widget-table action-table"
+								id="idDivObservacao">
+								<div class="widget-header" id="idTituloObservacao">
+									<i class="icon-th-list"></i>
+									<h3>Observação</h3>
+								</div>
+								<div class="widget-content">
+									<textarea rows="5" cols="5" class="span4" id="observacao"
+										name="pedido.observacao">${pedido.observacao}</textarea>
+								</div>
+							</div>
 					</form>
 				</div>
 

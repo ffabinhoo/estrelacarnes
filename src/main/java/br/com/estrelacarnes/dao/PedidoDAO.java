@@ -45,6 +45,8 @@ public interface PedidoDAO {
 	List<Pedido> listarPedidos(String fechados);
 
 	List<Pedido> consultarPedido(String status, String inicio, String fim);
+
+	List<Pedido> listarPedidosEnviadosHoje();
 	
 
 }

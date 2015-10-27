@@ -161,7 +161,7 @@
 													<c:if test="${pedido.status eq 'E'}">
 													<form id="formEnviarPedido" method="get" action="${linkTo[AdminController].pedidoEnviado}${pedido.id}" 
 														style="float: left; padding: 1px;">
-															<button id="enviarPedido" name="enviarPedido" class="button btn-small btn-primary">Detalhes</button>
+															<button id="detalhePedido" name="detalhePedido" class="button btn-small btn-primary">Detalhes</button>
 													</form>
 													</c:if>
 												</td>

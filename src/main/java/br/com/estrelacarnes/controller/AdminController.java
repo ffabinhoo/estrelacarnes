@@ -54,6 +54,8 @@ public class AdminController {
 	
 	@Get("/")
 	public void principal() {
+		List<Pedido> listaPedidosEnviadosHoje = pedidoDAO.listarPedidosEnviadosHoje();
+		
 	    List<Pedido> listaPedidosAbertos = pedidoDAO.listarPedidosAbertos();
 	    for (int i = 0; i < listaPedidosAbertos.size(); i++) {
 			Entrega entrega = new Entrega();
@@ -65,6 +67,18 @@ public class AdminController {
 			
 			
 		}
+	    for (int i = 0; i < listaPedidosEnviadosHoje.size(); i++) {
+			Entrega entrega = new Entrega();
+			if (listaPedidosEnviadosHoje.get(i).getIdEntrega()!=null){
+				entrega.setId(Integer.valueOf(listaPedidosEnviadosHoje.get(i).getIdEntrega()));
+				entrega = entregaDAO.load(entrega);
+				listaPedidosEnviadosHoje.get(i).setTipoEntrega(entrega.getTipoEntrega());
+			}
+			
+			
+		}
+	    
+	    result.include("listaPedidosEnviadosHoje", listaPedidosEnviadosHoje);
 	    result.include("listaPedidosAbertos", listaPedidosAbertos);
 	    
 	}
@@ -94,11 +108,17 @@ public class AdminController {
 		result.include("listaPedidos", listaPedidos);
 	}
 	
-	@Get("/pedido/consultar/fechados")
+	/*@Get("/pedido/consultar/fechados")
 	public void consultarPedidosFechados(){
 		String fechados = "F";
 		List<Pedido> listaPedidosFechados = pedidoDAO.listarPedidos(fechados);
 		result.include("listaPedidosFechados", listaPedidosFechados);
+	}*/
+	@Get("/pedido/consultar/enviadosHoje")
+	public void consultarPedidosEnviadosHoje(){
+		//String fechados = "F";
+		List<Pedido> listaPedidosEnviadosHoje = pedidoDAO.listarPedidosEnviadosHoje();
+		result.include("listaPedidosEnviadosHoje", listaPedidosEnviadosHoje);
 	}
 	
 	
@@ -335,7 +355,8 @@ public class AdminController {
 	public void enviarPedidoSaida(Pedido pedido){
 		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
 		pedidoObj.setStatus("E");
-		
+		pedidoObj.setData(new Date());//Atualiza data de envio do pedido
+		pedidoObj.setValor(pedido.getValor());
 		Entrega entrega = new Entrega();
 		entrega.setId(Integer.valueOf(pedidoObj.getIdEntrega()));
 		entrega = entregaDAO.load(entrega);
@@ -362,7 +383,9 @@ public class AdminController {
 			result.redirectTo(AdminController.class).resumoPedido(pedido);
 		}
 		if (tipoEntrega!=null){
+			String observacao = pedido.getObservacao();
 			pedido = pedidoDAO.load(pedido.getId());
+			pedido.setObservacao(observacao);
 			if (endereco.getId()!=null){
 				endereco = clienteDAO.consultarEndereco(endereco);
 			}else{

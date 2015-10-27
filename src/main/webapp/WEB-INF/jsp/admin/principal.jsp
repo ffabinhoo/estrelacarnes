@@ -91,8 +91,8 @@
 									 
 										<a href="javascript:;" class="shortcut" id="pedidosHoje"><i class="shortcut-icon icon-list-alt"></i>
 										<span class="shortcut-label">Pedidos Abertos</span> </a>
-										<%-- <a href="${linkTo[AdminController].consultarUsuario}" class="shortcut"><i class="shortcut-icon icon-inbox"></i>
-									<span class="shortcut-label">Pedidos Enviados</span> </a> --%>
+										<a href="javascript:;" id="pedidosEnviadosHoje" class="shortcut"><i class="shortcut-icon icon-inbox"></i>
+									<span class="shortcut-label">Pedidos Enviados</span> </a>
 										 <a href="${linkTo[AdminController].consultarPedido}" class="shortcut"><i class="shortcut-icon icon-search"></i>
 										 <span class="shortcut-label">Consultar Pedidos</span> </a>
 
@@ -148,6 +148,7 @@
 													<c:if test="${pedido.idEntrega ne null}">
 														<form id="formEnviarPedidoSaida" method="post" action="${linkTo[AdminController].enviarPedidoSaida}${pedido.id}" 
 															style="float: left; padding: 1px;">
+															<input type="hidden" name="pedido.valor" id="valorPedido" value="">
 																<button id="enviarPedidoSaida" name="enviarPedidoSaida" class="button btn-small btn-primary">Enviar</button>
 														</form>
 													</c:if>
@@ -163,6 +164,9 @@
 											</div>
 											<div id="confirmEnviar" class="modal hide fade">
 												<div class="modal-body"><h3>Confirma enviar o Pedido?</h3>
+													<br />
+													<label class="control-label" for="valor">Valor:</label>
+													<input type="text" id="valor" name="valor">
 												<br />
 												</div>
 												
@@ -179,6 +183,65 @@
 							</div>
 							<!-- /widget-content -->
 						</div>
+						
+						<div class="widget widget-table action-table" id="listaPedidosEnviadosHoje">
+							<div class="widget-header">
+								<i class="icon-th-list"></i>
+								<h3>Pedidos Enviados Hoje</h3>
+							</div>
+							<!-- /widget-header -->
+							<div class="widget-content">
+								<table class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th>Nº do Pedido</th>
+											<th>Cliente - Celular</th>
+											<th>Data</th>
+											<th>Entrega</th>
+											<th class="td-actions"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="pedido" items="${listaPedidosEnviadosHoje}">
+											<tr>
+												<td style="width: 100px;">${pedido.id}</td>
+												<td><a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}">
+													${pedido.cliente.nome} - ${pedido.cliente.celular}</a></td>
+												<td><fmt:formatDate pattern="dd/MM HH:mm" value="${pedido.data}" /></td>
+												<td>
+													<c:if test="${pedido.tipoEntrega eq 'D'}">
+														Delivery
+													</c:if>
+													<c:if test="${pedido.tipoEntrega eq 'P'}">
+														Pick-up
+													</c:if>
+													<c:if test="${pedido.tipoEntrega eq null}">
+														Não selecionado
+													</c:if>
+												</td>
+												
+												<td class="td-actions" style="width: 200px;">
+													<form id="formVerPedido" method="get" action="${linkTo[AdminController].pedidoEnviado}${pedido.id}" style="float: left; padding: 1px;">
+														<button id="detalhePedido" name="detalhePedido" class="button btn-small btn-primary">Detalhes</button>
+													</form>
+													
+													
+												</td>
+
+											</tr>
+											
+											
+										</c:forEach>
+
+									</tbody>
+								</table>
+							</div>
+							<!-- /widget-content -->
+						</div>
+						
+						
+						
+						
 					</div>
 					<!-- /span6 -->
 
@@ -235,6 +298,13 @@
 				$("#listaPedidosHoje").toggle("slow");
 			});
 		});
+		$(function() {
+			$("#listaPedidosEnviadosHoje").hide();
+			$("#pedidosEnviadosHoje").click(function() {
+				$("#listaPedidosHoje").hide();	
+				$("#listaPedidosEnviadosHoje").toggle("slow");
+			});
+		});
 		$('button[name="_method"]').on('click', function(e) {
 			var $form = $(this).closest('form');
 			e.preventDefault();
@@ -247,9 +317,15 @@
 		});
 		 $('button[name="enviarPedidoSaida"]').on('click', function(e){
 		    var $form=$(this).closest('form'); 
+		    
 		    e.preventDefault();
 		    $('#confirmEnviar').modal({ backdrop: 'static', keyboard: false })
 		        .one('click', '#confirmar', function() {
+		        	var valor = $('#valor').val();
+			        
+			        $("#valorPedido").val(valor);
+			        var valor2 = $('#valorPedido').val();
+			        
 		            $form.trigger('submit'); // submit the form
 		        });
 		});   

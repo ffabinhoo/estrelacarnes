@@ -122,7 +122,7 @@
 							<div class="widget-content">
 								<div class="pricing-plans plans-1">
 									<div class="plan-container">
-										<div class="plan">
+										<div class="plan green">
 											<div class="plan-header">
 												<div class="plan-title">${entrega.endereco.endereco}-
 													${entrega.endereco.complemento}</div>
@@ -144,7 +144,28 @@
 						</div>
 					</div>
 					</c:if>
-
+					<div class="span12">
+						<div class="widget widget-table action-table" id="idDivObservacao">
+								<div class="widget-header" id="idTituloObservacao">
+									<i class="icon-th-list"></i>
+									<h3>Observação</h3>
+								</div>
+								<div class="widget-content">
+									<label>${pedido.observacao}</label>
+								</div>
+						</div>
+					</div>
+					<div class="span12">
+						<div class="widget widget-table action-table" id="idDivObservacao">
+								<div class="widget-header" id="idTituloObservacao">
+									<i class="icon-th-list"></i>
+									<h3>Valor(R$)</h3>
+								</div>
+								<div class="widget-content">
+									<label>${pedido.valor}</label>
+								</div>
+						</div>
+					</div>
 					<div class="span12">
 						<div class="widget-header">
 							<i class="icon-list-alt"></i>
@@ -226,8 +247,10 @@
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
 	<script>
 		document.getElementById("voltarPedido").onclick = function() {
-			var url = '/estrelacarnes';
-			window.location.href = url;
+			//var url = '/estrelacarnes';
+			//window.location.href = url;
+			event.preventDefault();
+		    history.back(1);
 		};
 	</script>
 </body>

@@ -12,6 +12,10 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import br.com.estrelacarnes.model.Complemento;
 import br.com.estrelacarnes.model.Item;
 import br.com.estrelacarnes.model.Pedido;
@@ -225,4 +229,27 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 		return lista;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Pedido> listarPedidosEnviadosHoje() {
+		List<Pedido> lista = new ArrayList<Pedido>();
+		String inicio = "";
+		String fim = "";
+		
+		//DateTimeFormatter dtf = DateTimeFormat.forPattern("dd-MM-yyyy");
+		String pattern = "MM/dd/yyyy";
+		DateTime dataInicio = new DateTime();
+		DateTime dataFim = new DateTime(); 
+		inicio = dataInicio.toString();
+		dataInicio = dataInicio.minusDays(1);
+		inicio = dataInicio.toString(pattern);
+		fim = dataFim.toString(pattern);
+		
+		String sql = "select * from Pedido p where p.status = 'E' "
+				+ "and  DATE_FORMAT(p.data, '%m/%d/%y') >= '"+inicio+"' "
+				+ "and  DATE_FORMAT(p.data, '%m/%d/%y') <= '"+fim+"' "
+				+ "order by p.data desc";
+		lista = entityManager.createNativeQuery(sql, Pedido.class).getResultList();
+		return lista;
+	}
 }
