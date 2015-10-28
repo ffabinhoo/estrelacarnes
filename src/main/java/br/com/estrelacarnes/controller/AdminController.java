@@ -357,6 +357,7 @@ public class AdminController {
 		pedidoObj.setStatus("E");
 		pedidoObj.setData(new Date());//Atualiza data de envio do pedido
 		pedidoObj.setValor(pedido.getValor());
+		pedidoObj.setValorFrete(pedido.getValorFrete());
 		Entrega entrega = new Entrega();
 		entrega.setId(Integer.valueOf(pedidoObj.getIdEntrega()));
 		entrega = entregaDAO.load(entrega);

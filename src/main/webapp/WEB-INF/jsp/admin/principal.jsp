@@ -149,6 +149,7 @@
 														<form id="formEnviarPedidoSaida" method="post" action="${linkTo[AdminController].enviarPedidoSaida}${pedido.id}" 
 															style="float: left; padding: 1px;">
 															<input type="hidden" name="pedido.valor" id="valorPedido" value="">
+															<input type="hidden" name="pedido.valorFrete" id="valorPedidoFrete" value="">
 																<button id="enviarPedidoSaida" name="enviarPedidoSaida" class="button btn-small btn-primary">Enviar</button>
 														</form>
 													</c:if>
@@ -165,8 +166,10 @@
 											<div id="confirmEnviar" class="modal hide fade">
 												<div class="modal-body"><h3>Confirma enviar o Pedido?</h3>
 													<br />
-													<label class="control-label" for="valor">Valor:</label>
+													<label class="control-label" for="valor">Valor do Pedido(R$):</label>
 													<input type="text" id="valor" name="valor">
+													<label class="control-label" for="valorFrete">Valor do Frete(R$):</label>
+													<input type="text" id="valorFrete" name="valorFrete">
 												<br />
 												</div>
 												
@@ -317,18 +320,24 @@
 		});
 		 $('button[name="enviarPedidoSaida"]').on('click', function(e){
 		    var $form=$(this).closest('form'); 
+		    //alert($form.find('valor'));
 		    
 		    e.preventDefault();
+		    
 		    $('#confirmEnviar').modal({ backdrop: 'static', keyboard: false })
 		        .one('click', '#confirmar', function() {
 		        	var valor = $('#valor').val();
+		        	var valorFrete = $('#valorFrete').val();
 			        
 			        $("#valorPedido").val(valor);
-			        var valor2 = $('#valorPedido').val();
-			        
+			        $("#valorPedidoFrete").val(valorFrete);
+			        var valor = $('#valor').val();
+			        var valorFrete = $('#valorFrete').val();
+			        //alert(valorFrete);
 		            $form.trigger('submit'); // submit the form
 		        });
-		});   
+		});
+		  
 	</script>
 
 </body>

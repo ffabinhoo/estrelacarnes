@@ -162,7 +162,9 @@
 									<h3>Valor(R$)</h3>
 								</div>
 								<div class="widget-content">
-									<label>${pedido.valor}</label>
+									<label>Valor do Pedido: ${pedido.valor}</label>
+									<br />
+									<label>Valor do Frete: ${pedido.valorFrete}</label>
 								</div>
 						</div>
 					</div>

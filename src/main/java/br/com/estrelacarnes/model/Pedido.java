@@ -11,8 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -29,6 +27,8 @@ public class Pedido implements Serializable{
 	private Integer id;
 	
 	private String valor;
+	
+	private String valorFrete;
 	
 	private String status;
 	
@@ -122,6 +122,14 @@ public class Pedido implements Serializable{
 
 	public void setTipoEntrega(String tipoEntrega) {
 		this.tipoEntrega = tipoEntrega;
+	}
+
+	public String getValorFrete() {
+		return valorFrete;
+	}
+
+	public void setValorFrete(String valorFrete) {
+		this.valorFrete = valorFrete;
 	}
 
 	/*public Entrega getEntrega() {

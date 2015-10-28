@@ -73,7 +73,7 @@
 							<div class="control-group">
 								<label class="control-label" for="cliente.nome">Nome *</label>
 								<div class="controls">
-									<input class="span6" name="cliente.nome" value="${cliente.nome}" type="text" required>
+									<input class="span6" name="cliente.nome" value="${cliente.nome}" id="nome" type="text" required>
 								</div>
 								<label class="control-label" id="cliente.celular" >Telefone Celular *</label>
 								<div class="controls">
@@ -87,6 +87,11 @@
 								<label class="control-label" for="cpf" >CPF</label>
 								<div class="controls">
 									<input class="span6" name="cliente.cpf" id="cpf" value="${cliente.cpf}" type="text">
+								</div>
+								
+								<label class="control-label" for="cliente.email">e-mail</label>
+								<div class="controls">
+									<input class="span6" name="cliente.email" id="email" value="${cliente.email}" type="email">
 								</div>
 								
 								<h2>Endereço</h2>
@@ -194,6 +199,10 @@
 				$("#cpf").mask("999.999.999-99");
 				$("#cep").mask("99999-999");
 		});
+
+		 $( document ).ready(function() {
+			  $( "#nome" ).focus();
+			});	
 
 		/* function montaurl(){
 			var yourElement = document.getElementById('linkbuscacep');
