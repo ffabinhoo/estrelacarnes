@@ -111,6 +111,10 @@
 								<div class="controls">
 									<input class="span6" name="cliente.endereco.complemento" value="${cliente.endereco.complemento}" type="text" >
 								</div>
+								<label class="control-label" id="referencia" >Referência</label>
+								<div class="controls">
+									<input class="span6" name="cliente.endereco.referencia" value="${cliente.endereco.referencia}" type="text" >
+								</div>
 								<label class="control-label" id="bairro" >Bairro</label>
 								<div class="controls">
 									<input class="span6" name="cliente.endereco.bairro" value="${cliente.endereco.bairro}" type="text" >
@@ -202,7 +206,7 @@
 
 		 $( document ).ready(function() {
 			  $( "#nome" ).focus();
-			});	
+		});	
 
 		/* function montaurl(){
 			var yourElement = document.getElementById('linkbuscacep');

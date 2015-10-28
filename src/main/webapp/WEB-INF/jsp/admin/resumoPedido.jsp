@@ -129,8 +129,6 @@
 														<div class="pricing-plans plans-3">
 															<div class="plan-container">
 																	<div class="plan">
-																		
-																		
 																		<div class="plan-actions">
 																			<a href="" class="btn" id="enviarPedido">Enviar</a>
 																		</div>
@@ -170,6 +168,7 @@
 																				<li><strong>Bairro: </strong>${endereco.bairro}</li>
 																				<li><strong>CEP: </strong>${endereco.cep}</li>
 																				<li><strong>Cidade: </strong>${endereco.cidade} / ${endereco.uf}</li>
+																				
 																			</ul>
 																		</div>
 																		<div class="plan-actions">
@@ -177,20 +176,34 @@
 																		</div>
 																	</div>
 																</div>
+																
 															</c:forEach>
 														</div>
 													</div>
+													
 												</div>
 											</div>
-
 										</div>
 									</div>
 								</div>
 							</div>
 							
-					</form>
+					
 				</div>
-
+				<!-- valor de entrega -->
+				<div class="span12" id="divValores">
+					<ul>
+						<li>
+							<label class="control-label" for="valor">Valor do Pedido(R$):</label>
+							<input type="text" id="valor" name="pedido.valor" value="${pedido.valor}">
+						</li>
+						<li id="frete">	
+							<label class="control-label" for="valorFrete">Valor do Frete(R$):</label>
+							<input type="text" id="valorFrete" name="pedido.valorFrete" value="${pedido.valorFrete}">
+						</li>
+					</ul>
+				</div>
+				</form>
 				<div class="span12">
 					<div class="widget-header">
 						<i class="icon-list-alt"></i>
@@ -269,34 +282,45 @@
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
 	<script>
+	$( "#valor" ).focus();
 	$(document).ready(function() {
 		$("#enderecoDelivery").hide();
 		$("#enderecoPick").hide();
+		$("#frete").hide();
+		
 		var tipoEntrega = $('input[name=ctipoEntrega]:checked',	'#formEnviarPedido').val();
 		if (tipoEntrega == 'D'){
 			$("#enderecoDelivery").show();
-			$("#enderecoPick").hide();						
+			$("#enderecoPick").hide();
+			$( "#valor" ).focus();
+			$("#frete").show();						
 		} 
 		if (tipoEntrega == 'P'){
 			$("#enderecoDelivery").hide();
 			$("#enderecoPick").show();
+			$( "#valor" ).focus();
 		}
 	});
 
 	
-	/* $("#enderecoDelivery").hide();
-	$("#enderecoPick").hide();
- */
 	$("input[name=ctipoEntrega]").click(function() {
 		var tipoEntrega = $('input[name=ctipoEntrega]:checked',	'#formEnviarPedido').val();
 		if (tipoEntrega == 'D'){
 			$("#enderecoDelivery").show();
-			$("#enderecoPick").hide();						
+			$("#enderecoPick").hide();
+			$("#frete").show();
+			$( "#valor" ).focus();
+									
 		} else {
 			$("#enderecoDelivery").hide();
 			$("#enderecoPick").show();
+			$("#frete").hide();
+			$( "#valor" ).focus();
 		}
 	});
+
+
+
 
 	
 		document.getElementById("voltarPedido").onclick = function() {

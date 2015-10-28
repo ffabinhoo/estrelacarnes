@@ -353,17 +353,17 @@ public class AdminController {
 	
 	@Post("/pedido/enviar/saida/{pedido.id}")
 	public void enviarPedidoSaida(Pedido pedido){
-		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
+		Pedido pedidoObj = new Pedido();
+		pedidoObj = pedidoDAO.load(pedido.getId());
 		pedidoObj.setStatus("E");
+		
 		pedidoObj.setData(new Date());//Atualiza data de envio do pedido
-		pedidoObj.setValor(pedido.getValor());
-		pedidoObj.setValorFrete(pedido.getValorFrete());
 		Entrega entrega = new Entrega();
 		entrega.setId(Integer.valueOf(pedidoObj.getIdEntrega()));
 		entrega = entregaDAO.load(entrega);
 		entrega.setData(new Date());
-		entregaDAO.alterar(entrega);
 		pedidoDAO.alterarPedido(pedidoObj);
+		entregaDAO.alterar(entrega);
 		result.redirectTo(AdminController.class).pedidoEnviado(pedidoObj);
 	}
 	
@@ -385,8 +385,12 @@ public class AdminController {
 		}
 		if (tipoEntrega!=null){
 			String observacao = pedido.getObservacao();
+			String valor = pedido.getValor();
+			String valorFrete = pedido.getValorFrete();
 			pedido = pedidoDAO.load(pedido.getId());
 			pedido.setObservacao(observacao);
+			pedido.setValor(valor);
+			pedido.setValorFrete(valorFrete);
 			if (endereco.getId()!=null){
 				endereco = clienteDAO.consultarEndereco(endereco);
 			}else{

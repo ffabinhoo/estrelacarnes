@@ -18,7 +18,9 @@
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
 </head>
+
 <body>
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
@@ -32,7 +34,7 @@
 							<ul class="dropdown-menu">
 								<li><a href="javascript:;">Profile</a></li>
 								<li><a href="${linkTo[IndexController].logout}">logout</a></li>
-
+ 
 							</ul></li>
 					</ul>
 					<form class="navbar-search pull-right">
@@ -148,8 +150,8 @@
 													<c:if test="${pedido.idEntrega ne null}">
 														<form id="formEnviarPedidoSaida" method="post" action="${linkTo[AdminController].enviarPedidoSaida}${pedido.id}" 
 															style="float: left; padding: 1px;">
-															<input type="hidden" name="pedido.valor" id="valorPedido" value="">
-															<input type="hidden" name="pedido.valorFrete" id="valorPedidoFrete" value="">
+															<!-- <input type="hidden" name="pedidoValor" id="valorPedido" value="">
+															<input type="hidden" name="pedidoValorFrete" id="valorPedidoFrete" value=""> -->
 																<button id="enviarPedidoSaida" name="enviarPedidoSaida" class="button btn-small btn-primary">Enviar</button>
 														</form>
 													</c:if>
@@ -166,11 +168,11 @@
 											<div id="confirmEnviar" class="modal hide fade">
 												<div class="modal-body"><h3>Confirma enviar o Pedido?</h3>
 													<br />
-													<label class="control-label" for="valor">Valor do Pedido(R$):</label>
+													<!-- <label class="control-label" for="valor">Valor do Pedido(R$):</label>
 													<input type="text" id="valor" name="valor">
 													<label class="control-label" for="valorFrete">Valor do Frete(R$):</label>
 													<input type="text" id="valorFrete" name="valorFrete">
-												<br />
+												<br /> -->
 												</div>
 												
 												<div class="modal-footer">
@@ -318,25 +320,26 @@
 				$form.trigger('submit'); // submit the form
 			});
 		});
-		 $('button[name="enviarPedidoSaida"]').on('click', function(e){
-		    var $form=$(this).closest('form'); 
+		  $('button[name="enviarPedidoSaida"]').on('click', function(e){
+		    var $form=$(this).closest('#formEnviarPedidoSaida'); 
 		    
 		    e.preventDefault();
 		    
 		    $('#confirmEnviar').modal({ backdrop: 'static', keyboard: false })
-		        .one('click', '#confirmar', function() {
-		        	var valor = $('#valor').val();
+		        .one('click', '#confirmar', function(e) {
+		        	/* var valor = $('#valor').val();
 		        	var valorFrete = $('#valorFrete').val();
 			        
 			        $("#valorPedido").val(valor);
 			        $("#valorPedidoFrete").val(valorFrete);
 			        var valor = $('#valor').val();
-			        var valorFrete = $('#valorFrete').val();
+			        var valorFrete = $('#valorFrete').val(); */
 			        
 		            $form.trigger('submit'); // submit the form
 		        });
-		});
-		  
+		}); 
+		
+	 	  
 	</script>
 
 </body>

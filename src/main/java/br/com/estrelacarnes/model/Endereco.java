@@ -43,6 +43,8 @@ public class Endereco implements Serializable{
 	
 	private String status;
 	
+	private String referencia;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idCliente")
 	private Cliente cliente = new Cliente();
@@ -149,6 +151,14 @@ public class Endereco implements Serializable{
 
 	public void setUf(String uf) {
 		this.uf = uf;
+	}
+
+	public String getReferencia() {
+		return referencia;
+	}
+
+	public void setReferencia(String referencia) {
+		this.referencia = referencia;
 	}
 	
 	

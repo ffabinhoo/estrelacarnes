@@ -225,6 +225,7 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 					}
 					 
 				}
+				sql = sql + " order by p.data desc"; 
 		lista = entityManager.createNativeQuery(sql, Pedido.class).getResultList();
 		return lista;
 	}

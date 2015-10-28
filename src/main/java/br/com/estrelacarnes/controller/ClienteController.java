@@ -182,6 +182,7 @@ public class ClienteController {
 			result.include("cep", cliente.getEndereco().getCep());
 			result.include("endereco", cliente.getEndereco().getEndereco());
 			result.include("complemento", cliente.getEndereco().getComplemento());
+			result.include("referencia", cliente.getEndereco().getReferencia());
 			result.include("bairro", cliente.getEndereco().getBairro());
 			result.include("cidade", cliente.getEndereco().getCidade());
 			result.include("uf", cliente.getEndereco().getUf());
