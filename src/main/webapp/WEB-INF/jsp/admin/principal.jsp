@@ -320,7 +320,6 @@
 		});
 		 $('button[name="enviarPedidoSaida"]').on('click', function(e){
 		    var $form=$(this).closest('form'); 
-		    //alert($form.find('valor'));
 		    
 		    e.preventDefault();
 		    
@@ -333,7 +332,7 @@
 			        $("#valorPedidoFrete").val(valorFrete);
 			        var valor = $('#valor').val();
 			        var valorFrete = $('#valorFrete').val();
-			        //alert(valorFrete);
+			        
 		            $form.trigger('submit'); // submit the form
 		        });
 		});
