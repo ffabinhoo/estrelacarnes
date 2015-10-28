@@ -352,18 +352,20 @@ public class AdminController {
 	}
 	
 	@Post("/pedido/enviar/saida/{pedido.id}")
-	public void enviarPedidoSaida(Pedido pedido){
-		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
+	public void enviarPedidoSaida(Pedido pedido, String pedidoValor, String pedidoValorFrete){
+		Pedido pedidoObj = new Pedido();
+		pedidoObj = pedidoDAO.load(pedido.getId());
 		pedidoObj.setStatus("E");
+		pedidoObj.setValor(pedidoValor);
+		pedidoObj.setValorFrete(pedidoValorFrete);
 		pedidoObj.setData(new Date());//Atualiza data de envio do pedido
-		pedidoObj.setValor(pedido.getValor());
-		pedidoObj.setValorFrete(pedido.getValorFrete());
 		Entrega entrega = new Entrega();
 		entrega.setId(Integer.valueOf(pedidoObj.getIdEntrega()));
 		entrega = entregaDAO.load(entrega);
 		entrega.setData(new Date());
-		entregaDAO.alterar(entrega);
 		pedidoDAO.alterarPedido(pedidoObj);
+		entregaDAO.alterar(entrega);
+		result.include("campo", pedidoValor);
 		result.redirectTo(AdminController.class).pedidoEnviado(pedidoObj);
 	}
 	

@@ -159,12 +159,12 @@
 						<div class="widget widget-table action-table" id="idDivObservacao">
 								<div class="widget-header" id="idTituloObservacao">
 									<i class="icon-th-list"></i>
-									<h3>Valor(R$)</h3>
+									<h3>Valor(R$) - ${campo}</h3>
 								</div>
 								<div class="widget-content">
-									<label>Valor do Pedido: ${pedido.valor}</label>
+									<label><strong>Valor do Pedido:</strong> ${pedido.valor}</label>
 									<br />
-									<label>Valor do Frete: ${pedido.valorFrete}</label>
+									<label><strong>Valor do Frete:</strong> ${pedido.valorFrete}</label>
 								</div>
 						</div>
 					</div>

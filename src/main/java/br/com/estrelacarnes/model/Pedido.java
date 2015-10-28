@@ -132,13 +132,7 @@ public class Pedido implements Serializable{
 		this.valorFrete = valorFrete;
 	}
 
-	/*public Entrega getEntrega() {
-		return entrega;
-	}
-
-	public void setEntrega(Entrega entrega) {
-		this.entrega = entrega;
-	}*/
+	
 
 	
 }

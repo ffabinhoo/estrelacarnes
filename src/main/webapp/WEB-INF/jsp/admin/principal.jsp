@@ -32,7 +32,7 @@
 							<ul class="dropdown-menu">
 								<li><a href="javascript:;">Profile</a></li>
 								<li><a href="${linkTo[IndexController].logout}">logout</a></li>
-
+ 
 							</ul></li>
 					</ul>
 					<form class="navbar-search pull-right">
@@ -148,8 +148,8 @@
 													<c:if test="${pedido.idEntrega ne null}">
 														<form id="formEnviarPedidoSaida" method="post" action="${linkTo[AdminController].enviarPedidoSaida}${pedido.id}" 
 															style="float: left; padding: 1px;">
-															<input type="hidden" name="pedido.valor" id="valorPedido" value="">
-															<input type="hidden" name="pedido.valorFrete" id="valorPedidoFrete" value="">
+															<input type="hidden" name="pedidoValor" id="valorPedido" value="">
+															<input type="hidden" name="pedidoValorFrete" id="valorPedidoFrete" value="">
 																<button id="enviarPedidoSaida" name="enviarPedidoSaida" class="button btn-small btn-primary">Enviar</button>
 														</form>
 													</c:if>
@@ -319,7 +319,7 @@
 			});
 		});
 		 $('button[name="enviarPedidoSaida"]').on('click', function(e){
-		    var $form=$(this).closest('form'); 
+		    var $form=$(this).closest('#formEnviarPedidoSaida'); 
 		    
 		    e.preventDefault();
 		    
@@ -336,7 +336,7 @@
 		            $form.trigger('submit'); // submit the form
 		        });
 		});
-		  
+	 	  
 	</script>
 
 </body>
