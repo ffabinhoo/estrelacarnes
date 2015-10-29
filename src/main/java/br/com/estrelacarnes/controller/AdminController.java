@@ -359,6 +359,7 @@ public class AdminController {
 		pedidoObj.setStatus("E");
 		//pedidoObj.setValor(pedidoValor);
 		//pedidoObj.setValorFrete(pedidoValorFrete);
+
 		pedidoObj.setData(new Date());//Atualiza data de envio do pedido
 		Entrega entrega = new Entrega();
 		entrega.setId(Integer.valueOf(pedidoObj.getIdEntrega()));
@@ -422,6 +423,17 @@ public class AdminController {
 	}
 	@Get("/pedido/pedidoEnviado/{pedido.id}")
 	public void pedidoEnviado(Pedido pedido){
+		Entrega entrega = new Entrega();
+		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
+		
+		entrega.setId(Integer.valueOf(pedidoObj.getIdEntrega()));
+		entrega = entregaDAO.load(entrega);
+		result.include("pedido", pedidoObj);
+		result.include("entrega", entrega);
+	}
+	
+	@Get("/pedido/imprimir/{pedido.id}")
+	public void imprimir(Pedido pedido){
 		Entrega entrega = new Entrega();
 		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
 		
