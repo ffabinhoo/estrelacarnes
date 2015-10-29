@@ -151,7 +151,8 @@
 														<form id="formEnviarPedidoSaida" method="post" action="${linkTo[AdminController].enviarPedidoSaida}${pedido.id}" 
 															style="float: left; padding: 1px;">
 															<!-- <input type="hidden" name="pedidoValor" id="valorPedido" value="">
-															<input type="hidden" name="pedidoValorFrete" id="valorPedidoFrete" value=""> -->
+															<input type="hidden" name="pedidoValorFrete" id="valorPedidoFrete" value="">
+ -->
 																<button id="enviarPedidoSaida" name="enviarPedidoSaida" class="button btn-small btn-primary">Enviar</button>
 														</form>
 													</c:if>
@@ -320,7 +321,8 @@
 				$form.trigger('submit'); // submit the form
 			});
 		});
-		  $('button[name="enviarPedidoSaida"]').on('click', function(e){
+
+		 $('button[name="enviarPedidoSaida"]').on('click', function(e){
 		    var $form=$(this).closest('#formEnviarPedidoSaida'); 
 		    
 		    e.preventDefault();
@@ -337,8 +339,7 @@
 			        
 		            $form.trigger('submit'); // submit the form
 		        });
-		}); 
-		
+		});
 	 	  
 	</script>
 

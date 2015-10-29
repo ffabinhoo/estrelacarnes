@@ -352,11 +352,13 @@ public class AdminController {
 	}
 	
 	@Post("/pedido/enviar/saida/{pedido.id}")
-	public void enviarPedidoSaida(Pedido pedido){
+
+	public void enviarPedidoSaida(Pedido pedido, String pedidoValor, String pedidoValorFrete){
 		Pedido pedidoObj = new Pedido();
 		pedidoObj = pedidoDAO.load(pedido.getId());
 		pedidoObj.setStatus("E");
-		
+		//pedidoObj.setValor(pedidoValor);
+		//pedidoObj.setValorFrete(pedidoValorFrete);
 		pedidoObj.setData(new Date());//Atualiza data de envio do pedido
 		Entrega entrega = new Entrega();
 		entrega.setId(Integer.valueOf(pedidoObj.getIdEntrega()));

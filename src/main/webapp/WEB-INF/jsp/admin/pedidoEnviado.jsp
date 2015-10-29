@@ -144,6 +144,7 @@
 						</div>
 					</div>
 					</c:if>
+					<c:if test="${pedido.observacao ne null}">
 					<div class="span12">
 						<div class="widget widget-table action-table" id="idDivObservacao">
 								<div class="widget-header" id="idTituloObservacao">
@@ -155,11 +156,12 @@
 								</div>
 						</div>
 					</div>
+					</c:if>
 					<div class="span12">
 						<div class="widget widget-table action-table" id="idDivObservacao">
 								<div class="widget-header" id="idTituloObservacao">
 									<i class="icon-th-list"></i>
-									<h3>Valor(R$)</h3>
+									<h3>Valor(R$) </h3>
 								</div>
 								<div class="widget-content">
 									<li><strong>Valor do Pedido:</strong> ${pedido.valor}</li>
