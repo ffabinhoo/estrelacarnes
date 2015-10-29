@@ -159,12 +159,20 @@
 						<div class="widget widget-table action-table" id="idDivObservacao">
 								<div class="widget-header" id="idTituloObservacao">
 									<i class="icon-th-list"></i>
-									<h3>Valor(R$)</h3>
+									<h3>Valor(R$) - ${campo}</h3>
 								</div>
 								<div class="widget-content">
+<<<<<<< HEAD
 									<li><strong>Valor do Pedido:</strong> ${pedido.valor}</li>
+=======
+									<label><strong>Valor do Pedido:</strong> ${pedido.valor}</label>
+>>>>>>> branch 'master' of https://github.com/ffabinhoo/estrelacarnes.git
 									<br />
+<<<<<<< HEAD
 									<li><strong>Valor do Frete:</strong> ${pedido.valorFrete}</li>
+=======
+									<label><strong>Valor do Frete:</strong> ${pedido.valorFrete}</label>
+>>>>>>> branch 'master' of https://github.com/ffabinhoo/estrelacarnes.git
 								</div>
 						</div>
 					</div>
