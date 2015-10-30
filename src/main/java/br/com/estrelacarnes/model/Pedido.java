@@ -30,6 +30,9 @@ public class Pedido implements Serializable{
 	
 	private String valorFrete;
 	
+	@Transient
+	private String total;
+	
 	private String status;
 	
 	private String idEntrega;
@@ -132,6 +135,15 @@ public class Pedido implements Serializable{
 		this.valorFrete = valorFrete;
 	}
 
+	public String getTotal() {
+		Float val1 = Float.parseFloat(getValor().replace(",", "."));
+		Float val2 = Float.parseFloat(getValorFrete().replace(",", "."));
+		Float tot = val1 + val2;
+		
+		return String.format("%.2f", tot);
+	}
+
+	
 	
 
 	
