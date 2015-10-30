@@ -175,8 +175,10 @@
 												<br />
 											</c:if>
 											<div class="span2">
-												<label><input type="radio" id="produto"
-													name="produto" value="${produto.id}" required />${fn:toLowerCase(produto.nome.trim())}</label>
+												<label>
+													<%-- <input type="radio" id="produto" name="produto" value="${produto.id}" required />${fn:toLowerCase(produto.nome.trim())} --%>
+														 <input type="radio" id="produto" name="produto" value="${produto.id}" required />${produto.nome.trim()}
+												</label>
 											</div>
 										</c:forEach>
 									</div>
@@ -191,8 +193,9 @@
 								<div class="widget-content">
 									<!-- <div class="controls"> -->
 									<c:forEach var="preparo" items="${listaPreparos}">
-										<label class="checkbox inline"> <input type="radio"
-											id="preparo" name="preparo" value="${preparo.id}" />${fn:toLowerCase(preparo.nome)}
+										<label class="checkbox inline"> 
+											<%-- <input type="radio"	id="preparo" name="preparo" value="${preparo.id}" />${fn:toLowerCase(preparo.nome)} --%>
+											<input type="radio"	id="preparo" name="preparo" value="${preparo.id}" />${preparo.nome}
 										</label>
 									</c:forEach>
 									<!-- </div> -->
@@ -207,8 +210,9 @@
 								<div class="widget-content">
 									<!-- <div class="controls"> -->
 									<c:forEach var="complemento" items="${listaComplementos}">
-										<label class="checkbox inline"> <input type="radio"
-											id="complemento" name="complemento" value="${complemento.id}" />${fn:toLowerCase(complemento.nome)}
+										<label class="checkbox inline">
+											<%-- <input type="radio" id="complemento" name="complemento" value="${complemento.id}" />${fn:toLowerCase(complemento.nome)} --%>
+											<input type="radio" id="complemento" name="complemento" value="${complemento.id}" />${complemento.nome}
 										</label>
 									</c:forEach>
 									<!-- </div> -->

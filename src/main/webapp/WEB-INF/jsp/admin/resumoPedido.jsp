@@ -195,7 +195,7 @@
 					<ul>
 						<li>
 							<label class="control-label" for="valor">Valor do Pedido(R$):</label>
-							<input type="text" id="valor" name="pedido.valor" value="${pedido.valor}">
+							<input type="text" id="valor" name="pedido.valor" value="${pedido.valor}" required>
 						</li>
 						<li id="frete">	
 							<label class="control-label" for="valorFrete">Valor do Frete(R$):</label>
@@ -358,6 +358,25 @@
 												
 											});
 						});
+		$('#valor').keypress(function (event) {
+            return isNumber(event, this)
+        });
+        
+		$('#valorFrete').keypress(function (event) {
+            return isNumber(event, this)
+        });
+        
+		
+		function isNumber(evt, element) {
+	        var charCode = (evt.which) ? evt.which : event.keyCode
+	        if (
+	            (charCode != 45 || $(element).val().indexOf('-') != -1) &&      // “-” CHECK MINUS, AND ONLY ONE.
+	            (charCode != 46 || $(element).val().indexOf('.') != -1) &&      // “.” CHECK DOT, AND ONLY ONE.
+	            (charCode != 44 || $(element).val().indexOf(',') != -1) &&      // “.” CHECK DOT, AND ONLY ONE.
+	            (charCode < 48 || charCode > 57))
+	            return false;
+	        return true;
+	    }
 	</script>
 </body>
 </html>

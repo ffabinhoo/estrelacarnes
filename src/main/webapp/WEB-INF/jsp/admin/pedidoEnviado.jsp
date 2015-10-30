@@ -60,7 +60,7 @@
 					<li><a href="${linkTo[AdminController].consultarPedido}"><i class="icon-search"></i><span>Consultar Pedido</span></a></li>
 					<li><a href="${linkTo[ClienteController].cadastrarCliente}"><i class="icon-user"></i><span>Cadastrar Cliente</span></a></li>
 					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-zoom-in"></i><span>Consultar Cliente</span></a></li>
-					<li><a href="${linkTo[AdminController].imprimir}${pedido.id}"><i class="icon-print"></i><span>Imprimir</span></a></li>
+					<li><a href="${linkTo[AdminController].imprimir}${pedido.id}" target="_blank"><i class="icon-print"></i><span>Imprimir</span></a></li>
 				</ul>
 			</div>
 		</div>

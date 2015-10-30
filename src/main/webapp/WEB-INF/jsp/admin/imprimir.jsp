@@ -30,11 +30,12 @@
 body {
 	margin: 0;
 	padding: 0;
+	font-size: 15px;
 }
 
 </style>
 </head>
-<body>
+<body onload="window.print(); return false;" >
 	<!--  onload="window.print()" -->
 	
 		<div align="center">
@@ -84,7 +85,7 @@ body {
 		<table>
 			<tr>
 				<td><Strong>DATA:&nbsp;</strong><fmt:formatDate pattern="dd/MM HH:mm"	value="${entrega.data}" /></td>
-				<td><Strong>MODO:&nbsp;</strong>
+				<td><Strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MODO:&nbsp;</strong>
 					<c:if test="${entrega.tipoEntrega eq 'D'}">
 						DELIVERY
 					</c:if>
@@ -106,12 +107,12 @@ body {
 	
 	<br>
 	<div align="left">
-		<strong><font size="2">${pedido.cliente.nome}</font></strong>:(${pedido.cliente.celular})
+		Cliente: <strong><font size="3">${pedido.cliente.nome}</font></strong> - (${pedido.cliente.celular})
 	</div>
+	<br>
 	<c:if test="${entrega.tipoEntrega eq 'D'}">
 
-		<Strong>Endereço de Entrega</Strong><br>
-		${entrega.endereco.endereco} - ${entrega.endereco.complemento}
+		<li><Strong>Endereço: </Strong>${entrega.endereco.endereco} - ${entrega.endereco.complemento}</li>
 		<li><strong>Bairro: </strong>${entrega.endereco.bairro}</li>
 		<li><strong>Referência: </strong>${entrega.endereco.referencia}</li>
 		<li><strong>CEP: </strong>${entrega.endereco.cep}</li>

@@ -136,8 +136,14 @@ public class Pedido implements Serializable{
 	}
 
 	public String getTotal() {
-		Float val1 = Float.parseFloat(getValor().replace(",", "."));
-		Float val2 = Float.parseFloat(getValorFrete().replace(",", "."));
+		Float val1 = 0F;
+		Float val2 = 0F;
+		if (getValor()!=null){ 
+			val1 = Float.parseFloat(getValor().replace(",", "."));
+		}
+		if (getValorFrete()!=null){ //Caso seja Pick-up
+			val2 = Float.parseFloat(getValorFrete().replace(",", "."));
+		}
 		Float tot = val1 + val2;
 		
 		return String.format("%.2f", tot);

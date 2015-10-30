@@ -298,6 +298,8 @@ public class AdminController {
 		pedidoDAO.inserirItem(item);
 
 		result.include("idPedido", pedidoobj.getId());
+		tipo = "KG";
+		quantidade = "1";
 		result.redirectTo(AdminController.class).cadastrarPedido(pedidoobj.getId(), tipo, quantidade, categoria);
 	}
 	
