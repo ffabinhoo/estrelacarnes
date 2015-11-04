@@ -226,10 +226,14 @@
 													</c:if>
 												</td>
 												
-												<td class="td-actions" style="width: 200px;">
+												<td class="td-actions" style="width: 150px;">
 													<form id="formVerPedido" method="get" action="${linkTo[AdminController].pedidoEnviado}${pedido.id}" style="float: left; padding: 1px;">
 														<button id="detalhePedido" name="detalhePedido" class="button btn-small btn-primary">Detalhes</button>
 													</form>
+													<%-- <form id="formVerPedido" method="get" action="${linkTo[AdminController].imprimirItens}${pedido.id}" style="float: left; padding: 1px;"> --%>
+														<button id="detalhePedido" name="detalhePedido" class="button btn-small btn" onclick="window.open('${linkTo[AdminController].imprimirItens}${pedido.id}')"><i class="icon-print"></i>Imprimir Itens</button>
+														<%-- <a href="${linkTo[AdminController].imprimirItens}${pedido.id}" target="_blank" class="button"><i class="icon-print"></i></a> --%>
+													<!-- </form> -->
 													
 													
 												</td>

@@ -89,6 +89,19 @@
 						<input type="hidden" value="" id="idEndereco" name="endereco.id">
 						<input type="hidden" value="" id="idTipoEntrega" name="tipoEntrega">
 						<input type="hidden" value="${pedido.id}" id="idPedido" name="pedido.id">
+						<!-- valor de entrega -->
+						<div class="span12" id="divValores">
+							<ul>
+								<li>
+									<label class="control-label" for="valor">Valor do Pedido(R$):</label>
+									<input type="text" id="valor" name="pedido.valor" value="${pedido.valor}" required>
+								</li>
+								<li id="frete">	
+									<label class="control-label" for="valorFrete">Valor do Frete(R$):</label>
+									<input type="text" id="valorFrete" name="pedido.valorFrete" value="${pedido.valorFrete}">
+								</li>
+							</ul>
+						</div>
 						<div class="span12">
 							<div class="widget widget-table action-table"
 								id="idDivObservacao">
@@ -190,19 +203,7 @@
 							
 					
 				</div>
-				<!-- valor de entrega -->
-				<div class="span12" id="divValores">
-					<ul>
-						<li>
-							<label class="control-label" for="valor">Valor do Pedido(R$):</label>
-							<input type="text" id="valor" name="pedido.valor" value="${pedido.valor}" required>
-						</li>
-						<li id="frete">	
-							<label class="control-label" for="valorFrete">Valor do Frete(R$):</label>
-							<input type="text" id="valorFrete" name="pedido.valorFrete" value="${pedido.valorFrete}">
-						</li>
-					</ul>
-				</div>
+				
 				</form>
 				<div class="span12">
 					<div class="widget-header">
@@ -278,6 +279,7 @@
 	</div>
 
 	<script src="/estrelacarnes/js/jquery-1.7.2.min.js"></script>
+	<script src="/estrelacarnes/js/jquery.maskMoney.min.js"></script>
 	<script src="/estrelacarnes/js/excanvas.min.js"></script>
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
@@ -358,16 +360,16 @@
 												
 											});
 						});
-		$('#valor').keypress(function (event) {
+		/* $('#valor').keypress(function (event) {
             return isNumber(event, this)
-        });
+        }); */
         
-		$('#valorFrete').keypress(function (event) {
+		/* $('#valorFrete').keypress(function (event) {
             return isNumber(event, this)
-        });
+        }); */
         
 		
-		function isNumber(evt, element) {
+		/* function isNumber(evt, element) {
 	        var charCode = (evt.which) ? evt.which : event.keyCode
 	        if (
 	            (charCode != 45 || $(element).val().indexOf('-') != -1) &&      // “-” CHECK MINUS, AND ONLY ONE.
@@ -376,7 +378,10 @@
 	            (charCode < 48 || charCode > 57))
 	            return false;
 	        return true;
-	    }
+	    } */
+		//$("#valor").maskMoney('mask', 1999.99);
+	    $("#valor").maskMoney({thousands:'.', decimal:',', affixesStay: true});
+	    $("#valorFrete").maskMoney({thousands:'.', decimal:',', affixesStay: true});
 	</script>
 </body>
 </html>

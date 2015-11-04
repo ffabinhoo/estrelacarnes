@@ -30,29 +30,15 @@
 body {
 	margin: 0;
 	padding: 0;
-	font-size: 15px;
+	font-size: 11px;
 }
 
 </style>
-<script type="text/javascript">
-function imprimir(){
-	window.print();
-	var url = '/estrelacarnes/pedido/imprimirItens/' + ${pedido.id};
-	window.open(url, '_blank');
-	return false;
-}
-</script>
 </head>
-<body onload="imprimir();" >
+<body onload="window.print(); return false;" >
 	<!--  onload="window.print()" -->
 	
-		<div align="center">
-			<i class="icon-star-empty"></i>
-			<label><strong><font size="5"> ESTRELA CARNES</font></strong></label>
-			WWW.ESTRELACARNES.COM.BR
-			<br> CNPJ: 00.454.728/0001-93
-			<br>
-		</div>	
+			
 	<br>
 	<div align="center">
 		<strong><font size="3">${pedido.cliente.nome}</font></strong>
@@ -69,16 +55,7 @@ function imprimir(){
 		</c:forEach>
 	</div>
 	
-	<div align="right">
-		<table>
-			<tr><td>SUBTOTAL:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>R$&nbsp;&nbsp;&nbsp;</td><td>${pedido.valor}</td></tr>
-			<tr><td>TX DE ENTREGA:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>R$&nbsp;&nbsp;&nbsp;</td><td>${pedido.valorFrete}</td></tr>
-			<tr><td></td><td></td><td></td></tr>
-			<tr><td></td><td></td><td></td></tr>
-			<tr><td></td><td></td><td></td></tr>
-			<tr><td><strong>TOTAL</strong>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>R$&nbsp;&nbsp;&nbsp;</td><td>${pedido.total}</td></tr>
-		</table>
-	</div>
+	
 	
 	<div align="left">
 	<c:if test="${pedido.observacao ne null}">
@@ -89,49 +66,7 @@ function imprimir(){
 
 	<br>
 	<br>
-	<div align="left">
-		<table>
-			<tr>
-				<td><Strong>DATA:&nbsp;</strong><fmt:formatDate pattern="dd/MM HH:mm"	value="${entrega.data}" /></td>
-				<td><Strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MODO:&nbsp;</strong>
-					<c:if test="${entrega.tipoEntrega eq 'D'}">
-						DELIVERY
-					</c:if>
-					<c:if test="${entrega.tipoEntrega eq 'P'}">
-						PICK-UP
-					</c:if>
-				</td>
-			</tr>
-		</table>
-	</div>
-	<br>
-	<div align="left">
-		<Strong>RECEBIMENTO:</strong>________________________________________________________________
-		<br>
-		
-									 ===============================================================
-		
-	</div>
 	
-	<br>
-	<div align="left">
-		<strong><font size="3">${pedido.cliente.nome}</font></strong> - (${pedido.cliente.celular})
-	</div>
-	<br>
-	<c:if test="${entrega.tipoEntrega eq 'D'}">
-
-		<li><Strong>Endereço: </Strong>${entrega.endereco.endereco} - ${entrega.endereco.complemento}</li>
-		<li><strong>Bairro: </strong>${entrega.endereco.bairro}</li>
-		<li><strong>Referência: </strong>${entrega.endereco.referencia}</li>
-		
-		
-
-	</c:if>
-	
-
-	
-
-
 
 </body>
 </html>
