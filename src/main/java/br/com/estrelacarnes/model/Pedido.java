@@ -139,10 +139,10 @@ public class Pedido implements Serializable{
 		Float val1 = 0F;
 		Float val2 = 0F;
 		if (getValor()!=null){ 
-			val1 = Float.parseFloat(getValor().replace(",", "."));
+			val1 = Float.parseFloat(getValor().replace(".", "").replace(",", "."));
 		}
 		if (getValorFrete()!=null){ //Caso seja Pick-up
-			val2 = Float.parseFloat(getValorFrete().replace(",", "."));
+			val2 = Float.parseFloat(getValorFrete().replace(".", "").replace(",", "."));
 		}
 		Float tot = val1 + val2;
 		

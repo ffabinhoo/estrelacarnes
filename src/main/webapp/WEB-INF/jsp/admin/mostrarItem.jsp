@@ -18,6 +18,8 @@
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <style type="text/css">
+    </style>
 </head>
 <body>
 	<div class="navbar navbar-fixed-top">
@@ -98,7 +100,7 @@
 										Ave
 									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="4" ${4 == item.categoria.id ? 'checked' : ''} disabled>
 										Peixe
-									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="5" ${4 == item.categoria.id ? 'checked' : ''} disabled>
+									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="5" ${5 == item.categoria.id ? 'checked' : ''} disabled>
 										Cordeiro
 									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="6" ${6 == item.categoria.id ? 'checked' : ''} disabled>
 										Angus
@@ -220,6 +222,11 @@
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
 	<script>
+	$('#observacao').val($('#observacao').val().toUpperCase());
+
+	$('#observacao').keyup(function() {
+	    $(this).val($(this).val().toUpperCase());
+	});
 		
 		$( "#quantidade" ).focus(function() {
 			

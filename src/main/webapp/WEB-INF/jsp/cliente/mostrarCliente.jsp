@@ -191,7 +191,9 @@
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
 	<script>
-		
+		$('input[type=text]').val (function () {
+	    	return this.value.toUpperCase();
+		})
 
 		document.getElementById("voltarCliente").onclick = function() {
 			var url = '/estrelacarnes';

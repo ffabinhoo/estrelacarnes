@@ -153,7 +153,9 @@
 													</c:if>
 												</td>
 												<td class="td-actions" style="width: 150px;">
+												
 													<c:if test="${pedido.status eq 'A'}">
+														<button id="detalhePedido" name="detalhePedido" class="button btn-small btn" onclick="window.open('${linkTo[AdminController].imprimirItens}${pedido.id}')"><i class="icon-print"></i>Print</button>
 														<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${pedido.id}/KG/1/0" style="float: left; padding: 1px;">
 															<button class="button btn btn-success btn-small" id="verPedido">Editar</button>
 														</form>
@@ -163,7 +165,6 @@
 														style="float: left; padding: 1px;">
 															<button id="detalhePedido" name="detalhePedido" class="button btn-small btn-primary">Detalhes</button>
 													</form>
-													<button id="detalhePedido" name="detalhePedido" class="button btn-small btn" onclick="window.open('${linkTo[AdminController].imprimirItens}${pedido.id}')"><i class="icon-print"></i>Imprimir Itens</button>
 													</c:if>
 												</td>
 											</tr>

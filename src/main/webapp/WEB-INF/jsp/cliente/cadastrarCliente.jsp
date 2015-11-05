@@ -18,6 +18,10 @@
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <style type="text/css">
+    textarea { text-transform: uppercase; }
+    text { text-transform: uppercase; }
+    </style>
 </head>
 <body>
 	<div class="navbar navbar-fixed-top">
@@ -190,6 +194,9 @@
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
 	<script>
+		$('input[type=text]').val (function () {
+		    return this.value.toUpperCase();
+		})
 		document.getElementById("voltarCliente").onclick = function() {
 			var url = '/estrelacarnes';
 			window.location.href = url;

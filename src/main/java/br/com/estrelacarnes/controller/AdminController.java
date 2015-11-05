@@ -287,7 +287,7 @@ public class AdminController {
 		}
 		
 		item.setCategoria(categoriaobj);
-		item.setObservacao(observacao);
+		item.setObservacao(observacao.toUpperCase());
 		item.setProduto(produtoobj);
 		item.setQuantidade(quantidade);
 		item.setTipo(tipo);
@@ -447,13 +447,9 @@ public class AdminController {
 	
 	@Get("/pedido/imprimirItens/{pedido.id}")
 	public void imprimirItens(Pedido pedido){
-		Entrega entrega = new Entrega();
 		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
 		
-		entrega.setId(Integer.valueOf(pedidoObj.getIdEntrega()));
-		entrega = entregaDAO.load(entrega);
 		result.include("pedido", pedidoObj);
-		result.include("entrega", entrega);
 	}
 	
 	

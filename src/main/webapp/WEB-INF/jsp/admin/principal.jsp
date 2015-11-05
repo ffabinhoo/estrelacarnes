@@ -140,6 +140,7 @@
 												</td>
 												
 												<td class="td-actions" style="width: 200px;">
+													<button id="detalhePedido" name="detalhePedido" class="button btn-small btn" onclick="window.open('${linkTo[AdminController].imprimirItens}${pedido.id}')"><i class="icon-print"></i>Print</button>
 													<form id="formVerPedido" method="get" action="cadastrarPedido/${pedido.id}/KG/1/0" style="float: left; padding: 1px;">
 														<button class="button btn btn-success btn-small" id="verPedido">Editar</button>
 													</form>
@@ -231,8 +232,7 @@
 														<button id="detalhePedido" name="detalhePedido" class="button btn-small btn-primary">Detalhes</button>
 													</form>
 													<%-- <form id="formVerPedido" method="get" action="${linkTo[AdminController].imprimirItens}${pedido.id}" style="float: left; padding: 1px;"> --%>
-														<button id="detalhePedido" name="detalhePedido" class="button btn-small btn" onclick="window.open('${linkTo[AdminController].imprimirItens}${pedido.id}')"><i class="icon-print"></i>Imprimir Itens</button>
-														<%-- <a href="${linkTo[AdminController].imprimirItens}${pedido.id}" target="_blank" class="button"><i class="icon-print"></i></a> --%>
+													<%-- <button id="detalhePedido" name="detalhePedido" class="button btn-small btn" onclick="window.open('${linkTo[AdminController].imprimirItens}${pedido.id}')"><i class="icon-print"></i>Print</button> --%>
 													<!-- </form> -->
 													
 													

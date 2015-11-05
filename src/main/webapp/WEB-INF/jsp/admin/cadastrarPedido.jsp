@@ -39,6 +39,7 @@
 #divSpan10 {
 	
 }
+
 </style>
 </head>
 <body>
@@ -147,7 +148,7 @@
 										${4 == idCategoria ? 'checked' : ''} required> Peixe
 									</label> <label class="radio inline"> <input type="radio"
 										id="categoria" name="categoria" value="5"
-										${4 == idCategoria ? 'checked' : ''} required>
+										${5 == idCategoria ? 'checked' : ''} required>
 										Cordeiro
 									</label> <label class="radio inline"> <input type="radio"
 										id="categoria" name="categoria" value="6"
@@ -373,6 +374,12 @@
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
 	<script>
+	$('#observacao').val($('#observacao').val().toUpperCase());
+
+	$('#observacao').keyup(function() {
+	    $(this).val($(this).val().toUpperCase());
+	});
+	
 		$(function() {
 			$("#idTituloCategoria").hide();
 			$("#idTituloProduto").hide();

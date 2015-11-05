@@ -30,13 +30,20 @@
 body {
 	margin: 0;
 	padding: 0;
-	font-size: 11px;
+	margin-top: 0;
+	margin-bottom: 0;
+	font-size: 9px;
 }
-
+li{
+  margin: 0px 0;
+}
+br{
+  margin: 0px 0;
+}
 </style>
 </head>
-<body onload="window.print(); return false;" >
-	<!--  onload="window.print()" -->
+<body  onload="window.print(); return false;">
+	<!--  onload="window.print(); return false;" -->
 	
 			
 	<br>
@@ -48,9 +55,12 @@ body {
 	<div align="left">
 		<c:forEach var="item" items="${pedido.itens}">
 	
-			<li>${item.quantidade}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${item.tipo}&nbsp;&nbsp;&nbsp;${item.produto.nome}&nbsp;&nbsp;&nbsp;${item.preparo.nome}&nbsp;&nbsp;&nbsp; ${item.complemento.nome}
-				<br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${item.observacao}</li>
+			<li>${item.quantidade}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${item.tipo}&nbsp;&nbsp;${item.produto.nome}&nbsp;&nbsp;${item.preparo.nome}&nbsp;&nbsp; ${item.complemento.nome}
+				<c:if test="${item.observacao ne null}">
+					<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${item.observacao} 
+				</c:if>
+			</li>	
 	
 		</c:forEach>
 	</div>
@@ -58,7 +68,7 @@ body {
 	
 	
 	<div align="left">
-	<c:if test="${pedido.observacao ne null}">
+	<c:if test="${pedido.observacao ne ''}">
 		<br>
 		<strong>OBS.:</strong>${pedido.observacao}
 	</c:if>	

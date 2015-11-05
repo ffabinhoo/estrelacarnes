@@ -30,15 +30,18 @@
 body {
 	margin: 0;
 	padding: 0;
+	margin-top: 0;
+	margin-bottom: 0;
 	font-size: 15px;
 }
+
 
 </style>
 <script type="text/javascript">
 function imprimir(){
 	window.print();
-	var url = '/estrelacarnes/pedido/imprimirItens/' + ${pedido.id};
-	window.open(url, '_blank');
+	//var url = '/estrelacarnes/pedido/imprimirItens/' + ${pedido.id};
+	//window.open(url, '_blank');
 	return false;
 }
 </script>
@@ -47,11 +50,10 @@ function imprimir(){
 	<!--  onload="window.print()" -->
 	
 		<div align="center">
-			<i class="icon-star-empty"></i>
 			<label><strong><font size="5"> ESTRELA CARNES</font></strong></label>
 			WWW.ESTRELACARNES.COM.BR
 			<br> CNPJ: 00.454.728/0001-93
-			<br>
+			<br> TEL: 
 		</div>	
 	<br>
 	<div align="center">
@@ -62,8 +64,10 @@ function imprimir(){
 	<div align="left">
 		<c:forEach var="item" items="${pedido.itens}">
 	
-			<li>${item.quantidade}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${item.tipo}&nbsp;&nbsp;&nbsp;${item.produto.nome}&nbsp;&nbsp;&nbsp;${item.preparo.nome}&nbsp;&nbsp;&nbsp; ${item.complemento.nome}
-				<br>
+			<li>${item.quantidade}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${item.tipo}&nbsp;&nbsp;${item.produto.nome}&nbsp;&nbsp;${item.preparo.nome}&nbsp;&nbsp; ${item.complemento.nome}
+				<c:if test="${item.observacao ne ''}">
+					<br>
+				</c:if>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${item.observacao}</li>
 	
 		</c:forEach>

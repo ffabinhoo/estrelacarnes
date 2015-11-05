@@ -284,6 +284,11 @@
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
 	<script>
+	$('#observacao').val($('#observacao').val().toUpperCase());
+
+	$('#observacao').keyup(function() {
+	    $(this).val($(this).val().toUpperCase());
+	});
 	$( "#valor" ).focus();
 	$(document).ready(function() {
 		$("#enderecoDelivery").hide();
