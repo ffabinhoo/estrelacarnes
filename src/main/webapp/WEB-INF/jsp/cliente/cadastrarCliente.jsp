@@ -107,29 +107,29 @@
 										<button name="buscarCep" value="buscarCep" class="btn btn-primary btn-small" id="buscarCep">
 									Buscar CEP</button>
 								</div>
-								<label class="control-label" id="endereco" >Endereco</label>
+								<label class="control-label" >Endereco</label>
 								<div class="controls">
-									<input class="span6" name="cliente.endereco.endereco" value="${cliente.endereco.endereco}" type="text" >
+									<input class="span6" name="cliente.endereco.endereco" value="${cliente.endereco.endereco}" type="text"  id="endereco">
 								</div>
-								<label class="control-label" id="complemento" >Complemento</label>
+								<label class="control-label"  >Complemento</label>
 								<div class="controls">
-									<input class="span6" name="cliente.endereco.complemento" value="${cliente.endereco.complemento}" type="text" >
+									<input class="span6" name="cliente.endereco.complemento" value="${cliente.endereco.complemento}" type="text" id="complemento">
 								</div>
-								<label class="control-label" id="referencia" >Referência</label>
+								<label class="control-label">Referência</label>
 								<div class="controls">
-									<input class="span6" name="cliente.endereco.referencia" value="${cliente.endereco.referencia}" type="text" >
+									<input class="span6" name="cliente.endereco.referencia" value="${cliente.endereco.referencia}" type="text" id="referencia">
 								</div>
-								<label class="control-label" id="bairro" >Bairro</label>
+								<label class="control-label">Bairro</label>
 								<div class="controls">
-									<input class="span6" name="cliente.endereco.bairro" value="${cliente.endereco.bairro}" type="text" >
+									<input class="span6" name="cliente.endereco.bairro" value="${cliente.endereco.bairro}" type="text" id="bairro">
 								</div>
-								<label class="control-label" id="cidade" >Cidade</label>
+								<label class="control-label">Cidade</label>
 								<div class="controls">
-									<input class="span6" name="cliente.endereco.cidade" value="${cliente.endereco.cidade}" type="text" >
+									<input class="span6" name="cliente.endereco.cidade" value="${cliente.endereco.cidade}" type="text" id="cidade">
 								</div>
-								<label class="control-label" id="uf" >UF</label>
+								<label class="control-label">UF</label>
 								<div class="controls">
-									<input class="span6" name="cliente.endereco.uf" value="${cliente.endereco.uf}" type="text" >
+									<input class="span6" name="cliente.endereco.uf" value="${cliente.endereco.uf}" type="text" id="uf">
 								</div>
 								
 								<div class="form-actions">
@@ -194,6 +194,43 @@
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
 	<script>
+	$('#nome').val($('#nome').val().toUpperCase());
+	$('#email').val($('#email').val().toUpperCase());
+	$('#endereco').val($('#endereco').val().toUpperCase());
+	$('#complemento').val($('#complemento').val().toUpperCase());
+	$('#referencia').val($('#referencia').val().toUpperCase());
+	$('#bairro').val($('#bairro').val().toUpperCase());
+	$('#cidade').val($('#cidade').val().toUpperCase());
+	$('#uf').val($('#uf').val().toUpperCase());
+	
+	$('#nome').keyup(function() {
+	    $(this).val($(this).val().toUpperCase());
+	});
+
+	$('#email').keyup(function() {
+	    $(this).val($(this).val().toUpperCase());
+	});
+	$('#endereco').keyup(function() {
+	    $(this).val($(this).val().toUpperCase());
+	});
+	$('#complemento').keyup(function() {
+	    $(this).val($(this).val().toUpperCase());
+	});
+	$('#referencia').keyup(function() {
+	    $(this).val($(this).val().toUpperCase());
+	});
+	$('#bairro').keyup(function() {
+	    $(this).val($(this).val().toUpperCase());
+	});
+	$('#cidade').keyup(function() {
+	    $(this).val($(this).val().toUpperCase());
+	});
+	$('#uf').keyup(function() {
+	    $(this).val($(this).val().toUpperCase());
+	});
+	
+	
+	
 		$('input[type=text]').val (function () {
 		    return this.value.toUpperCase();
 		})

@@ -65,7 +65,7 @@
 				</div>
 				<form id="formEditarEndereco" method="post" action="${linkTo[ClienteController].alterarEndereco}" style="float: left; padding: 1px;">
 					<input id="id" name="cliente.id" value="${cliente.id}" type="hidden">
-					<input id="idEndereco" name="endereco.id" value="${endereco.id}" type="hidden">
+					<input id="idEndereco" name="cliente.endereco.id" value="${endereco.id}" type="hidden">
 					<input id="idEnderecoCliente" name="cliente.endereco.id" value="${cliente.endereco.id}" type="hidden">
 					<div class="row" >
 					<div class="span6" style="background-color:">
@@ -92,25 +92,29 @@
 										<button name="buscarCep" value="buscarCep" class="btn btn-primary btn-small" id="buscarCep">
 									Buscar CEP</button>
 								</div>
-								<label class="control-label" id="endereco" >Endereco</label>
+								<label class="control-label" >Endereco</label>
 								<div class="controls">
-									<input class="span6" name="cliente.endereco.endereco" value="${endereco.endereco}" type="text" >
+									<input class="span6" name="cliente.endereco.endereco" value="${endereco.endereco}" type="text"  id="endereco">
 								</div>
-								<label class="control-label" id="complemento" >Complemento</label>
+								<label class="control-label" >Complemento</label>
 								<div class="controls">
-									<input class="span6" name="cliente.endereco.complemento" value="${endereco.complemento}" type="text" >
+									<input class="span6" name="cliente.endereco.complemento" value="${endereco.complemento}" type="text"  id="complemento" >
 								</div>
-								<label class="control-label" id="bairro" >Bairro</label>
+								<label class="control-label"  >Bairro</label>
 								<div class="controls">
-									<input class="span6" name="cliente.endereco.bairro" value="${endereco.bairro}" type="text" >
+									<input class="span6" name="cliente.endereco.bairro" value="${endereco.bairro}" type="text" id="bairro">
 								</div>
-								<label class="control-label" id="cidade" >Cidade</label>
+								<label class="control-label" >Referência</label>
 								<div class="controls">
-									<input class="span6" name="cliente.endereco.cidade" value="${endereco.cidade}" type="text" >
+									<input class="span6" name="cliente.endereco.referencia" value="${endereco.referencia}" type="text"  id="referencia" >
 								</div>
-								<label class="control-label" id="uf" >UF</label>
+								<label class="control-label"  >Cidade</label>
 								<div class="controls">
-									<input class="span6" name="cliente.endereco.uf" value="${endereco.uf}" type="text" >
+									<input class="span6" name="cliente.endereco.cidade" value="${endereco.cidade}" type="text" id="cidade">
+								</div>
+								<label class="control-label"  >UF</label>
+								<div class="controls">
+									<input class="span6" name="cliente.endereco.uf" value="${endereco.uf}" type="text" id="uf">
 								</div>
 								
 								<div class="form-actions">
@@ -164,6 +168,38 @@
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
 	<script>
+	
+	$('#endereco').val($('#endereco').val().toUpperCase());
+	$('#complemento').val($('#complemento').val().toUpperCase());
+	$('#referencia').val($('#referencia').val().toUpperCase());
+	$('#bairro').val($('#bairro').val().toUpperCase());
+	$('#cidade').val($('#cidade').val().toUpperCase());
+	$('#uf').val($('#uf').val().toUpperCase());
+	
+	
+	$('#endereco').keyup(function() {
+	    $(this).val($(this).val().toUpperCase());
+	});
+	$('#complemento').keyup(function() {
+	    $(this).val($(this).val().toUpperCase());
+	});
+	$('#referencia').keyup(function() {
+	    $(this).val($(this).val().toUpperCase());
+	});
+	$('#bairro').keyup(function() {
+	    $(this).val($(this).val().toUpperCase());
+	});
+	$('#cidade').keyup(function() {
+	    $(this).val($(this).val().toUpperCase());
+	});
+	$('#uf').keyup(function() {
+	    $(this).val($(this).val().toUpperCase());
+	});
+
+	$('input[type=text]').val (function () {
+	    return this.value.toUpperCase();
+	})
+	
 		document.getElementById("voltarCliente").onclick = function() {
 			var url = '/estrelacarnes';
 			window.location.href = url;
