@@ -53,7 +53,7 @@ function imprimir(){
 			<label><strong><font size="5"> ESTRELA CARNES</font></strong></label>
 			WWW.ESTRELACARNES.COM.BR
 			<br> CNPJ: 00.454.728/0001-93
-			<br> TEL: 
+			<br> TEL: 3351-2313
 		</div>	
 	<br>
 	<div align="center">
