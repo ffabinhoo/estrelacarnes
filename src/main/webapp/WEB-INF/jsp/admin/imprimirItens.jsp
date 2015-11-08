@@ -32,7 +32,7 @@ body {
 	padding: 0;
 	margin-top: 0;
 	margin-bottom: 0;
-	font-size: 9px;
+	font-size: 7px;
 }
 li{
   margin: 0px 0;
@@ -40,6 +40,11 @@ li{
 br{
   margin: 0px 0;
 }
+p{
+  margin: 0px 0;
+}
+
+
 </style>
 </head>
 <body  onload="window.print(); return false;">
@@ -55,12 +60,12 @@ br{
 	<div align="left">
 		<c:forEach var="item" items="${pedido.itens}">
 	
-			<li>${item.quantidade}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${item.tipo}&nbsp;&nbsp;${item.produto.nome}&nbsp;&nbsp;${item.preparo.nome}&nbsp;&nbsp; ${item.complemento.nome}
+			<p>${item.quantidade}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${item.tipo}&nbsp;&nbsp;${item.produto.nome}&nbsp;&nbsp;${item.preparo.nome}&nbsp;&nbsp; ${item.complemento.nome}
 				<c:if test="${item.observacao ne null}">
 					<br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${item.observacao} 
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${item.observacao} 
 				</c:if>
-			</li>	
+			</p>	
 	
 		</c:forEach>
 	</div>

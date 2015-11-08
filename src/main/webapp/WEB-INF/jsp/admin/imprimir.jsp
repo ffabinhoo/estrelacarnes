@@ -64,11 +64,11 @@ function imprimir(){
 	<div align="left">
 		<c:forEach var="item" items="${pedido.itens}">
 	
-			<li>${item.quantidade}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${item.tipo}&nbsp;&nbsp;${item.produto.nome}&nbsp;&nbsp;${item.preparo.nome}&nbsp;&nbsp; ${item.complemento.nome}
+			<p>${item.quantidade}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${item.tipo}&nbsp;&nbsp;${item.produto.nome}&nbsp;&nbsp;${item.preparo.nome}&nbsp;&nbsp; ${item.complemento.nome}
 				<c:if test="${item.observacao ne ''}">
 					<br>
 				</c:if>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${item.observacao}</li>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${item.observacao}</p>
 	
 		</c:forEach>
 	</div>
