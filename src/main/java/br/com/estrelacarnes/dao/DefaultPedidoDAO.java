@@ -257,9 +257,15 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 	@Override
 	public List<Pedido> consultarHistoricoPedido(Cliente cliente) {
 		List<Pedido> lista = new ArrayList<Pedido>();
-		String sql = "select p from Pedido p where p.cliente.id = "+cliente.getId()+" order by p.data desc";
-		lista = entityManager.createQuery(sql, Pedido.class).getResultList();
+		String sql = "select * from Pedido p where idCliente = "+cliente.getId()+" order by p.data desc limit 10 ";
+		lista = entityManager.createNativeQuery(sql, Pedido.class).getResultList();
 		return lista;
+	}
+
+	@Override
+	public void inserirListaItens(List<Item> listaItens) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

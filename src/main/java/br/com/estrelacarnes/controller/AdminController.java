@@ -187,21 +187,39 @@ public class AdminController {
 	@Post("/pedido/copiar")
 	public void copiarPedido(Pedido pedido){
 		pedido = pedidoDAO.load(pedido.getId());
+		List<Item> listaItens = pedido.getItens();
 		Pedido pedidoNovo = new Pedido();
 		pedidoNovo.setCliente(pedido.getCliente());
 		pedidoNovo.setData(new Date());
 		pedidoNovo.setStatus("A");
 		pedidoNovo.setObservacao(pedido.getObservacao());
 		pedidoNovo = pedidoDAO.abrirPedido(pedidoNovo);
-		pedidoNovo.setItens(pedido.getItens());
-		for (int i = 0; i < pedidoNovo.getItens().size(); i++) {
-			Item item = pedidoNovo.getItens().get(i);
-			item.setPedido(pedidoNovo);
-			pedidoDAO.inserirItem(item);
+		Pedido pedidonew = pedidoDAO.load(pedidoNovo.getId());
+		
+		for (int i = 0; i < listaItens.size(); i++) {
+			Item itemN = clonarItemPedido(listaItens.get(i),pedidonew);
+			pedidoDAO.inserirItem(itemN);
 		}
-		result.redirectTo(AdminController.class).cadastrarPedido(pedido.getId(), "KG", "1","0");
+		result.redirectTo(AdminController.class).cadastrarPedido(pedidonew.getId(), "KG", "1","0");
 	}
 	
+	private Item clonarItemPedido(Item item, Pedido pedidonew) {
+		 //item = pedidoDAO.mostrarItem(item.getId());
+		 Item itemNew = new Item();
+		 itemNew.setCategoria(item.getCategoria());
+		 itemNew.setComplemento(item.getComplemento());
+		 itemNew.setObservacao(item.getObservacao());
+		 itemNew.setPedido(pedidonew);
+		 itemNew.setPreparo(item.getPreparo());
+		 itemNew.setProduto(item.getProduto());
+		 itemNew.setQuantidade(item.getQuantidade());
+		 itemNew.setTipo(item.getTipo());
+		 
+		 
+		 return itemNew;
+		
+	}
+
 	@Post("/cadastrarPedido")
 	public void cadastrarPedidoNovo(Integer idCliente) {
 		Cliente cliente = new Cliente();

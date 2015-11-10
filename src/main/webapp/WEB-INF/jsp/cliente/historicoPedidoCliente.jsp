@@ -131,12 +131,12 @@
 													<c:if test="${pedido.status eq 'E'}">
 													<form id="formEnviarPedido" method="get" action="${linkTo[AdminController].pedidoEnviado}${pedido.id}" 
 														style="float: left; padding: 1px;">
-															<button id="detalhePedido" name="detalhePedido" class="button btn-small btn-primary">Detalhes</button>
+															<button id="detalhePedido" name="detalhePedido" class="button btn-small btn-primary" title="${pedido.itens}">Detalhes</button>
 													</form>
 													<form id="formCopiarPedido" method="post" action="${linkTo[AdminController].copiarPedido}" 
 														style="float: left; padding: 1px;">
 															<input type="hidden" id="idPedido" name="pedido.id" value="${pedido.id}">
-															<button id="copiarPedido" name="copiarPedido" class="button btn-small btn"><i class="icon-copy"></i>&nbsp;Copiar</button>
+															<button id="copiarPedido" name="copiarPedidoNome" class="button btn-small btn"><i class="icon-copy"></i>&nbsp;Copiar</button>
 													</form>
 													</c:if>
 												</td>

@@ -51,6 +51,8 @@ public interface PedidoDAO {
 
 	List<Pedido> consultarHistoricoPedido(Cliente cliente);
 
+	void inserirListaItens(List<Item> listaItens);
+
 	
 
 }
