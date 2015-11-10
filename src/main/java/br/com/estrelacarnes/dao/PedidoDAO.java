@@ -2,6 +2,7 @@ package br.com.estrelacarnes.dao;
 
 import java.util.List;
 
+import br.com.estrelacarnes.model.Cliente;
 import br.com.estrelacarnes.model.Complemento;
 import br.com.estrelacarnes.model.Item;
 import br.com.estrelacarnes.model.Pedido;
@@ -47,6 +48,9 @@ public interface PedidoDAO {
 	List<Pedido> consultarPedido(String status, String inicio, String fim);
 
 	List<Pedido> listarPedidosEnviadosHoje();
+
+	List<Pedido> consultarHistoricoPedido(Cliente cliente);
+
 	
 
 }

@@ -24,6 +24,7 @@ import br.com.estrelacarnes.interceptor.UserInfo;
 import br.com.estrelacarnes.model.Cliente;
 import br.com.estrelacarnes.model.Endereco;
 import br.com.estrelacarnes.model.Entrega;
+import br.com.estrelacarnes.model.Pedido;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.sun.jersey.api.client.Client;
@@ -102,6 +103,23 @@ public class ClienteController {
 		cliente = clienteDAO.load(cliente);
 		result.include("cliente", cliente);
 		
+	}
+	
+	@Get("cliente/historico/{cliente.id}")
+	public void historicoPedidoCliente(Cliente cliente){
+		System.out.println(cliente.getId());
+		List<Pedido> listaPedidos = pedidoDAO.consultarHistoricoPedido(cliente);
+		for (int i = 0; i < listaPedidos.size(); i++) {
+			Entrega entrega = new Entrega();
+			if (listaPedidos.get(i).getIdEntrega()!=null){
+				entrega.setId(Integer.valueOf(listaPedidos.get(i).getIdEntrega()));
+				entrega = entregaDAO.load(entrega);
+				listaPedidos.get(i).setTipoEntrega(entrega.getTipoEntrega());
+			}
+			
+			
+		}
+		result.include("listaPedidos", listaPedidos);
 	}
 	
 	

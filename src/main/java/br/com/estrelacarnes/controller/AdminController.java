@@ -182,6 +182,26 @@ public class AdminController {
 		System.out.println("consultar usuario");
 	}
 	
+	
+	
+	@Post("/pedido/copiar")
+	public void copiarPedido(Pedido pedido){
+		pedido = pedidoDAO.load(pedido.getId());
+		Pedido pedidoNovo = new Pedido();
+		pedidoNovo.setCliente(pedido.getCliente());
+		pedidoNovo.setData(new Date());
+		pedidoNovo.setStatus("A");
+		pedidoNovo.setObservacao(pedido.getObservacao());
+		pedidoNovo = pedidoDAO.abrirPedido(pedidoNovo);
+		pedidoNovo.setItens(pedido.getItens());
+		for (int i = 0; i < pedidoNovo.getItens().size(); i++) {
+			Item item = pedidoNovo.getItens().get(i);
+			item.setPedido(pedidoNovo);
+			pedidoDAO.inserirItem(item);
+		}
+		result.redirectTo(AdminController.class).cadastrarPedido(pedido.getId(), "KG", "1","0");
+	}
+	
 	@Post("/cadastrarPedido")
 	public void cadastrarPedidoNovo(Integer idCliente) {
 		Cliente cliente = new Cliente();
@@ -376,6 +396,8 @@ public class AdminController {
 	public void layout(){
 				
 	}
+	
+	
 	
 	@Post("/pedido/entrega")
 	public void prepararEntrega(Pedido pedido, Endereco endereco, String tipoEntrega){

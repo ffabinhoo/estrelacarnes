@@ -16,6 +16,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import br.com.estrelacarnes.model.Cliente;
 import br.com.estrelacarnes.model.Complemento;
 import br.com.estrelacarnes.model.Item;
 import br.com.estrelacarnes.model.Pedido;
@@ -70,9 +71,8 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 	public Pedido abrirPedido(Pedido pedido) {
 		pedido = this.entityManager.merge(pedido);
 		return pedido;
-		
 	}
-
+	
 	@Override
 	public List<Item> listarItensPorPedido(Integer idPedido) {
 		List<Item> lista = new ArrayList<Item>();
@@ -253,4 +253,14 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 		lista = entityManager.createNativeQuery(sql, Pedido.class).getResultList();
 		return lista;
 	}
+
+	@Override
+	public List<Pedido> consultarHistoricoPedido(Cliente cliente) {
+		List<Pedido> lista = new ArrayList<Pedido>();
+		String sql = "select p from Pedido p where p.cliente.id = "+cliente.getId()+" order by p.data desc";
+		lista = entityManager.createQuery(sql, Pedido.class).getResultList();
+		return lista;
+	}
+
+	
 }

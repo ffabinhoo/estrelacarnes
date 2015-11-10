@@ -107,6 +107,9 @@
 						<input type="hidden" id="idCliente" name="idCliente" value="${cliente.id}">
 						<button class="button btn btn-success " id="abrirPedido">Abrir Pedido</button>
 					</form>
+					<form action="${linkTo[ClienteController].historicoPedidoCliente}${cliente.id}" method="get" id="formHistoricoPedido" style="float: left; padding: 1px;">
+						<button class="button btn btn-success " id="abrirPedido">Histório de Pedidos</button>
+					</form>
 				</div>
 			</div>
 			
