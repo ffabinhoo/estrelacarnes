@@ -131,12 +131,16 @@
 													<c:if test="${pedido.status eq 'E'}">
 													<form id="formEnviarPedido" method="get" action="${linkTo[AdminController].pedidoEnviado}${pedido.id}" 
 														style="float: left; padding: 1px;">
-															<button id="detalhePedido" name="detalhePedido" class="button btn-small btn-primary" title="${pedido.itens}">Detalhes</button>
+															<button id="detalhePedido" name="detalhePedido" class="button btn-small btn-primary" 
+															title="<c:forEach var="item" items="${pedido.itens}">- ${item.quantidade}${item.tipo}  ${item.categoria.nome}  ${item.produto.nome}  ${item.preparo.nome}  ${item.complemento.nome} 
+</c:forEach>">
+															Detalhes
+															</button>
 													</form>
 													<form id="formCopiarPedido" method="post" action="${linkTo[AdminController].copiarPedido}" 
 														style="float: left; padding: 1px;">
 															<input type="hidden" id="idPedido" name="pedido.id" value="${pedido.id}">
-															<button id="copiarPedido" name="copiarPedidoNome" class="button btn-small btn"><i class="icon-copy"></i>&nbsp;Copiar</button>
+															<button id="copiarPedidoId" name="copiarPedido" class="button btn-small btn"><i class="icon-copy"></i>&nbsp;Copiar</button>
 													</form>
 													</c:if>
 												</td>
@@ -197,26 +201,15 @@
 		<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 		<script src="/estrelacarnes/js/bootstrap.js"></script>
 		<script>
-		jQuery('#datetimepicker').datetimepicker({
-			timepicker:false,
-			format : 'd/m/Y'
-		});
-		jQuery('#datetimepicker2').datetimepicker({
-			timepicker:false,
-			format : 'd/m/Y'
-		});
-			
-			document.getElementById("voltarCliente").onclick = function() {
-				var url = '/estrelacarnes';
-				window.location.href = url;
-			};
-			$('button[name="copiarPedido"]').on('click', function(e){
-			    var $form=$(this).closest('form'); 
-			    e.preventDefault();
-			    $('#confirm').modal({ backdrop: 'static', keyboard: false })
-			        .one('click', '#delete', function() {
-			            $form.trigger('submit'); // submit the form
-			        });
+			$('button[name="copiarPedido"]').on('click', function(e) {
+				var $form = $(this).closest('form');
+				e.preventDefault();
+				$('#confirm').modal({
+					backdrop : 'static',
+					keyboard : false
+				}).one('click', '#delete', function() {
+					$form.trigger('submit'); // submit the form
+				});
 			});
 		</script>
 </body>

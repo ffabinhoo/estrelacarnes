@@ -325,7 +325,9 @@ public class AdminController {
 		}
 		
 		item.setCategoria(categoriaobj);
-		item.setObservacao(observacao.toUpperCase());
+		if (observacao != null){
+			item.setObservacao(observacao.toUpperCase());
+		}
 		item.setProduto(produtoobj);
 		item.setQuantidade(quantidade);
 		item.setTipo(tipo);

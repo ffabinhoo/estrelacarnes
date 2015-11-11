@@ -110,11 +110,13 @@ public class ClienteController {
 		System.out.println(cliente.getId());
 		List<Pedido> listaPedidos = pedidoDAO.consultarHistoricoPedido(cliente);
 		for (int i = 0; i < listaPedidos.size(); i++) {
-			Entrega entrega = new Entrega();
+			listaPedidos.get(i).setItens(pedidoDAO.listarItensPorPedido(listaPedidos.get(i).getId()));
 			if (listaPedidos.get(i).getIdEntrega()!=null){
+				Entrega entrega = new Entrega();
 				entrega.setId(Integer.valueOf(listaPedidos.get(i).getIdEntrega()));
 				entrega = entregaDAO.load(entrega);
 				listaPedidos.get(i).setTipoEntrega(entrega.getTipoEntrega());
+				
 			}
 			
 			
