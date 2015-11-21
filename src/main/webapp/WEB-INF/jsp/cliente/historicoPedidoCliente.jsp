@@ -147,7 +147,7 @@
 											</tr>
 										<div id="confirm" class="modal hide fade">
 										  <div class="modal-body">
-										    Quer mesmo Copiar Pedido do Cliente?<br />
+										  <h3>Quer mesmo copiar o Pedido selecionado</h3>
 										    (Todo o pedido do cliente será copiado)
 										  </div>
 										  <div class="modal-footer">
