@@ -157,6 +157,22 @@
 										id="categoria" name="categoria" value="7"
 										${7 == idCategoria ? 'checked' : ''} required>
 										Linguiça
+									</label> <label class="radio inline"> <input type="radio"
+										id="categoria" name="categoria" value="8"
+										${8 == idCategoria ? 'checked' : ''} required>
+										Espetinho
+									</label></label> <label class="radio inline"> <input type="radio"
+										id="categoria" name="categoria" value="9"
+										${9 == idCategoria ? 'checked' : ''} required>
+										Gourmet
+									</label></label> <label class="radio inline"> <input type="radio"
+										id="categoria" name="categoria" value="10"
+										${10 == idCategoria ? 'checked' : ''} required>
+										Embutidos
+									</label></label> <label class="radio inline"> <input type="radio"
+										id="categoria" name="categoria" value="11"
+										${11 == idCategoria ? 'checked' : ''} required>
+										Diversos
 									</label>
 									<!-- </div> -->
 								</div>
