@@ -136,43 +136,37 @@
 									<!-- <div class="controls"> -->
 									<label class="radio inline"> <input type="radio"
 										id="categoria" name="categoria" value="1"
-										${1 == idCategoria ? 'checked' : ''} required> Bovino
+										${1 == idCategoria ? 'checked' : ''} required> BOVINO
 									</label> <label class="radio inline"> <input type="radio"
 										id="categoria" name="categoria" value="2"
-										${2 == idCategoria ? 'checked' : ''} required> Suíno
+										${2 == idCategoria ? 'checked' : ''} required> AVES
 									</label> <label class="radio inline"> <input type="radio"
 										id="categoria" name="categoria" value="3"
-										${3 == idCategoria ? 'checked' : ''} required> Ave
+										${3 == idCategoria ? 'checked' : ''} required> SUÍNO
 									</label> <label class="radio inline"> <input type="radio"
 										id="categoria" name="categoria" value="4"
-										${4 == idCategoria ? 'checked' : ''} required> Peixe
+										${4 == idCategoria ? 'checked' : ''} required> LINGUIÇA
 									</label> <label class="radio inline"> <input type="radio"
 										id="categoria" name="categoria" value="5"
-										${5 == idCategoria ? 'checked' : ''} required>
-										Cordeiro
+										${5 == idCategoria ? 'checked' : ''} required> PEIXES
 									</label> <label class="radio inline"> <input type="radio"
 										id="categoria" name="categoria" value="6"
-										${6 == idCategoria ? 'checked' : ''} required> Angus
+										${6 == idCategoria ? 'checked' : ''} required> GOURMET
 									</label> <label class="radio inline"> <input type="radio"
 										id="categoria" name="categoria" value="7"
-										${7 == idCategoria ? 'checked' : ''} required>
-										Linguiça
+										${7 == idCategoria ? 'checked' : ''} required> CORDEIRO
 									</label> <label class="radio inline"> <input type="radio"
 										id="categoria" name="categoria" value="8"
-										${8 == idCategoria ? 'checked' : ''} required>
-										Espetinho
+										${8 == idCategoria ? 'checked' : ''} required> ANGUS
 									</label></label> <label class="radio inline"> <input type="radio"
 										id="categoria" name="categoria" value="9"
-										${9 == idCategoria ? 'checked' : ''} required>
-										Gourmet
+										${9 == idCategoria ? 'checked' : ''} required> ESPETINHO
 									</label></label> <label class="radio inline"> <input type="radio"
 										id="categoria" name="categoria" value="10"
-										${10 == idCategoria ? 'checked' : ''} required>
-										Embutidos
+										${10 == idCategoria ? 'checked' : ''} required> EMBUTIDOS
 									</label></label> <label class="radio inline"> <input type="radio"
 										id="categoria" name="categoria" value="11"
-										${11 == idCategoria ? 'checked' : ''} required>
-										Diversos
+										${11 == idCategoria ? 'checked' : ''} required>	DIVERSOS
 									</label>
 									<!-- </div> -->
 								</div>

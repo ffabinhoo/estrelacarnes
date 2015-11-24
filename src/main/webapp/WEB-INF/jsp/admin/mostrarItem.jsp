@@ -93,20 +93,29 @@
 							<div class="widget-content">
 								<div class="controls">
 									<label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="1" ${1 == item.categoria.id ? 'checked' : ''} disabled>
-										Bovino
+										BOVINO
 									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="2" ${2 == item.categoria.id ? 'checked' : ''} disabled>
-										Suíno
+										AVES
 									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="3" ${3 == item.categoria.id ? 'checked' : ''} disabled>
-										Ave
+										SUÍNO
 									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="4" ${4 == item.categoria.id ? 'checked' : ''} disabled>
-										Peixe
+										LINGUIÇA
 									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="5" ${5 == item.categoria.id ? 'checked' : ''} disabled>
-										Cordeiro
+										PEIXES
 									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="6" ${6 == item.categoria.id ? 'checked' : ''} disabled>
-										Angus
+										GOURMET
 									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="7" ${7 == item.categoria.id ? 'checked' : ''} disabled>
-										Linguiça
+										CORDEIRO
+									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="8" ${8 == item.categoria.id ? 'checked' : ''} disabled>
+										ANGUS
+									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="9" ${9 == item.categoria.id ? 'checked' : ''} disabled>
+										ESPETINHO
+									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="10" ${10 == item.categoria.id ? 'checked' : ''} disabled>
+										EMBUTIDOS
+									</label> <label class="radio inline"> <input type="radio" id="categoria" name="categoria" value="11" ${11 == item.categoria.id ? 'checked' : ''} disabled>
+										DIVERSOS
 									</label>
+									
 								</div>
 							</div>
 						</div>
