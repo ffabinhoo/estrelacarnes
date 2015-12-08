@@ -9,7 +9,7 @@
 <head>
 <meta charset="iso-8859-1">
 <title>Estrela Carnes</title>
-<meta name="viewport"
+<!-- <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link href="/estrelacarnes/css/bootstrap.min.css" rel="stylesheet">
@@ -32,7 +32,7 @@ body {
 	padding: 0;
 	margin-top: 0;
 	margin-bottom: 0;
-	font-size: 7px;
+	font-size: 9px;
 }
 li{
   margin: 0px 0;
@@ -43,17 +43,20 @@ br{
 p{
   margin: 0px 0;
 }
+#nome{
+font-size: 13px
 
+}
 
 </style>
 </head>
-<body  onload="window.print(); return false;">
+<body  >
 	<!--  onload="window.print(); return false;" -->
 	
 			
 	<br>
-	<div align="center">
-		<strong><font size="3">${pedido.cliente.nome}</font></strong>
+	<div align="center" id="nome">
+		<strong>${pedido.cliente.nome}</strong>
 		<br>(${pedido.cliente.celular})
 	</div>
 	

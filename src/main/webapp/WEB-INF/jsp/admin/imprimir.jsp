@@ -9,9 +9,8 @@
 <head>
 <meta charset="iso-8859-1">
 <title>Estrela Carnes</title>
-<meta name="viewport"
+<!--<meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
 <link href="/estrelacarnes/css/bootstrap.min.css" rel="stylesheet">
 <link href="/estrelacarnes/css/bootstrap-responsive.min.css"
 	rel="stylesheet">
@@ -34,30 +33,32 @@ body {
 	margin-bottom: 0;
 	font-size: 15px;
 }
-
+#nomeEmpresa{
+	font-size: 25px;
+ }
 
 </style>
 <script type="text/javascript">
 function imprimir(){
-	window.print();
+	//window.print();
 	//var url = '/estrelacarnes/pedido/imprimirItens/' + ${pedido.id};
 	//window.open(url, '_blank');
-	return false;
+	//return false;
 }
 </script>
 </head>
 <body onload="imprimir();" >
 	<!--  onload="window.print()" -->
 	
-		<div align="center">
-			<label><strong><font size="5"> ESTRELA CARNES</font></strong></label>
+		<div align="center" >
+			<label id="nomeEmpresa"><strong> ESTRELA CARNES</strong></label>
 			WWW.ESTRELACARNES.COM.BR
 			<br> CNPJ: 00.454.728/0001-93
 			<br> TEL: 3351-2313
 		</div>	
 	<br>
 	<div align="center">
-		<strong><font size="3">${pedido.cliente.nome}</font></strong>
+		<strong>${pedido.cliente.nome}</strong>
 		<br>(${pedido.cliente.celular})
 	</div>
 	
@@ -116,26 +117,15 @@ function imprimir(){
 									 ===============================================================
 		
 	</div>
-	
 	<br>
 	<div align="left">
-		<strong><font size="3">${pedido.cliente.nome}</font></strong> - (${pedido.cliente.celular})
+		<strong>${pedido.cliente.nome}</strong> - (${pedido.cliente.celular})
 	</div>
 	<br>
 	<c:if test="${entrega.tipoEntrega eq 'D'}">
-
 		<li><Strong>Endereço: </Strong>${entrega.endereco.endereco} - ${entrega.endereco.complemento}</li>
 		<li><strong>Bairro: </strong>${entrega.endereco.bairro}</li>
 		<li><strong>Referência: </strong>${entrega.endereco.referencia}</li>
-		
-		
-
 	</c:if>
-	
-
-	
-
-
-
 </body>
 </html>
