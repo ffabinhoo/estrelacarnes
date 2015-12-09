@@ -32,7 +32,8 @@ body {
 	padding: 0;
 	margin-top: 0;
 	margin-bottom: 0;
-	font-size: 9px;
+	font-size: 12px;
+	font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 }
 li{
   margin: 0px 0;
@@ -44,13 +45,14 @@ p{
   margin: 0px 0;
 }
 #nome{
-font-size: 13px
+font-size: 17px
+font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 
 }
 
 </style>
 </head>
-<body  >
+<body  onload="window.print(); return false;">
 	<!--  onload="window.print(); return false;" -->
 	
 			

@@ -32,18 +32,21 @@ body {
 	margin-top: 0;
 	margin-bottom: 0;
 	font-size: 15px;
+	font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 }
+
 #nomeEmpresa{
 	font-size: 25px;
+	font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
  }
 
 </style>
 <script type="text/javascript">
 function imprimir(){
-	//window.print();
+	window.print();
 	//var url = '/estrelacarnes/pedido/imprimirItens/' + ${pedido.id};
 	//window.open(url, '_blank');
-	//return false;
+	return false;
 }
 </script>
 </head>
