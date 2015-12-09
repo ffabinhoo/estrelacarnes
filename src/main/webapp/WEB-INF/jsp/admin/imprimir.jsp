@@ -32,9 +32,12 @@ body {
 	margin-top: 0;
 	margin-bottom: 0;
 	font-size: 15px;
+	font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 }
+
 #nomeEmpresa{
 	font-size: 25px;
+	font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
  }
 
 </style>
