@@ -32,7 +32,7 @@ body {
 	padding: 0;
 	margin-top: 0;
 	margin-bottom: 0;
-	font-size: 12px;
+	font-size: 10px;
 	font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 }
 li{
@@ -45,7 +45,7 @@ p{
   margin: 0px 0;
 }
 #nome{
-font-size: 17px
+font-size: 15px
 font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 
 }
