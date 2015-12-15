@@ -115,10 +115,11 @@ function imprimir(){
 	<br>
 	<div align="left">
 		<Strong>RECEBIMENTO:</strong>________________________________________________________________
-		<br>
+		<br><br><br><br>
 		
 									 ===============================================================
-		
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>	
 	</div>
 	<br>
 	<div align="left">
