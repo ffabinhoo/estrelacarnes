@@ -90,8 +90,8 @@
 									<thead>
 										<tr>
 											<th>Nome do Cliente</th>
-											<th>Nº Pedido</th>
 											<th>Data do Pedido</th>
+											<th>Data de Entrega</th>
 											<th>Entrega</th>
 											<th class="td-actions"></th>
 										</tr>
@@ -101,19 +101,19 @@
 											<tr>
 											
 												<td><a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}">${pedido.cliente.nome}</a></td>
-												<td>${pedido.id}</td>
+												<td><fmt:formatDate pattern="dd/MM HH:mm" value="${pedido.pedido.data}" /></td>
 												<td><fmt:formatDate pattern="dd/MM HH:mm" value="${pedido.data}" /></td>
 												
 												<td>
 													<c:if test="${pedido.tipoEntrega eq 'D'}">
 														Delivery
-														<c:if test="${pedido.status eq 'E'}">
+														<c:if test="${pedido.pedido.status eq 'E'}">
 															- Enviado
 														</c:if>
 													</c:if>
 													<c:if test="${pedido.tipoEntrega eq 'P'}">
 														Pick-up
-														<c:if test="${pedido.status eq 'E'}">
+														<c:if test="${pedido.pedido.status eq 'E'}">
 															- Enviado
 														</c:if>
 													</c:if>
@@ -123,23 +123,23 @@
 												</td>
 												<td class="td-actions" style="width: 150px;">
 												
-													<c:if test="${pedido.status eq 'A'}">
-														<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${pedido.id}/KG/1/0" style="float: left; padding: 1px;">
+													<c:if test="${pedido.pedido.status eq 'A'}">
+														<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${pedido.pedido.id}/KG/1/0" style="float: left; padding: 1px;">
 															<button class="button btn btn-success btn-small" id="verPedido">Editar</button>
 														</form>
 													</c:if>
-													<c:if test="${pedido.status eq 'E'}">
-													<form id="formEnviarPedido" method="get" action="${linkTo[AdminController].pedidoEnviado}${pedido.id}" 
+													<c:if test="${pedido.pedido.status eq 'E'}">
+													<form id="formEnviarPedido" method="get" action="${linkTo[AdminController].pedidoEnviado}${pedido.pedido.id}" 
 														style="float: left; padding: 1px;">
 															<button id="detalhePedido" name="detalhePedido" class="button btn-small btn-primary" 
-															title="<c:forEach var="item" items="${pedido.itens}">- ${item.quantidade}${item.tipo}  ${item.categoria.nome}  ${item.produto.nome}  ${item.preparo.nome}  ${item.complemento.nome} 
+															title="<c:forEach var="item" items="${pedido.pedido.itens}">- ${item.quantidade}${item.tipo}  ${item.categoria.nome}  ${item.produto.nome}  ${item.preparo.nome}  ${item.complemento.nome} 
 </c:forEach>">
 															Detalhes
 															</button>
 													</form>
 													<form id="formCopiarPedido" method="post" action="${linkTo[AdminController].copiarPedido}" 
 														style="float: left; padding: 1px;">
-															<input type="hidden" id="idPedido" name="pedido.id" value="${pedido.id}">
+															<input type="hidden" id="idPedido" name="pedido.id" value="${pedido.pedido.id}">
 															<button id="copiarPedidoId" name="copiarPedido" class="button btn-small btn"><i class="icon-copy"></i>&nbsp;Copiar</button>
 													</form>
 													</c:if>

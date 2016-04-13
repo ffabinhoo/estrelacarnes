@@ -108,7 +108,7 @@ public class ClienteController {
 	@Get("cliente/historico/{cliente.id}")
 	public void historicoPedidoCliente(Cliente cliente){
 		System.out.println(cliente.getId());
-		List<Pedido> listaPedidos = pedidoDAO.consultarHistoricoPedido(cliente);
+		/*List<Pedido> listaPedidos = pedidoDAO.consultarHistoricoPedido(cliente);
 		for (int i = 0; i < listaPedidos.size(); i++) {
 			listaPedidos.get(i).setItens(pedidoDAO.listarItensPorPedido(listaPedidos.get(i).getId()));
 			if (listaPedidos.get(i).getIdEntrega()!=null){
@@ -120,8 +120,14 @@ public class ClienteController {
 			}
 			
 			
+		}*/
+		List<Entrega> listaEntregas = entregaDAO.consultarEntregasCliente(cliente);
+		for (int i = 0; i < listaEntregas.size(); i++) {
+			listaEntregas.get(i).getPedido().setItens(pedidoDAO.listarItensPorPedido(listaEntregas.get(i).getPedido().getId()));
+			
 		}
-		result.include("listaPedidos", listaPedidos);
+		
+		result.include("listaPedidos", listaEntregas);
 	}
 	
 	
