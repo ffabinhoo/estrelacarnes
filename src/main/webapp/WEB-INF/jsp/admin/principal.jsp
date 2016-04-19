@@ -97,6 +97,8 @@
 									<span class="shortcut-label">Pedidos Enviados</span> </a>
 										 <a href="${linkTo[AdminController].consultarPedido}" class="shortcut"><i class="shortcut-icon icon-search"></i>
 										 <span class="shortcut-label">Consultar Pedidos</span> </a>
+										 <a href="${linkTo[AdminController].consultarPedido}" class="shortcut"><i class="shortcut-icon icon-sent"></i>
+										 <span class="shortcut-label">Entrega</span> </a>
 
 								</div>
 								<!-- /shortcuts -->
