@@ -57,6 +57,18 @@
 					<li><a href="${linkTo[AdminController].consultarPedido}"><i class="icon-search"></i><span>Consultar Pedido</span></a></li>
 					<li><a href="${linkTo[ClienteController].cadastrarCliente}"><i class="icon-user"></i><span>Cadastrar Cliente</span></a></li>
 					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-zoom-in"></i><span>Consultar Cliente</span></a></li>
+					<li class="dropdown">					
+						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+							<i class="icon-cog"></i>
+							<span>Administração</span>
+							<b class="caret"></b>
+						</a>	
+					
+						<ul class="dropdown-menu">
+	                        <li><a href="#">Produtos</a></li>
+							<li><a href="${linkTo[AdminController].manterHorario}">Horários</a></li>
+	                    </ul>    				
+					</li>
 					<!-- <li><a href="#"><i class="icon-list-alt"></i><span>Relatórios</span>
 					</a></li> -->
 					<!-- <li class="dropdown"><a href="javascript:;"
@@ -97,8 +109,7 @@
 									<span class="shortcut-label">Pedidos Enviados</span> </a>
 										 <a href="${linkTo[AdminController].consultarPedido}" class="shortcut"><i class="shortcut-icon icon-search"></i>
 										 <span class="shortcut-label">Consultar Pedidos</span> </a>
-										 <a href="${linkTo[AdminController].consultarPedido}" class="shortcut"><i class="shortcut-icon icon-sent"></i>
-										 <span class="shortcut-label">Entrega</span> </a>
+										 
 
 								</div>
 								<!-- /shortcuts -->

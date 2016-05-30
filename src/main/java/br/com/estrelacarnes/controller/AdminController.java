@@ -182,6 +182,11 @@ public class AdminController {
 		System.out.println("consultar usuario");
 	}
 	
+	@Get("/manterHorario")
+	public void manterHorario() {
+		System.out.println("Administrar Sistema");
+	}
+	
 	
 	
 	@Post("/pedido/copiar")
