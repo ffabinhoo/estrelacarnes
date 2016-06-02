@@ -55,6 +55,11 @@ public class DefaultHorarioDAO implements HorarioDAO, Serializable{
 		
 	}
 
+	@Override
+	public Horario update(Horario horario) {
+		return this.entityManager.merge(horario);
+	}
+
 	
 
 	

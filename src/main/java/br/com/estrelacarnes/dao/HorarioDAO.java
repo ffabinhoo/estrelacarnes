@@ -15,5 +15,7 @@ public interface HorarioDAO {
 	List<Horario> consultarTodosHorariosAtivos();
 
 	void excluir(Horario horario);
+	
+	Horario update(Horario horario);
 
 }

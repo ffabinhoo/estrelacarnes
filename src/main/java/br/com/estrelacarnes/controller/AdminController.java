@@ -12,10 +12,10 @@ import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Result;
-import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.estrelacarnes.dao.ClienteDAO;
 import br.com.estrelacarnes.dao.EntregaDAO;
+import br.com.estrelacarnes.dao.HorarioDAO;
 import br.com.estrelacarnes.dao.PedidoDAO;
 import br.com.estrelacarnes.interceptor.UserInfo;
 import br.com.estrelacarnes.model.Categoria;
@@ -23,6 +23,7 @@ import br.com.estrelacarnes.model.Cliente;
 import br.com.estrelacarnes.model.Complemento;
 import br.com.estrelacarnes.model.Endereco;
 import br.com.estrelacarnes.model.Entrega;
+import br.com.estrelacarnes.model.Horario;
 import br.com.estrelacarnes.model.Item;
 import br.com.estrelacarnes.model.Pedido;
 import br.com.estrelacarnes.model.Preparo;
@@ -36,18 +37,20 @@ public class AdminController {
 	private final UserInfo userInfo;
 	private final ClienteDAO clienteDAO;
 	private final EntregaDAO entregaDAO;
+	private final HorarioDAO horarioDAO;
 	
 	protected AdminController() {
-		this(null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null);
 	}
 	
 	@Inject
-	public AdminController(Result result, PedidoDAO pedidoDAO, ClienteDAO clienteDAO, EntregaDAO entregaDAO, UserInfo userInfo,
+	public AdminController(Result result, PedidoDAO pedidoDAO, ClienteDAO clienteDAO, EntregaDAO entregaDAO, HorarioDAO horarioDAO, UserInfo userInfo,
 			Validator validator) {
 		this.result = result;
 		this.pedidoDAO = pedidoDAO;
 		this.clienteDAO = clienteDAO;
 		this.entregaDAO = entregaDAO;
+		this.horarioDAO = horarioDAO;
 		this.userInfo = userInfo;
 		this.validator = validator;
 	}
@@ -184,7 +187,24 @@ public class AdminController {
 	
 	@Get("/manterHorario")
 	public void manterHorario() {
+		List<Horario> listaHorario = new ArrayList<Horario>();
+		listaHorario = horarioDAO.consultarTodosHorarios();
+		result.include("listaHorario", listaHorario);
 		System.out.println("Administrar Sistema");
+	}
+	
+	@Get("/alterarHorario/{idHorario}/{status}")
+	public void alterarHorario(Integer idHorario, String status){
+		Horario horario = new Horario();
+		horario.setId(idHorario);
+		horario = horarioDAO.load(horario);
+		horario.setAtivo(status);
+		horarioDAO.update(horario );
+		result.include("tipomsg", "success");
+		result.include("mensagemNegrito", "Horário ");
+		result.include("mensagem", "alterado com sucesso.");
+		result.redirectTo(AdminController.class).manterHorario();
+		
 	}
 	
 	

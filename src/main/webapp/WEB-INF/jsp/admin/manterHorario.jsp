@@ -32,7 +32,6 @@
 							<ul class="dropdown-menu">
 								<li><a href="javascript:;">Profile</a></li>
 								<li><a href="${linkTo[IndexController].logout}">logout</a></li>
-
 							</ul></li>
 					</ul>
 					<!-- <form class="navbar-search pull-right">
@@ -55,6 +54,18 @@
 					<li><a href="${linkTo[AdminController].consultarPedido}"><i class="icon-search"></i><span>Consultar Pedido</span></a></li>
 					<li><a href="${linkTo[ClienteController].cadastrarCliente}"><i class="icon-user"></i><span>Cadastrar Cliente</span></a></li>
 					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-zoom-in"></i><span>Consultar Cliente</span></a></li>
+					<li class="dropdown">					
+						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+							<i class="icon-cog"></i>
+							<span>Administração</span>
+							<b class="caret"></b>
+						</a>	
+					
+						<ul class="dropdown-menu">
+	                        <li><a href="#">Produtos</a></li>
+							<li><a href="${linkTo[AdminController].manterHorario}">Horários</a></li>
+	                    </ul>    				
+					</li>
 				</ul>
 			</div>
 			<!-- /container -->
@@ -73,68 +84,104 @@
 					</div>
 				</div>
 				<div class="row">
+					
 					<div class="span12">
-					<div class="widget widget-table action-table" id="listarHorario">
+						<div class="widget widget-table action-table" id="buscaUsuario">
+							<form action="${linkTo[AdminController].cadastrarHorario}" method="post" id="formConsulta">
 								
+								<input type="text" class="" placeholder="Nome" id="nome" name="nome" value=""> <!-- <a href="#" id="idBuscaNome"><i
+									class="icon-search"></i></a> --><br />
+									<input type="text" class="" placeholder="Telefone" id="telefone" name="telefone" value=""> <!-- <a href="#" id="idBusca"><i
+									class="icon-search"></i></a> --><br />
+									<div class="form-actions">
+										<button  class="btn btn-primary btn-small" id="buscar">Buscar</button>
+										<button class="btn btn-small" id="voltarCliente" type="button">Voltar</button>
+								</div>	
+							</form>
+						</div>
 					</div>
+					
+					<div class="span12">
+					
 					</div>
+					<!-- /widget-header -->
+							<div class="widget-content">
+								<form id="formHorario" class="form-horizontal" action="${linkTo[AdminController].alterarHorario}" method="post">
+								<table class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th>Horário</th>
+											<th>Ativo/Inativo</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="horario" items="${listaHorario}">
+											<tr>
+												<td>${horario.horario}</td>
+												<td>
+													<input type="checkbox" name="ativo" value="${horario.id}" ${'S' == horario.ativo ? 'checked' : ''}>
+												</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+								</form>
+							</div>
+							<!-- /widget-content -->
+				</div>
 				<!-- /row -->
-				</div>
-				<!-- /container -->
 			</div>
-			<!-- /main-inner -->
+			<!-- /container -->
 		</div>
-		<!-- /main -->
-		<div class="extra">
-			<div class="extra-inner">
-				<div class="container">
-					<div class="row">
-						<div class="span3">
-							<h4>Sobre Estrela Carnes</h4>
+		<!-- /main-inner -->
+	</div>
+	<!-- /main -->
+	<div class="extra">
+		<div class="extra-inner">
+			<div class="container">
+				<div class="row">
+					<div class="span3">
+						<h4>Sobre Estrela Carnes</h4>
 
-						</div>
-						<!-- /span3 -->
-						<div class="span3">
-							<h4>Suporte</h4>
-
-						</div>
-						<!-- /span3 -->
-						<div class="span3"></div>
-						<!-- /span3 -->
-						<div class="span3"></div>
-						<!-- /span3 -->
 					</div>
-					<!-- /row -->
-				</div>
-				<!-- /container -->
-			</div>
-			<!-- /extra-inner -->
-		</div>
-		</div>
+					<!-- /span3 -->
+					<div class="span3">
+						<h4>Suporte</h4>
 
-		<script src="/estrelacarnes/js/jquery-1.7.2.min.js"></script>
-		<script src="/estrelacarnes/js/excanvas.min.js"></script>
-		<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
-		<script src="/estrelacarnes/js/bootstrap.js"></script>
-		<script>
-		$(function() {
-			$("#nome").focus();
-		});
+					</div>
+					<!-- /span3 -->
+					<div class="span3"></div>
+					<!-- /span3 -->
+					<div class="span3"></div>
+					<!-- /span3 -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /extra-inner -->
+	</div>
+
+	<script src="/estrelacarnes/js/jquery-1.7.2.min.js"></script>
+	<script src="/estrelacarnes/js/excanvas.min.js"></script>
+	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
+	<script src="/estrelacarnes/js/bootstrap.js"></script>
+	<script>
+	$("input:checkbox[name=ativo]").click(function() {
+		var valor_ativo = $(this).val();
+		//var tipo = $( "input:checkbox[name=ativo]:checked" ).val();
+		
+		if($(this).is(':checked'))
+			window.location = "/estrelacarnes/alterarHorario/" + valor_ativo + "/S"; 
 			
-			document.getElementById("voltarCliente").onclick = function() {
-				var url = '/estrelacarnes';
-				window.location.href = url;
-			};
-			$('button[name="_method"]').on('click', function(e){
-			    var $form=$(this).closest('form'); 
-			    e.preventDefault();
-			    $('#confirm').modal({ backdrop: 'static', keyboard: false })
-			        .one('click', '#delete', function() {
-			            $form.trigger('submit'); // submit the form
-			        });
-			        // .one() is NOT a typo of .on()
-			});
-			
-		</script>
+        else
+        	window.location = "/estrelacarnes/alterarHorario/" + valor_ativo + "/N";
+		
+		
+		
+		//window.location = "/estrelacarnes/cadastrarPedido/" + idPedido + "/" + tipo + "/" + quantidade + "/" + categoria;
+		//$( "#cadastrarPedido" ).submit();
+	});
+	</script>
 </body>
 </html>

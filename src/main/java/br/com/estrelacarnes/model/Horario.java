@@ -16,7 +16,7 @@ public class Horario implements Serializable{
 	@Id
 	private Integer id;
 	private String horario;
-	private Boolean ativo;
+	private String ativo;
 	private Integer turno;
 	
 	public Integer getId() {
@@ -35,20 +35,20 @@ public class Horario implements Serializable{
 		this.horario = horario;
 	}
 
-	public Boolean getAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
-	}
-
 	public Integer getTurno() {
 		return turno;
 	}
 
 	public void setTurno(Integer turno) {
 		this.turno = turno;
+	}
+
+	public String getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(String ativo) {
+		this.ativo = ativo;
 	}
 
 }
