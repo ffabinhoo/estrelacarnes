@@ -53,6 +53,18 @@
 					<li><a href="${linkTo[AdminController].consultarPedido}"><i class="icon-search"></i><span>Consultar Pedido</span></a></li>
 					<li><a href="${linkTo[ClienteController].cadastrarCliente}"><i class="icon-user"></i><span>Cadastrar Cliente</span></a></li>
 					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-zoom-in"></i><span>Consultar Cliente</span></a></li>
+					<li class="dropdown">					
+						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+							<i class="icon-cog"></i>
+							<span>Administração</span>
+							<b class="caret"></b>
+						</a>	
+					
+						<ul class="dropdown-menu">
+	                        <li><a href="#">Produtos</a></li>
+							<li><a href="${linkTo[AdminController].manterHorario}">Horários</a></li>
+	                    </ul>    				
+					</li>
 				</ul>
 			</div>
 			<!-- /container -->
@@ -189,10 +201,14 @@
 
 
 	<script src="/estrelacarnes/js/jquery-1.8.3.min.js"></script>
+	<script src="/estrelacarnes/js/jquery-1.7.2.min.js"></script>
 	<script src="/estrelacarnes/js/jquery.maskedinput.min.js"></script>
 	<script src="/estrelacarnes/js/excanvas.min.js"></script>
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
+	
+	
+	
 	<script>
 	$('#nome').val($('#nome').val().toUpperCase());
 	$('#email').val($('#email').val().toUpperCase());

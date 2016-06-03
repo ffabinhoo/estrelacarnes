@@ -84,22 +84,23 @@
 					</div>
 				</div>
 				<div class="row">
-					
-					<div class="span12">
+				 <div class="span12">
 						<div class="widget widget-table action-table" id="buscaUsuario">
 							<form action="${linkTo[AdminController].cadastrarHorario}" method="post" id="formConsulta">
 								
-								<input type="text" class="" placeholder="Nome" id="nome" name="nome" value=""> <!-- <a href="#" id="idBuscaNome"><i
-									class="icon-search"></i></a> --><br />
-									<input type="text" class="" placeholder="Telefone" id="telefone" name="telefone" value=""> <!-- <a href="#" id="idBusca"><i
-									class="icon-search"></i></a> --><br />
+								<input type="text" class="" placeholder="Horário" id="horario" name="Horário" value=""> 
+									
 									<div class="form-actions">
-										<button  class="btn btn-primary btn-small" id="buscar">Buscar</button>
-										<button class="btn btn-small" id="voltarCliente" type="button">Voltar</button>
-								</div>	
+										<button  class="btn btn-primary btn-small" id="buscar">Cadastrar</button>
+										
+									</div>	
 							</form>
 						</div>
 					</div>
+				</div>
+				<div class="row">
+					
+					
 					
 					<div class="span12">
 					

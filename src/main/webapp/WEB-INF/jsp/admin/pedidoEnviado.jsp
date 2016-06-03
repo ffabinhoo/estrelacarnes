@@ -61,6 +61,18 @@
 					<li><a href="${linkTo[ClienteController].cadastrarCliente}"><i class="icon-user"></i><span>Cadastrar Cliente</span></a></li>
 					<li><a href="${linkTo[AdminController].consultarUsuario}"><i class="icon-zoom-in"></i><span>Consultar Cliente</span></a></li>
 					<li><a href="${linkTo[AdminController].imprimir}${pedido.id}" target="_blank"><i class="icon-print"></i><span>Imprimir</span></a></li>
+					<li class="dropdown">					
+						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+							<i class="icon-cog"></i>
+							<span>Administração</span>
+							<b class="caret"></b>
+						</a>	
+					
+						<ul class="dropdown-menu">
+	                        <li><a href="#">Produtos</a></li>
+							<li><a href="${linkTo[AdminController].manterHorario}">Horários</a></li>
+	                    </ul>    				
+					</li>
 				</ul>
 			</div>
 		</div>

@@ -207,6 +207,11 @@ public class AdminController {
 		
 	}
 	
+	@Post
+	public void cadastrarHorario(Horario horario){
+		System.out.println(horario);
+	}
+	
 	
 	
 	@Post("/pedido/copiar")

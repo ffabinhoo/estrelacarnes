@@ -169,7 +169,7 @@ public class ClienteController {
 	
 	@Post("/cliente/buscarCEP")
 	public void buscarCEP(Cliente cliente) {
-		WebResource resource = Client.create().resource("http://104.236.248.13:8080/buscaCep/rest/cep/" + cliente.getEndereco().getCep());
+		WebResource resource = Client.create().resource("http://107.170.137.167:8080/buscaCep/rest/cep/" + cliente.getEndereco().getCep());
         ClientResponse response = resource.type("application/x-www-form-urlencoded").get(ClientResponse.class); 
         CepResult cepResult = response.getEntity(CepResult.class);
         
