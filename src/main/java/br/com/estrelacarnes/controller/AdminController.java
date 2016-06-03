@@ -207,6 +207,11 @@ public class AdminController {
 		
 	}
 	
+	@Get("/excluirHorario/{idHorario}")
+	public void excluirHorario(Integer idHorario){
+		System.out.println(idHorario);
+	}
+	
 	@Post
 	public void cadastrarHorario(Horario horario){
 		System.out.println(horario);

@@ -113,6 +113,7 @@
 										<tr>
 											<th>Horário</th>
 											<th>Ativo/Inativo</th>
+											<th class="td-actions"></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -121,6 +122,12 @@
 												<td>${horario.horario}</td>
 												<td>
 													<input type="checkbox" name="ativo" value="${horario.id}" ${'S' == horario.ativo ? 'checked' : ''}>
+												</td>
+												<td class="td-actions" style="width: 200px;">
+													<form id="formExcluirHorario" method="get" action="${linkTo[AdminController].excluirHorario}${horario.id}" 
+															style="float: left; padding: 1px;">
+															<button  class="button btn btn-danger btn-small" id="excluirHorario">Excluir Horario</button>
+													</form>
 												</td>
 											</tr>
 										</c:forEach>
