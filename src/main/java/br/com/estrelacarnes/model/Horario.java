@@ -5,8 +5,11 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Horario implements Serializable{
@@ -14,7 +17,10 @@ public class Horario implements Serializable{
 	private static final long serialVersionUID = -608419721106315574L;
 
 	@Id
+	@GenericGenerator(name="idHorario", strategy="increment")
+	@GeneratedValue(generator="idHorario")
 	private Integer id;
+	
 	private String horario;
 	private String ativo;
 	private Integer turno;

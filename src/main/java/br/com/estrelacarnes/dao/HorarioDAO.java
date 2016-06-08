@@ -18,4 +18,6 @@ public interface HorarioDAO {
 	
 	Horario update(Horario horario);
 
+	Horario consultarPedidoHorario(Horario horario);
+
 }

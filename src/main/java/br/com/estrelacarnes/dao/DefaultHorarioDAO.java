@@ -7,6 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import br.com.estrelacarnes.model.Cliente;
 import br.com.estrelacarnes.model.Horario;
 
 public class DefaultHorarioDAO implements HorarioDAO, Serializable{
@@ -26,7 +27,7 @@ public class DefaultHorarioDAO implements HorarioDAO, Serializable{
 
 	@Override
 	public void incluir(Horario horario) {
-		
+		this.entityManager.persist(horario);
 	}
 
 	@Override
@@ -37,7 +38,7 @@ public class DefaultHorarioDAO implements HorarioDAO, Serializable{
 	@Override
 	public List<Horario> consultarTodosHorarios() {
 		List<Horario> lista = new ArrayList<Horario>();
-		String sql = "select i from Horario i ";
+		String sql = "select i from Horario i order by ativo desc, horario asc";
 		lista = entityManager.createQuery(sql, Horario.class).getResultList();
 		return lista;
 	}
@@ -52,12 +53,20 @@ public class DefaultHorarioDAO implements HorarioDAO, Serializable{
 
 	@Override
 	public void excluir(Horario horario) {
-		
+		horario = load(horario);
+		Horario obj = this.entityManager.merge(horario);
+		this.entityManager.remove(obj);
 	}
 
 	@Override
 	public Horario update(Horario horario) {
 		return this.entityManager.merge(horario);
+	}
+
+	@Override
+	public Horario consultarPedidoHorario(Horario horario) {
+		
+		return null;
 	}
 
 	

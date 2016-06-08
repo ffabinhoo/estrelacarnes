@@ -209,12 +209,34 @@ public class AdminController {
 	
 	@Get("/excluirHorario/{idHorario}")
 	public void excluirHorario(Integer idHorario){
-		System.out.println(idHorario);
+		Horario horario = new Horario();
+		horario.setId(idHorario);
+		horario = horarioDAO.load(horario);
+		horarioDAO.consultarPedidoHorario(horario);
+		horarioDAO.excluir(horario);
+		result.include("tipomsg", "success");
+		result.include("mensagemNegrito", "Horário ");
+		result.include("mensagem", "excluído com sucesso.");
+		result.redirectTo(AdminController.class).manterHorario();
 	}
 	
 	@Post
 	public void cadastrarHorario(Horario horario){
-		System.out.println(horario);
+		String[] horaSplit = horario.getHorario().split(";");
+		Integer hora = Integer.valueOf(horaSplit[0].substring(0, 2));
+		if (hora <12){
+			horario.setTurno(1);
+		}else if (hora >12 &&hora < 18){
+			horario.setTurno(2);
+		}else{
+			horario.setTurno(3);
+		}
+		horario.setAtivo("N");
+		horarioDAO.incluir(horario);
+		result.include("tipomsg", "success");
+		result.include("mensagemNegrito", "Horário ");
+		result.include("mensagem", "incluído com sucesso.");
+		result.redirectTo(AdminController.class).manterHorario();
 	}
 	
 	

@@ -88,7 +88,7 @@
 						<div class="widget widget-table action-table" id="buscaUsuario">
 							<form action="${linkTo[AdminController].cadastrarHorario}" method="post" id="formConsulta">
 								
-								<input type="text" class="" placeholder="Horário" id="horario" name="Horário" value=""> 
+								<input type="text" class="" placeholder="Horário" id="horario" name="horario.horario" value=""> 
 									
 									<div class="form-actions">
 										<button  class="btn btn-primary btn-small" id="buscar">Cadastrar</button>
@@ -107,7 +107,7 @@
 					</div>
 					<!-- /widget-header -->
 							<div class="widget-content">
-								<form id="formHorario" class="form-horizontal" action="${linkTo[AdminController].alterarHorario}" method="post">
+								
 								<table class="table table-striped table-bordered">
 									<thead>
 										<tr>
@@ -126,10 +126,20 @@
 												<td class="td-actions" style="width: 200px;">
 													<form id="formExcluirHorario" method="get" action="${linkTo[AdminController].excluirHorario}${horario.id}" 
 															style="float: left; padding: 1px;">
-															<button  class="button btn btn-danger btn-small" id="excluirHorario">Excluir Horario</button>
+															<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirHorario">Excluir</button>
 													</form>
 												</td>
 											</tr>
+											<div id="confirm" class="modal hide fade">
+												  <div class="modal-body">
+												    Confirma exclusão do Horário?<br />
+												    (Todo o Histórico do horário será perdido)
+												  </div>
+												  <div class="modal-footer">
+												    <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Excluir</button>
+												    <button type="button" data-dismiss="modal" class="btn">Cancelar</button>
+												  </div>
+										</div>
 										</c:forEach>
 									</tbody>
 								</table>
@@ -171,10 +181,16 @@
 	</div>
 
 	<script src="/estrelacarnes/js/jquery-1.7.2.min.js"></script>
+	<script src="/estrelacarnes/js/jquery.maskedinput.min.js"></script>
 	<script src="/estrelacarnes/js/excanvas.min.js"></script>
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
 	<script>
+	
+	$(function() {
+		$("#horario").mask("99:99 - 99:99"); 
+});
+	
 	$("input:checkbox[name=ativo]").click(function() {
 		var valor_ativo = $(this).val();
 		//var tipo = $( "input:checkbox[name=ativo]:checked" ).val();
@@ -189,6 +205,15 @@
 		
 		//window.location = "/estrelacarnes/cadastrarPedido/" + idPedido + "/" + tipo + "/" + quantidade + "/" + categoria;
 		//$( "#cadastrarPedido" ).submit();
+	});
+	$('button[name="_method"]').on('click', function(e){
+	    var $form=$(this).closest('form'); 
+	    e.preventDefault();
+	    $('#confirm').modal({ backdrop: 'static', keyboard: false })
+	        .one('click', '#delete', function() {
+	            $form.trigger('submit'); // submit the form
+	        });
+	        // .one() is NOT a typo of .on()
 	});
 	</script>
 </body>
