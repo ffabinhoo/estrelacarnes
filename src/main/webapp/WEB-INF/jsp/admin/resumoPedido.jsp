@@ -16,7 +16,9 @@
 <link href="/estrelacarnes/css/font-awesome.css" rel="stylesheet">
 <link href="/estrelacarnes/css/style.css" rel="stylesheet">
 <link href="/estrelacarnes/css/pages/dashboard.css" rel="stylesheet">
+<link href="/estrelacarnes/css/pages/bootstrap-datepicker.css" rel="stylesheet">
 <link href="/estrelacarnes/css/pages/plans.css" rel="stylesheet">
+<!-- <link href="/estrelacarnes/css/jquery.datetimepicker.css" rel="stylesheet"> -->
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -124,6 +126,23 @@
 								<div class="widget-content">
 									<textarea rows="3" cols="5" class="span4" id="observacao"
 										name="pedido.observacao">${pedido.observacao}</textarea>
+								</div>
+							</div>
+							<div class="widget widget-table action-table" id="idDivObservacao">
+								<div class="widget-header" id="idTituloObservacao">
+									<i class="icon-th-list"></i>
+									<h3>Horário</h3>
+								</div>
+								<div id="inicio">
+											<input class="datepicker" data-date-format="dd/mm/yyyy">
+								</div>
+								<div class="widget-content">
+									<select>
+										<option>Selecione</option>
+										<c:forEach var="horario" items="${listaHorarios}">
+											<option value="${horario.id}">${horario.horario}</option>
+										</c:forEach>
+									</select>
 								</div>
 							</div>
 							<div class="widget">
@@ -295,7 +314,31 @@
 	<script src="/estrelacarnes/js/excanvas.min.js"></script>
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
+	<script src="/estrelacarnes/js/bootstrap-datepicker.js"></script>
+	
+	<!-- <script src="/estrelacarnes/js/jquery.datetimepicker.js"></script> -->
 	<script>
+	/* jQuery('#datetimepicker').datetimepicker({
+		timepicker:false,
+		format : 'd/m/Y'
+		
+	});
+ */
+ 	 /* $(function () {
+	    $('#datetimepicker').datetimepicker({
+	        format: 'd/m/Y',
+	        timepicker:false,
+	        autoclose:true
+	    }).data('autoclose', true);
+	   
+	});  */
+
+	$('.datepicker').datepicker({
+	    format: 'dd/mm/yyyy',
+	    autoclose: true
+	});
+	
+	
 	$('#observacao').val($('#observacao').val().toUpperCase());
 
 	$('#observacao').keyup(function() {

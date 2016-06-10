@@ -124,6 +124,11 @@ public class AdminController {
 		result.include("listaPedidosEnviadosHoje", listaPedidosEnviadosHoje);
 	}
 	
+	@Get("/data")
+	public void data(){
+		
+	}
+	
 	
 	@Put("/item/alterar")
 	public void alterarItem(String idItem, String quantidade, String tipo, String produto, String complemento, String preparo, String observacao, Integer idPedido){
@@ -218,6 +223,14 @@ public class AdminController {
 		result.include("mensagemNegrito", "Horário ");
 		result.include("mensagem", "excluído com sucesso.");
 		result.redirectTo(AdminController.class).manterHorario();
+	}
+	
+	@Get("/mostrarHorario/{horario.id}")
+	public void mostrarHorario(Horario horario){
+		horario = horarioDAO.load(horario);
+		
+		result.include("horario", horario);
+		
 	}
 	
 	@Post
@@ -427,6 +440,8 @@ public class AdminController {
 	
 	@Get("/pedido/resumoPedido/{pedido.id}")
 	public void resumoPedido(Pedido pedido){
+		List<Horario> listaHorarios = horarioDAO.consultarTodosHorariosAtivos();
+		
 		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
 		Entrega entrega = new Entrega();
 		if (pedido.getIdEntrega()!=null){
@@ -438,6 +453,7 @@ public class AdminController {
 		}
 		
 		result.include("pedido", pedidoObj);
+		result.include("listaHorarios", listaHorarios);
 	}
 	
 	

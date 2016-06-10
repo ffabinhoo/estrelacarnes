@@ -54,6 +54,8 @@ public class Pedido implements Serializable{
 	
 	@Transient
 	List<Item> itens = new ArrayList<Item>();
+	
+	
 
 	public Integer getId() {
 		return id;
@@ -148,9 +150,6 @@ public class Pedido implements Serializable{
 		
 		return String.format("%.2f", tot);
 	}
-
-	
-	
 
 	
 }

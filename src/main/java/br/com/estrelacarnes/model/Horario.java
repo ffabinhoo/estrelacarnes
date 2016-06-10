@@ -24,6 +24,7 @@ public class Horario implements Serializable{
 	private String horario;
 	private String ativo;
 	private Integer turno;
+	private Integer quantidade;
 	
 	public Integer getId() {
 		return id;
@@ -55,6 +56,14 @@ public class Horario implements Serializable{
 
 	public void setAtivo(String ativo) {
 		this.ativo = ativo;
+	}
+
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
 	}
 
 }

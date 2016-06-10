@@ -89,6 +89,7 @@
 							<form action="${linkTo[AdminController].cadastrarHorario}" method="post" id="formConsulta">
 								
 								<input type="text" class="" placeholder="Horário" id="horario" name="horario.horario" value=""> 
+								<input type="text" class="" placeholder="Quantidade" id="quantidade" name="horario.quantidade" value="">
 									
 									<div class="form-actions">
 										<button  class="btn btn-primary btn-small" id="buscar">Cadastrar</button>
@@ -112,6 +113,7 @@
 									<thead>
 										<tr>
 											<th>Horário</th>
+											<th>Quantidade</th>
 											<th>Ativo/Inativo</th>
 											<th class="td-actions"></th>
 										</tr>
@@ -119,10 +121,12 @@
 									<tbody>
 										<c:forEach var="horario" items="${listaHorario}">
 											<tr>
-												<td>${horario.horario}</td>
+												<td><a href="${linkTo[AdminController].mostrarHorario}${horario.id}">${horario.horario}</a></td>
+												<td>${horario.quantidade}</td>
 												<td>
 													<input type="checkbox" name="ativo" value="${horario.id}" ${'S' == horario.ativo ? 'checked' : ''}>
 												</td>
+												
 												<td class="td-actions" style="width: 200px;">
 													<form id="formExcluirHorario" method="get" action="${linkTo[AdminController].excluirHorario}${horario.id}" 
 															style="float: left; padding: 1px;">
