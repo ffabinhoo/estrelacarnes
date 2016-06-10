@@ -46,7 +46,7 @@ public class DefaultHorarioDAO implements HorarioDAO, Serializable{
 	@Override
 	public List<Horario> consultarTodosHorariosAtivos() {
 		List<Horario> lista = new ArrayList<Horario>();
-		String sql = "select i from Horario i where i.ativo = 'S'";
+		String sql = "select i from Horario i where i.ativo = 'S' order by ativo desc, horario asc";
 		lista = entityManager.createQuery(sql, Horario.class).getResultList();
 		return lista;
 	}

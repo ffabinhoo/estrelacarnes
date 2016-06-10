@@ -13,6 +13,7 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
+import br.com.caelum.vraptor.view.Results;
 import br.com.estrelacarnes.dao.ClienteDAO;
 import br.com.estrelacarnes.dao.EntregaDAO;
 import br.com.estrelacarnes.dao.HorarioDAO;
@@ -90,6 +91,8 @@ public class AdminController {
 	public void consultarPedido(){
 		
 	}
+	
+	
 	
 	@Post("/pedido/consultar")
 	public void consultarPedido(String status, String inicio, String fim){
@@ -440,7 +443,7 @@ public class AdminController {
 	
 	@Get("/pedido/resumoPedido/{pedido.id}")
 	public void resumoPedido(Pedido pedido){
-		List<Horario> listaHorarios = horarioDAO.consultarTodosHorariosAtivos();
+		
 		
 		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
 		Entrega entrega = new Entrega();
@@ -453,7 +456,20 @@ public class AdminController {
 		}
 		
 		result.include("pedido", pedidoObj);
-		result.include("listaHorarios", listaHorarios);
+		
+	}
+	
+		
+	@Get("/pedido/horarioDisponivel/{pedido}/{horario}")
+	public void horarioDisponivel(Integer pedido, String horario){
+		System.out.println(horario);
+		List<Horario> listaHorarios = horarioDAO.consultarTodosHorariosAtivos();
+		//result.include("listaHorarios", listaHorarios);
+		result.use(Results.json()).from(listaHorarios).serialize();
+		
+		
+		
+		
 	}
 	
 	

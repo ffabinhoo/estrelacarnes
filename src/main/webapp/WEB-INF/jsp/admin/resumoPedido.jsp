@@ -16,7 +16,7 @@
 <link href="/estrelacarnes/css/font-awesome.css" rel="stylesheet">
 <link href="/estrelacarnes/css/style.css" rel="stylesheet">
 <link href="/estrelacarnes/css/pages/dashboard.css" rel="stylesheet">
-<link href="/estrelacarnes/css/pages/bootstrap-datepicker.css" rel="stylesheet">
+<link href="/estrelacarnes/css/bootstrap-datepicker.css" rel="stylesheet">
 <link href="/estrelacarnes/css/pages/plans.css" rel="stylesheet">
 <!-- <link href="/estrelacarnes/css/jquery.datetimepicker.css" rel="stylesheet"> -->
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -134,10 +134,10 @@
 									<h3>Horário</h3>
 								</div>
 								<div id="inicio">
-											<input class="datepicker" data-date-format="dd/mm/yyyy">
+											<input class="datepicker" >
 								</div>
-								<div class="widget-content">
-									<select>
+								<div class="widget-content" id="divHorario">
+									<select id="selectHorario">
 										<option>Selecione</option>
 										<c:forEach var="horario" items="${listaHorarios}">
 											<option value="${horario.id}">${horario.horario}</option>
@@ -318,24 +318,59 @@
 	
 	<!-- <script src="/estrelacarnes/js/jquery.datetimepicker.js"></script> -->
 	<script>
-	/* jQuery('#datetimepicker').datetimepicker({
-		timepicker:false,
-		format : 'd/m/Y'
-		
-	});
- */
- 	 /* $(function () {
-	    $('#datetimepicker').datetimepicker({
-	        format: 'd/m/Y',
-	        timepicker:false,
-	        autoclose:true
-	    }).data('autoclose', true);
-	   
-	});  */
-
+	 
 	$('.datepicker').datepicker({
-	    format: 'dd/mm/yyyy',
-	    autoclose: true
+		format: 'dd/mm/yyyy',
+	    autoclose: true,
+	});
+
+ 	$('.datepicker').on("changeDate", function() {
+		var valor = "";
+		var post_url = "";
+		var pedido = "";
+	    valor = $('.datepicker').val();
+	    pedido = $('#idPedido').val();
+	    valor = valor.replace("/", "").replace("/", "");
+	    post_url = "/estrelacarnes/pedido/horarioDisponivel/"+pedido+"/" + valor;
+	    $("#divHorario").show();	
+
+	    /* $.ajax({
+            type: 'GET',
+            url: post_url,  */
+            //data: valor,
+            /* success: function(msg) {
+               
+            	 $("#divHorario").load(post_url);
+            } */
+            /* dataType: 'json',
+            success: function( json ) {
+            	$('#selectHorario').empty();
+                $('#selectHorario').append($('<option>').text("Select"));
+                var obj = $("#divHorario").load(post_url);
+                $.each(json, function(i, obj){
+                        $('#selectHorario').append($('<option>').text(obj.horario).attr('value', obj.horario));
+                });
+             }
+
+        
+        }); */
+
+	    $.ajax({
+	        url:post_url,
+	        type:'GET',
+	        dataType: 'json',
+	        success: function( json ) {
+	        	$('#selectHorario').empty();
+	            $.each(json, function(i, value) {
+	            	for (var i=0; i<value.length; i++) {
+	            		$('#selectHorario').append('<option value="' + value[i].id + '">' + value[i].horario + '</option>');
+	            	 }
+		            
+	                
+	            });
+	        }
+	    });
+	    
 	});
 	
 	
@@ -349,6 +384,7 @@
 		$("#enderecoDelivery").hide();
 		$("#enderecoPick").hide();
 		$("#frete").hide();
+		$("#divHorario").hide();
 		
 		var tipoEntrega = $('input[name=ctipoEntrega]:checked',	'#formEnviarPedido').val();
 		if (tipoEntrega == 'D'){
