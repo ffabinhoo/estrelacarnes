@@ -1,6 +1,7 @@
 package br.com.estrelacarnes.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -26,6 +28,17 @@ public class Horario implements Serializable{
 	private Integer turno;
 	private Integer quantidade;
 	
+	@Transient
+	private Date data;
+	
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
 	public Integer getId() {
 		return id;
 	}

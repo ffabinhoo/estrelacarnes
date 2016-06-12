@@ -50,6 +50,21 @@ public class DefaultHorarioDAO implements HorarioDAO, Serializable{
 		lista = entityManager.createQuery(sql, Horario.class).getResultList();
 		return lista;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Horario> consultarTodosHorariosDisponiveis(String horario) {
+		List<Horario> lista = new ArrayList<Horario>();
+		String sql = "select h.id, h.horario, q.data, count(h.id) from Horario h"
+				+ " join Quadro q on H.id = q.idHorario "
+				+ " where h.ativo = 'S' "
+				+ " and DATE_FORMAT(Q.data,'%d/%m/%Y') =  "	+ horario		
+				+ " group by H.id, H.horario, Q.data " 
+				
+				+ " order by ativo desc, horario asc";
+		lista = entityManager.createNativeQuery(sql, Horario.class).getResultList();
+		return lista;
+	}
 
 	@Override
 	public void excluir(Horario horario) {
@@ -68,6 +83,8 @@ public class DefaultHorarioDAO implements HorarioDAO, Serializable{
 		
 		return null;
 	}
+
+	
 
 	
 

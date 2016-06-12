@@ -464,6 +464,8 @@ public class AdminController {
 	public void horarioDisponivel(Integer pedido, String horario){
 		System.out.println(horario);
 		List<Horario> listaHorarios = horarioDAO.consultarTodosHorariosAtivos();
+		List<Horario> listaHorariosContador = horarioDAO.consultarTodosHorariosDisponiveis(horario);
+		
 		//result.include("listaHorarios", listaHorarios);
 		result.use(Results.json()).from(listaHorarios).serialize();
 		

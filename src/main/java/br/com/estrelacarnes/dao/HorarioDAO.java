@@ -20,4 +20,6 @@ public interface HorarioDAO {
 
 	Horario consultarPedidoHorario(Horario horario);
 
+	List<Horario> consultarTodosHorariosDisponiveis(String horario);
+
 }

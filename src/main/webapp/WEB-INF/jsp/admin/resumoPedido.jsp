@@ -18,7 +18,7 @@
 <link href="/estrelacarnes/css/pages/dashboard.css" rel="stylesheet">
 <link href="/estrelacarnes/css/bootstrap-datepicker.css" rel="stylesheet">
 <link href="/estrelacarnes/css/pages/plans.css" rel="stylesheet">
-<!-- <link href="/estrelacarnes/css/jquery.datetimepicker.css" rel="stylesheet"> -->
+
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -137,11 +137,9 @@
 											<input class="datepicker" >
 								</div>
 								<div class="widget-content" id="divHorario">
-									<select id="selectHorario">
+									<select id="selectHorario" onchange="">
 										<option>Selecione</option>
-										<c:forEach var="horario" items="${listaHorarios}">
-											<option value="${horario.id}">${horario.horario}</option>
-										</c:forEach>
+										
 									</select>
 								</div>
 							</div>
@@ -316,14 +314,15 @@
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
 	<script src="/estrelacarnes/js/bootstrap-datepicker.js"></script>
 	
-	<!-- <script src="/estrelacarnes/js/jquery.datetimepicker.js"></script> -->
+	
 	<script>
-	 
+	
 	$('.datepicker').datepicker({
 		format: 'dd/mm/yyyy',
-	    autoclose: true,
+		minDate: 0,
+		autoclose: true,
 	});
-
+	
  	$('.datepicker').on("changeDate", function() {
 		var valor = "";
 		var post_url = "";
@@ -334,26 +333,7 @@
 	    post_url = "/estrelacarnes/pedido/horarioDisponivel/"+pedido+"/" + valor;
 	    $("#divHorario").show();	
 
-	    /* $.ajax({
-            type: 'GET',
-            url: post_url,  */
-            //data: valor,
-            /* success: function(msg) {
-               
-            	 $("#divHorario").load(post_url);
-            } */
-            /* dataType: 'json',
-            success: function( json ) {
-            	$('#selectHorario').empty();
-                $('#selectHorario').append($('<option>').text("Select"));
-                var obj = $("#divHorario").load(post_url);
-                $.each(json, function(i, obj){
-                        $('#selectHorario').append($('<option>').text(obj.horario).attr('value', obj.horario));
-                });
-             }
-
-        
-        }); */
+	    
 
 	    $.ajax({
 	        url:post_url,
@@ -362,8 +342,9 @@
 	        success: function( json ) {
 	        	$('#selectHorario').empty();
 	            $.each(json, function(i, value) {
+	            	$('#selectHorario').append('<option value="">Selecione</option>');
 	            	for (var i=0; i<value.length; i++) {
-	            		$('#selectHorario').append('<option value="' + value[i].id + '">' + value[i].horario + '</option>');
+	            		$('#selectHorario').append('<option value="' + value[i].id + '">' + value[i].horario +  ' - Total: '+ value[i].quantidade + '</option>');
 	            	 }
 		            
 	                
@@ -372,6 +353,12 @@
 	    });
 	    
 	});
+ 	
+ 	$('#selectHorario').on('change', function() {
+ 		  alert( this.value ); 
+ 		 alert($('.datepicker').val());
+ 		  // or $(this).val()
+ 		});
 	
 	
 	$('#observacao').val($('#observacao').val().toUpperCase());
@@ -427,15 +414,8 @@
 			event.preventDefault();
 		    history.back(1);
 		};
-		/* document.getElementById("enviarPedido").onclick = function() {
-			alert('oi');
-			form.submit();
-		}; */
-		/* $('.enviarPedido').click(function(e) {
-		    e.preventDefault(); // prevent the link's default behaviour
-		    alert('oiieeee');
-		    $('#formEnviarPedido').submit(); // trigget the submit handler
-		}); */
+		
+		
 		$(document)
 				.ready(
 						function() {
@@ -456,28 +436,32 @@
 												
 											});
 						});
-		/* $('#valor').keypress(function (event) {
-            return isNumber(event, this)
-        }); */
-        
-		/* $('#valorFrete').keypress(function (event) {
-            return isNumber(event, this)
-        }); */
-        
 		
-		/* function isNumber(evt, element) {
-	        var charCode = (evt.which) ? evt.which : event.keyCode
-	        if (
-	            (charCode != 45 || $(element).val().indexOf('-') != -1) &&      // “-” CHECK MINUS, AND ONLY ONE.
-	            (charCode != 46 || $(element).val().indexOf('.') != -1) &&      // “.” CHECK DOT, AND ONLY ONE.
-	            (charCode != 44 || $(element).val().indexOf(',') != -1) &&      // “.” CHECK DOT, AND ONLY ONE.
-	            (charCode < 48 || charCode > 57))
-	            return false;
-	        return true;
-	    } */
-		//$("#valor").maskMoney('mask', 1999.99);
 	    $("#valor").maskMoney({thousands:'.', decimal:',', affixesStay: true});
 	    $("#valorFrete").maskMoney({thousands:'.', decimal:',', affixesStay: true});
+	    
+	    
+	    
+	    /* $.ajax({
+        type: 'GET',
+        url: post_url,  */
+        //data: valor,
+        /* success: function(msg) {
+           
+        	 $("#divHorario").load(post_url);
+        } */
+        /* dataType: 'json',
+        success: function( json ) {
+        	$('#selectHorario').empty();
+            $('#selectHorario').append($('<option>').text("Select"));
+            var obj = $("#divHorario").load(post_url);
+            $.each(json, function(i, obj){
+                    $('#selectHorario').append($('<option>').text(obj.horario).attr('value', obj.horario));
+            });
+         }
+
+    
+    }); */
 	</script>
 </body>
 </html>
