@@ -29,6 +29,7 @@ import br.com.estrelacarnes.model.Item;
 import br.com.estrelacarnes.model.Pedido;
 import br.com.estrelacarnes.model.Preparo;
 import br.com.estrelacarnes.model.Produto;
+import br.com.estrelacarnes.model.Quadro;
 
 @Controller
 public class AdminController {
@@ -447,6 +448,16 @@ public class AdminController {
 		
 		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
 		Entrega entrega = new Entrega();
+		Quadro quadro = new Quadro();
+		Horario horario = new Horario();
+		
+		quadro = horarioDAO.consultarPedidoNoQuadro(pedido.getId());
+		if (quadro != null){
+			horario = horarioDAO.load(quadro.getHorario());
+		}else{
+			horario = null;
+		}
+		
 		if (pedido.getIdEntrega()!=null){
 			entrega.setId(Integer.valueOf(pedidoObj.getIdEntrega()));
 			entrega = entregaDAO.load(entrega);
@@ -455,7 +466,10 @@ public class AdminController {
 			result.include("entrega", entrega);
 		}
 		
+		result.include("quadro", quadro);
+		result.include("horario", horario);
 		result.include("pedido", pedidoObj);
+		
 		
 	}
 	
@@ -464,14 +478,14 @@ public class AdminController {
 	public void horarioDisponivel(Integer pedido, String horario){
 		System.out.println(horario);
 		List<Horario> listaHorarios = horarioDAO.consultarTodosHorariosAtivos();
-		List<Horario> listaHorariosContador = horarioDAO.consultarTodosHorariosDisponiveis(horario);
-		
-		//result.include("listaHorarios", listaHorarios);
+		//List<Horario> listaHorariosContador = horarioDAO.consultarTodosHorariosDisponiveis(horario);
 		result.use(Results.json()).from(listaHorarios).serialize();
-		
-		
-		
-		
+	}
+	
+	@Get("/pedido/totalHorarioDisponivel/{idHorario}/{data}")
+	public void totalHorarioDisponivel(String idHorario, String data){
+		Integer contador = horarioDAO.totalHorarioDisponivel(idHorario, data);
+		result.use(Results.json()).from(contador).serialize();
 	}
 	
 	

@@ -6,9 +6,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
-import br.com.estrelacarnes.model.Cliente;
 import br.com.estrelacarnes.model.Horario;
+import br.com.estrelacarnes.model.Quadro;
 
 public class DefaultHorarioDAO implements HorarioDAO, Serializable{
 	
@@ -53,18 +54,41 @@ public class DefaultHorarioDAO implements HorarioDAO, Serializable{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Horario> consultarTodosHorariosDisponiveis(String horario) {
-		List<Horario> lista = new ArrayList<Horario>();
-		String sql = "select h.id, h.horario, q.data, count(h.id) from Horario h"
-				+ " join Quadro q on H.id = q.idHorario "
-				+ " where h.ativo = 'S' "
-				+ " and DATE_FORMAT(Q.data,'%d/%m/%Y') =  "	+ horario		
-				+ " group by H.id, H.horario, Q.data " 
-				
-				+ " order by ativo desc, horario asc";
-		lista = entityManager.createNativeQuery(sql, Horario.class).getResultList();
-		return lista;
+	public Integer totalHorarioDisponivel(String idHorario, String data) {
+		Integer total = 0;
+		String sql = "select count(h.id) from Horario h,  Quadro q where h.id = q.idHorario "
+				+ " and h.ativo = 'S' "
+				+ " and DATE_FORMAT(q.data,'%d%m%Y') =  '"	+ data	+ "'"	
+				+ " and h.id = " + idHorario ; 
+		System.out.println(sql);
+		Object valor = entityManager.createNativeQuery(sql).getSingleResult();
+		String retorno = valor.toString();
+		return Integer.valueOf(retorno);
 	}
+	
+	public Quadro consultarPedidoNoQuadro(Integer idPedido) {
+		Quadro quadro = new Quadro();
+		String sql = "select q from Horario h,  Quadro q "
+				//+ " where h.id = q.idHorario "
+				+ " where h.ativo = 'S' "
+				
+				+ " and q.pedido.id = " + idPedido	
+				
+				
+				+ "";
+				
+		System.out.println(sql);
+		try{
+		quadro = entityManager.createQuery(sql, Quadro.class).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+		
+		return quadro;
+	}
+	
+	
+
 
 	@Override
 	public void excluir(Horario horario) {
@@ -83,6 +107,7 @@ public class DefaultHorarioDAO implements HorarioDAO, Serializable{
 		
 		return null;
 	}
+
 
 	
 

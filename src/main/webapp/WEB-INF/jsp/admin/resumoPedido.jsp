@@ -134,13 +134,27 @@
 									<h3>Horário</h3>
 								</div>
 								<div id="inicio">
-											<input class="datepicker" >
+											<c:if test="${quadro!=null}">
+												<fmt:formatDate var="fmtDate" value="${quadro.data}" pattern="dd/MM/yyyy"/>
+											<input class="datepicker" value="${fmtDate}">
+											</c:if>
+											<c:if test="${quadro==null}">
+												<input class="datepicker" >
+											</c:if>
+       
 								</div>
+								
 								<div class="widget-content" id="divHorario">
 									<select id="selectHorario" onchange="">
-										<option>Selecione</option>
+										<c:if test="${horario!=null}">
+											<option value="${horario.id}">${horario.horario}</option>
+										</c:if>
 										
 									</select>
+									<br>
+									<div id="divTotal" >
+										 
+									</div>
 								</div>
 							</div>
 							<div class="widget">
@@ -329,11 +343,9 @@
 		var pedido = "";
 	    valor = $('.datepicker').val();
 	    pedido = $('#idPedido').val();
-	    valor = valor.replace("/", "").replace("/", "");
-	    post_url = "/estrelacarnes/pedido/horarioDisponivel/"+pedido+"/" + valor;
+	    dataSemFormatacao = valor.replace("/", "").replace("/", "");
+	    post_url = "/estrelacarnes/pedido/horarioDisponivel/"+pedido+"/" + dataSemFormatacao;
 	    $("#divHorario").show();	
-
-	    
 
 	    $.ajax({
 	        url:post_url,
@@ -344,9 +356,8 @@
 	            $.each(json, function(i, value) {
 	            	$('#selectHorario').append('<option value="">Selecione</option>');
 	            	for (var i=0; i<value.length; i++) {
-	            		$('#selectHorario').append('<option value="' + value[i].id + '">' + value[i].horario +  ' - Total: '+ value[i].quantidade + '</option>');
+	            		$('#selectHorario').append('<option value="' + value[i].id + '">' + value[i].horario + '</option>');
 	            	 }
-		            
 	                
 	            });
 	        }
@@ -355,9 +366,23 @@
 	});
  	
  	$('#selectHorario').on('change', function() {
- 		  alert( this.value ); 
- 		 alert($('.datepicker').val());
- 		  // or $(this).val()
+ 		var idHorario = this.value; 
+		var data = $('.datepicker').val();
+		dataSemFormatacao = data.replace("/", "").replace("/", "");
+		post_url = "/estrelacarnes/pedido/totalHorarioDisponivel/"+idHorario+"/" + dataSemFormatacao;		
+
+		$.ajax({
+	        url:post_url,
+	        type:'GET',
+	        dataType: 'json',
+	        success: function( json ) {
+	        	$('#divTotal').empty();
+	            $.each(json, function(i, value) {
+	            	$('#divTotal').append('AGENDADOS <b>' + value + '</b> PEDIDOS PARA ENTREGA NESTA DATA/HORÁRIO');
+	            });
+	        }
+	    });
+			  
  		});
 	
 	
@@ -371,7 +396,7 @@
 		$("#enderecoDelivery").hide();
 		$("#enderecoPick").hide();
 		$("#frete").hide();
-		$("#divHorario").hide();
+		
 		
 		var tipoEntrega = $('input[name=ctipoEntrega]:checked',	'#formEnviarPedido').val();
 		if (tipoEntrega == 'D'){

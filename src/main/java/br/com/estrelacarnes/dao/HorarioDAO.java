@@ -3,6 +3,7 @@ package br.com.estrelacarnes.dao;
 import java.util.List;
 
 import br.com.estrelacarnes.model.Horario;
+import br.com.estrelacarnes.model.Quadro;
 
 public interface HorarioDAO {
 
@@ -19,7 +20,11 @@ public interface HorarioDAO {
 	Horario update(Horario horario);
 
 	Horario consultarPedidoHorario(Horario horario);
+	
+	Quadro consultarPedidoNoQuadro(Integer idPedido);
 
-	List<Horario> consultarTodosHorariosDisponiveis(String horario);
+	
+
+	Integer totalHorarioDisponivel(String idHorario, String data);
 
 }
