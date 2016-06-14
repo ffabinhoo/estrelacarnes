@@ -6,8 +6,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 import br.com.estrelacarnes.model.Quadro;
+import br.com.estrelacarnes.model.User;
 
 public class DefaultQuadroDAO implements QuadroDAO, Serializable{
 	
@@ -42,6 +44,19 @@ public class DefaultQuadroDAO implements QuadroDAO, Serializable{
 	}
 	
 	@Override
+	public Quadro consultarQuadroPorPedido(Integer pedido) {
+		try {
+			Quadro quadro = entityManager
+				.createQuery("select u from Quadro u where u.pedido.id = :pedido ", Quadro.class)
+					.setParameter("pedido", pedido)
+					.getSingleResult();
+			return quadro;
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	@Override
 	public void excluir(Quadro quadro) {
 		quadro = load(quadro);
 		Quadro obj = this.entityManager.merge(quadro);
@@ -52,5 +67,7 @@ public class DefaultQuadroDAO implements QuadroDAO, Serializable{
 	public Quadro update(Quadro quadro) {
 		return this.entityManager.merge(quadro);
 	}
+
+	
 
 }

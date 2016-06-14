@@ -10,6 +10,8 @@ public interface QuadroDAO {
 	void incluir(Quadro quadro);
 
 	Quadro load(Quadro quadro);
+	
+	Quadro consultarQuadroPorPedido(Integer pedido);
 
 	List<Quadro> consultarTodosQuadros();
 	

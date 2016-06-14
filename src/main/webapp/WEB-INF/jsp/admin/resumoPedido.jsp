@@ -136,16 +136,16 @@
 								<div id="inicio">
 											<c:if test="${quadro!=null}">
 												<fmt:formatDate var="fmtDate" value="${quadro.data}" pattern="dd/MM/yyyy"/>
-											<input class="datepicker" value="${fmtDate}">
+											<input class="datepicker" value="${fmtDate}" name="quadro.data">
 											</c:if>
 											<c:if test="${quadro==null}">
-												<input class="datepicker" >
+												<input class="datepicker" name="quadro.data">
 											</c:if>
        
 								</div>
 								
 								<div class="widget-content" id="divHorario">
-									<select id="selectHorario" onchange="">
+									<select id="selectHorario" onchange="" name="quadro.horario.id">
 										<c:if test="${horario!=null}">
 											<option value="${horario.id}">${horario.horario}</option>
 										</c:if>
@@ -153,7 +153,7 @@
 									</select>
 									<br>
 									<div id="divTotal" >
-										 
+										 AGENDADO(S) <b>${contador}</b> PEDIDO(S) PARA ENTREGA NESTA DATA/HORÁRIO
 									</div>
 								</div>
 							</div>
@@ -378,7 +378,7 @@
 	        success: function( json ) {
 	        	$('#divTotal').empty();
 	            $.each(json, function(i, value) {
-	            	$('#divTotal').append('AGENDADOS <b>' + value + '</b> PEDIDOS PARA ENTREGA NESTA DATA/HORÁRIO');
+	            	$('#divTotal').append('AGENDADO(S) <b>' + value + '</b> PEDIDO(S) PARA ENTREGA NESTA DATA/HORÁRIO');
 	            });
 	        }
 	    });

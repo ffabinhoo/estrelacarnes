@@ -6,6 +6,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
@@ -18,6 +22,7 @@ import br.com.estrelacarnes.dao.ClienteDAO;
 import br.com.estrelacarnes.dao.EntregaDAO;
 import br.com.estrelacarnes.dao.HorarioDAO;
 import br.com.estrelacarnes.dao.PedidoDAO;
+import br.com.estrelacarnes.dao.QuadroDAO;
 import br.com.estrelacarnes.interceptor.UserInfo;
 import br.com.estrelacarnes.model.Categoria;
 import br.com.estrelacarnes.model.Cliente;
@@ -40,19 +45,21 @@ public class AdminController {
 	private final ClienteDAO clienteDAO;
 	private final EntregaDAO entregaDAO;
 	private final HorarioDAO horarioDAO;
+	private final QuadroDAO quadroDAO;
 	
 	protected AdminController() {
-		this(null, null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null,null);
 	}
 	
 	@Inject
-	public AdminController(Result result, PedidoDAO pedidoDAO, ClienteDAO clienteDAO, EntregaDAO entregaDAO, HorarioDAO horarioDAO, UserInfo userInfo,
+	public AdminController(Result result, PedidoDAO pedidoDAO, ClienteDAO clienteDAO, EntregaDAO entregaDAO, HorarioDAO horarioDAO, QuadroDAO quadroDAO,UserInfo userInfo,
 			Validator validator) {
 		this.result = result;
 		this.pedidoDAO = pedidoDAO;
 		this.clienteDAO = clienteDAO;
 		this.entregaDAO = entregaDAO;
 		this.horarioDAO = horarioDAO;
+		this.quadroDAO = quadroDAO; 
 		this.userInfo = userInfo;
 		this.validator = validator;
 	}
@@ -450,10 +457,21 @@ public class AdminController {
 		Entrega entrega = new Entrega();
 		Quadro quadro = new Quadro();
 		Horario horario = new Horario();
+		Integer contador = 0;
 		
 		quadro = horarioDAO.consultarPedidoNoQuadro(pedido.getId());
 		if (quadro != null){
 			horario = horarioDAO.load(quadro.getHorario());
+			String dateTime =quadro.getData().toString();
+			// Format for input
+			DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.0");
+			// Parsing the date
+			DateTime jodatime = dtf.parseDateTime(dateTime);
+			// Format for output
+			DateTimeFormatter dtfOut = DateTimeFormat.forPattern("ddMMyyyy");
+			// Printing the date
+			
+			contador = horarioDAO.totalHorarioDisponivel(horario.getId().toString(), dtfOut.print(jodatime) );
 		}else{
 			horario = null;
 		}
@@ -469,6 +487,7 @@ public class AdminController {
 		result.include("quadro", quadro);
 		result.include("horario", horario);
 		result.include("pedido", pedidoObj);
+		result.include("contador", contador);
 		
 		
 	}
@@ -525,7 +544,7 @@ public class AdminController {
 	
 	
 	@Post("/pedido/entrega")
-	public void prepararEntrega(Pedido pedido, Endereco endereco, String tipoEntrega){
+	public void prepararEntrega(Pedido pedido, Endereco endereco, String tipoEntrega, Quadro quadro){
 		//validator.addIf(entrega.getTipoEntrega() == null, new SimpleMessage("Tipo entrega", "A Tipo de Entrega deve ser preenchido"));	
 				//validator.onErrorForwardTo(this).erro(pedido);
 		//tipoEntrega = entrega.getTipoEntrega();
@@ -554,6 +573,23 @@ public class AdminController {
 			entrega.setPedido(pedido);
 			entrega.setTipoEntrega(tipoEntrega);
 			entrega.setData(new Date());
+			/************Quadro***********/
+			if (quadro.getHorario()!=null){
+				quadro.setPedido(pedido);
+				Quadro quadroObj = quadroDAO.consultarQuadroPorPedido(pedido.getId());
+				if (quadroObj != null){
+					quadroDAO.excluir(quadroObj);
+					quadroDAO.incluir(quadro);
+					
+				}else{
+					 quadroDAO.incluir(quadro);
+				}
+			}
+			
+			
+			//****************************
+			
+			
 			pedido.setStatus("A");
 			if (pedido.getIdEntrega()==null){
 				entregaDAO.incluir(entrega);
