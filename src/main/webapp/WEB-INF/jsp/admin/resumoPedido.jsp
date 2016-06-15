@@ -136,16 +136,16 @@
 								<div id="inicio">
 											<c:if test="${quadro!=null}">
 												<fmt:formatDate var="fmtDate" value="${quadro.data}" pattern="dd/MM/yyyy"/>
-											<input class="datepicker" value="${fmtDate}" name="quadro.data">
+											<input class="datepicker" value="${fmtDate}" name="quadro.data" required>
 											</c:if>
 											<c:if test="${quadro==null}">
-												<input class="datepicker" name="quadro.data">
+												<input class="datepicker" name="quadro.data" required>
 											</c:if>
        
 								</div>
 								
 								<div class="widget-content" id="divHorario">
-									<select id="selectHorario" onchange="" name="quadro.horario.id">
+									<select id="selectHorario" onchange="" name="quadro.horario.id" required>
 										<c:if test="${horario!=null}">
 											<option value="${horario.id}">${horario.horario}</option>
 										</c:if>

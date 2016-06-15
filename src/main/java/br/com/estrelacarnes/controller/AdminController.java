@@ -7,6 +7,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -99,6 +101,27 @@ public class AdminController {
 	public void consultarPedido(){
 		
 	}
+	
+	@Get("/pedido/quadroEntregas")
+	public void quadroEntregas(){
+		List<Quadro> listaPedidos = pedidoDAO.listarQuadroEntregas();
+		
+		for (int i = 0; i < listaPedidos.size(); i++) {
+			Entrega entrega = new Entrega();
+			if (listaPedidos.get(i).getPedido().getIdEntrega()!=null){
+				entrega.setId(Integer.valueOf(listaPedidos.get(i).getPedido().getIdEntrega()));
+				entrega = entregaDAO.load(entrega);
+				listaPedidos.get(i).getPedido().setTipoEntrega(entrega.getTipoEntrega());
+			}
+			
+			
+		}
+		
+		 result.include("listaPedidos", listaPedidos);
+	}
+	
+	
+	
 	
 	
 	
@@ -574,7 +597,22 @@ public class AdminController {
 			entrega.setTipoEntrega(tipoEntrega);
 			entrega.setData(new Date());
 			/************Quadro***********/
-			if (quadro.getHorario()!=null){
+			if (quadro.getHorario().getId()==null||quadro.getData()==null){
+				result.include("tipomsg", "error");
+				result.include("mensagemNegrito", "Erro! ");
+				result.include("mensagem", "Data e Horário devem ser informados!");
+				result.forwardTo(AdminController.class).resumoPedido(pedido);
+			}
+			
+			
+			if (quadro.getHorario().getId()!=null){
+				
+				/*VALIDAR DATA SE É PASSADO*/
+				/****************/
+				validarData(quadro.getData(), pedido);
+				/***************/
+				
+				
 				quadro.setPedido(pedido);
 				Quadro quadroObj = quadroDAO.consultarQuadroPorPedido(pedido.getId());
 				if (quadroObj != null){
@@ -606,6 +644,27 @@ public class AdminController {
 		
 		
 	}
+	private void validarData(Date dataCampo, Pedido pedido) {
+		LocalDate dataCampoNovo = new LocalDate(dataCampo);
+		LocalDateTime agora = new LocalDateTime(new Date());
+		LocalDate forCompare = agora.toLocalDate();
+		
+		System.out.println("equal : " + forCompare.isAfter(dataCampoNovo));
+		
+		if (!forCompare.isEqual(dataCampoNovo)){
+		if (forCompare.isBefore(dataCampoNovo)){
+			System.out.println("pode");
+		}else{
+			result.include("tipomsg", "error");
+			result.include("mensagemNegrito", "Erro! ");
+			result.include("mensagem", "Data anterior a data de hoje!");
+			result.forwardTo(AdminController.class).resumoPedido(pedido);
+			
+		}
+		}
+		
+	}
+
 	@Get("/pedido/pedidoEnviado/{pedido.id}")
 	public void pedidoEnviado(Pedido pedido){
 		Entrega entrega = new Entrega();

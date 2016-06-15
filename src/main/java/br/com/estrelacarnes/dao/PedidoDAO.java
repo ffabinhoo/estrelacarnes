@@ -8,6 +8,7 @@ import br.com.estrelacarnes.model.Item;
 import br.com.estrelacarnes.model.Pedido;
 import br.com.estrelacarnes.model.Preparo;
 import br.com.estrelacarnes.model.Produto;
+import br.com.estrelacarnes.model.Quadro;
 
 public interface PedidoDAO {
 	
@@ -52,6 +53,8 @@ public interface PedidoDAO {
 	List<Pedido> consultarHistoricoPedido(Cliente cliente);
 
 	void inserirListaItens(List<Item> listaItens);
+
+	List<Quadro> listarQuadroEntregas();
 
 	
 

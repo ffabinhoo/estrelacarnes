@@ -13,8 +13,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import br.com.estrelacarnes.model.Cliente;
 import br.com.estrelacarnes.model.Complemento;
@@ -22,6 +20,7 @@ import br.com.estrelacarnes.model.Item;
 import br.com.estrelacarnes.model.Pedido;
 import br.com.estrelacarnes.model.Preparo;
 import br.com.estrelacarnes.model.Produto;
+import br.com.estrelacarnes.model.Quadro;
 
 public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 	
@@ -266,6 +265,14 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 	public void inserirListaItens(List<Item> listaItens) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Quadro> listarQuadroEntregas() {
+		List<Quadro> lista = new ArrayList<Quadro>();
+		String sql = "select q from Quadro q where q.pedido.status = 'A'order by q.data desc";
+		lista = entityManager.createQuery(sql, Quadro.class).getResultList();
+		return lista;
 	}
 
 	
