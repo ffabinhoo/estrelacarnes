@@ -21,7 +21,7 @@ public interface HorarioDAO {
 
 	Horario consultarPedidoHorario(Horario horario);
 	
-	Quadro consultarPedidoNoQuadro(Integer idPedido);
+	Quadro consultarEntregaNoQuadro(Integer idPedido);
 
 	
 

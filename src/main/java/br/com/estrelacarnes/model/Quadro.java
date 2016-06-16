@@ -22,9 +22,14 @@ public class Quadro implements Serializable{
 	@GeneratedValue(generator="idQuadro")
 	private Integer id;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	/*@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idPedido")
-	private Pedido pedido = new Pedido();
+	private Pedido pedido = new Pedido();*/
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idEntrega")
+	private Entrega entrega = new Entrega();
+	
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idHorario")
@@ -44,14 +49,7 @@ public class Quadro implements Serializable{
 	}
 
 
-	public Pedido getPedido() {
-		return pedido;
-	}
-
-
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
-	}
+	
 
 
 	public Horario getHorario() {
@@ -71,6 +69,16 @@ public class Quadro implements Serializable{
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+
+
+	public Entrega getEntrega() {
+		return entrega;
+	}
+
+
+	public void setEntrega(Entrega entrega) {
+		this.entrega = entrega;
 	}
 	
 }

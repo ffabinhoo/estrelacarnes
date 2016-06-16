@@ -11,13 +11,14 @@ public interface QuadroDAO {
 
 	Quadro load(Quadro quadro);
 	
-	Quadro consultarQuadroPorPedido(Integer pedido);
+	Quadro consultarQuadroPorEntrega(Integer entrega);
 
 	List<Quadro> consultarTodosQuadros();
 	
 	void excluir(Quadro quadro);
 	
 	Quadro update(Quadro quadro);
+
 
 
 }

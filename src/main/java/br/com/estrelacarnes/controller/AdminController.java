@@ -104,20 +104,33 @@ public class AdminController {
 	
 	@Get("/pedido/quadroEntregas")
 	public void quadroEntregas(){
-		List<Quadro> listaPedidos = pedidoDAO.listarQuadroEntregas();
+		List<Quadro> listaPedidosDelivery = pedidoDAO.listarQuadroEntregas("D");
+		List<Quadro> listaPedidosPickup = pedidoDAO.listarQuadroEntregas("P");
 		
-		for (int i = 0; i < listaPedidos.size(); i++) {
+		for (int i = 0; i < listaPedidosDelivery.size(); i++) {
 			Entrega entrega = new Entrega();
-			if (listaPedidos.get(i).getPedido().getIdEntrega()!=null){
-				entrega.setId(Integer.valueOf(listaPedidos.get(i).getPedido().getIdEntrega()));
+			if (listaPedidosDelivery.get(i).getEntrega().getPedido().getIdEntrega()!=null){
+				entrega.setId(Integer.valueOf(listaPedidosDelivery.get(i).getEntrega().getPedido().getIdEntrega()));
 				entrega = entregaDAO.load(entrega);
-				listaPedidos.get(i).getPedido().setTipoEntrega(entrega.getTipoEntrega());
+				listaPedidosDelivery.get(i).getEntrega().getPedido().setTipoEntrega(entrega.getTipoEntrega());
 			}
 			
 			
 		}
 		
-		 result.include("listaPedidos", listaPedidos);
+		for (int i = 0; i < listaPedidosPickup.size(); i++) {
+			Entrega entrega = new Entrega();
+			if (listaPedidosPickup.get(i).getEntrega().getPedido().getIdEntrega()!=null){
+				entrega.setId(Integer.valueOf(listaPedidosPickup.get(i).getEntrega().getPedido().getIdEntrega()));
+				entrega = entregaDAO.load(entrega);
+				listaPedidosPickup.get(i).getEntrega().getPedido().setTipoEntrega(entrega.getTipoEntrega());
+			}
+			
+			
+		}
+		
+		 result.include("listaPedidosDelivery", listaPedidosDelivery);
+		 result.include("listaPedidosPickup", listaPedidosPickup);
 	}
 	
 	
@@ -482,7 +495,7 @@ public class AdminController {
 		Horario horario = new Horario();
 		Integer contador = 0;
 		
-		quadro = horarioDAO.consultarPedidoNoQuadro(pedido.getId());
+		quadro = horarioDAO.consultarEntregaNoQuadro(pedido.getId());
 		if (quadro != null){
 			horario = horarioDAO.load(quadro.getHorario());
 			String dateTime =quadro.getData().toString();
@@ -606,63 +619,58 @@ public class AdminController {
 			
 			
 			if (quadro.getHorario().getId()!=null){
-				
 				/*VALIDAR DATA SE É PASSADO*/
-				/****************/
-				validarData(quadro.getData(), pedido);
-				/***************/
-				
-				
-				quadro.setPedido(pedido);
-				Quadro quadroObj = quadroDAO.consultarQuadroPorPedido(pedido.getId());
-				if (quadroObj != null){
-					quadroDAO.excluir(quadroObj);
+				if (validarData(quadro.getData(), pedido)){
+			
+
+				pedido.setStatus("A");
+	
+				if (pedido.getIdEntrega()==null){
+					entregaDAO.incluir(entrega);
+					pedido.setIdEntrega(entrega.getId().toString());
+					quadro.setEntrega(entrega);
 					quadroDAO.incluir(quadro);
-					
 				}else{
-					 quadroDAO.incluir(quadro);
+					entrega.setId(Integer.valueOf(pedido.getIdEntrega()));
+					entregaDAO.alterar(entrega);
+					Quadro quadroObj = quadroDAO.consultarQuadroPorEntrega(entrega.getId());
+					quadroObj.setData(quadro.getData());
+					quadroObj.setHorario(quadro.getHorario());
+					quadroDAO.update(quadroObj);
 				}
+				pedido = pedidoDAO.alterarPedido(pedido);
+				result.redirectTo(AdminController.class).principal();
 			}
 			
-			
-			//****************************
-			
-			
-			pedido.setStatus("A");
-			if (pedido.getIdEntrega()==null){
-				entregaDAO.incluir(entrega);
-				pedido.setIdEntrega(entrega.getId().toString());
-			}else{
-				entrega.setId(Integer.valueOf(pedido.getIdEntrega()));
-				entregaDAO.alterar(entrega);
+				
 			}
 			
-			pedido = pedidoDAO.alterarPedido(pedido);
-			result.redirectTo(AdminController.class).principal();
 		}
 		
 		
 		
 	}
-	private void validarData(Date dataCampo, Pedido pedido) {
+	private boolean validarData(Date dataCampo, Pedido pedido) {
+		boolean retorno = false;
 		LocalDate dataCampoNovo = new LocalDate(dataCampo);
 		LocalDateTime agora = new LocalDateTime(new Date());
 		LocalDate forCompare = agora.toLocalDate();
 		
 		System.out.println("equal : " + forCompare.isAfter(dataCampoNovo));
 		
-		if (!forCompare.isEqual(dataCampoNovo)){
-		if (forCompare.isBefore(dataCampoNovo)){
-			System.out.println("pode");
-		}else{
-			result.include("tipomsg", "error");
-			result.include("mensagemNegrito", "Erro! ");
-			result.include("mensagem", "Data anterior a data de hoje!");
-			result.forwardTo(AdminController.class).resumoPedido(pedido);
-			
-		}
-		}
+			if (forCompare.isEqual(dataCampoNovo) || forCompare.isBefore(dataCampoNovo)){
+				return true;
+			}else{
+				result.include("tipomsg", "error");
+				result.include("mensagemNegrito", "Erro! ");
+				result.include("mensagem", "Data anterior a data de hoje!");
+				result.forwardTo(AdminController.class).resumoPedido(pedido);
+				
+			}
 		
+		
+		
+		return retorno;
 	}
 
 	@Get("/pedido/pedidoEnviado/{pedido.id}")

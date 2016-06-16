@@ -44,11 +44,11 @@ public class DefaultQuadroDAO implements QuadroDAO, Serializable{
 	}
 	
 	@Override
-	public Quadro consultarQuadroPorPedido(Integer pedido) {
+	public Quadro consultarQuadroPorEntrega(Integer entrega) {
 		try {
 			Quadro quadro = entityManager
-				.createQuery("select u from Quadro u where u.pedido.id = :pedido ", Quadro.class)
-					.setParameter("pedido", pedido)
+				.createQuery("select u from Quadro u where u.entrega.id = :entrega ", Quadro.class)
+					.setParameter("entrega", entrega)
 					.getSingleResult();
 			return quadro;
 		} catch (NoResultException e) {

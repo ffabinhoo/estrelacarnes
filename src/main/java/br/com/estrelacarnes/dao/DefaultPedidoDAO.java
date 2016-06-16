@@ -268,9 +268,9 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 	}
 
 	@Override
-	public List<Quadro> listarQuadroEntregas() {
+	public List<Quadro> listarQuadroEntregas(String tipoEntrega) {
 		List<Quadro> lista = new ArrayList<Quadro>();
-		String sql = "select q from Quadro q where q.pedido.status = 'A'order by q.data desc";
+		String sql = "select q from Quadro q where q.entrega.pedido.status = 'A' and q.entrega.tipoEntrega = '"+ tipoEntrega +"' order by q.data desc";
 		lista = entityManager.createQuery(sql, Quadro.class).getResultList();
 		return lista;
 	}

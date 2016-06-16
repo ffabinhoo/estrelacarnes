@@ -66,13 +66,13 @@ public class DefaultHorarioDAO implements HorarioDAO, Serializable{
 		return Integer.valueOf(retorno);
 	}
 	
-	public Quadro consultarPedidoNoQuadro(Integer idPedido) {
+	public Quadro consultarEntregaNoQuadro(Integer idPedido) {
 		Quadro quadro = new Quadro();
 		String sql = "select q from Horario h,  Quadro q "
 				//+ " where h.id = q.idHorario "
 				+ " where h.ativo = 'S' "
 				
-				+ " and q.pedido.id = " + idPedido	
+				+ " and q.entrega.pedido.id = " + idPedido	
 				
 				
 				+ "";
