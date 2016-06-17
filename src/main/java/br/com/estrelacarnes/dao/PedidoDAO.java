@@ -54,7 +54,9 @@ public interface PedidoDAO {
 
 	void inserirListaItens(List<Item> listaItens);
 
-	List<Quadro> listarQuadroEntregas(String tipoEntrega);
+	List<Quadro> listarQuadroEntregasDelivery();
+	
+	List<Quadro> listarQuadroEntregasPickup();
 
 	
 

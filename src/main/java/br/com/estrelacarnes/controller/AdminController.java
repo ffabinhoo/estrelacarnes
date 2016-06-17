@@ -104,8 +104,8 @@ public class AdminController {
 	
 	@Get("/pedido/quadroEntregas")
 	public void quadroEntregas(){
-		List<Quadro> listaPedidosDelivery = pedidoDAO.listarQuadroEntregas("D");
-		List<Quadro> listaPedidosPickup = pedidoDAO.listarQuadroEntregas("P");
+		List<Quadro> listaPedidosDelivery = pedidoDAO.listarQuadroEntregasDelivery();
+		List<Quadro> listaPedidosPickup = pedidoDAO.listarQuadroEntregasPickup();
 		
 		for (int i = 0; i < listaPedidosDelivery.size(); i++) {
 			Entrega entrega = new Entrega();
