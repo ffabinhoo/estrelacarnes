@@ -19,6 +19,24 @@
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <style>
+    
+/* #block_container
+{
+    
+}
+#bloc1 
+{
+    display:inline;
+    text-align:left;
+}
+#bloc2
+{
+	display:inline;
+	text-align:right;
+	float:center;
+} */
+    </style>
 </head>
 <body>
 	<div class="navbar navbar-fixed-top">
@@ -107,7 +125,7 @@
 									<tbody>
 										<c:forEach var="quadro" items="${listaPedidosPickup}">
 											<tr>
-												<td><a href="${linkTo[ClienteController].mostrarCliente}${quadro.entrega.cliente.id}">${quadro.entrega.cliente.nome}</a></td>
+												<td style="width: 520px;"><a href="${linkTo[ClienteController].mostrarCliente}${quadro.entrega.cliente.id}">${quadro.entrega.cliente.nome}</a></td>
 												<td><fmt:formatDate pattern="dd/MM" value="${quadro.data}" /></td>
 												<td>${quadro.horario.horario} </td>
 												<td>
@@ -162,8 +180,9 @@
 									<tbody>
 										<c:forEach var="quadro" items="${listaPedidosDelivery}">
 											<tr>
-												<td><a href="${linkTo[ClienteController].mostrarCliente}${quadro.entrega.cliente.id}">${quadro.entrega.cliente.nome}</a></td>
-												<td>${quadro.entrega.endereco.bairro }</td>
+												<td style="width: 350px;" id="block_container">
+													<a href="${linkTo[ClienteController].mostrarCliente}${quadro.entrega.cliente.id}">${quadro.entrega.cliente.nome}</a>
+												<td style="width: 150px;">${quadro.entrega.endereco.bairro }</td>
 												<td><fmt:formatDate pattern="dd/MM" value="${quadro.data}" /></td>
 												<td>${quadro.horario.horario} </td>
 												<td>
