@@ -13,8 +13,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import br.com.estrelacarnes.model.Cliente;
 import br.com.estrelacarnes.model.Complemento;
@@ -22,6 +20,7 @@ import br.com.estrelacarnes.model.Item;
 import br.com.estrelacarnes.model.Pedido;
 import br.com.estrelacarnes.model.Preparo;
 import br.com.estrelacarnes.model.Produto;
+import br.com.estrelacarnes.model.Quadro;
 
 public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 	
@@ -266,6 +265,24 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 	public void inserirListaItens(List<Item> listaItens) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Quadro> listarQuadroEntregasDelivery() {
+		String tipoEntrega = "D";
+		List<Quadro> lista = new ArrayList<Quadro>();
+		String sql = "select q from Quadro q where q.entrega.pedido.status = 'A' and q.entrega.tipoEntrega = '"+ tipoEntrega +"' order by q.data, q.horario.horario, q.entrega.endereco.bairro desc";
+		lista = entityManager.createQuery(sql, Quadro.class).getResultList();
+		return lista;
+	}
+	
+	@Override
+	public List<Quadro> listarQuadroEntregasPickup() {
+		String tipoEntrega = "P";
+		List<Quadro> lista = new ArrayList<Quadro>();
+		String sql = "select q from Quadro q where q.entrega.pedido.status = 'A' and q.entrega.tipoEntrega = '"+ tipoEntrega +"' order by q.data, q.horario.horario desc ";
+		lista = entityManager.createQuery(sql, Quadro.class).getResultList();
+		return lista;
 	}
 
 	

@@ -19,6 +19,24 @@
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <style>
+    
+/* #block_container
+{
+    
+}
+#bloc1 
+{
+    display:inline;
+    text-align:left;
+}
+#bloc2
+{
+	display:inline;
+	text-align:right;
+	float:center;
+} */
+    </style>
 </head>
 <body>
 	<div class="navbar navbar-fixed-top">
@@ -86,48 +104,11 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="span12">
-						<div class="widget widget-table action-table" id="divConsultarPedido">
-							<form action="${linkTo[AdminController].consultarPedido}" method="post" id="formConsulta">
-								
-								<div class="control-group">	
-									<label class="control-label" for="status">Status do Pedido</label>	
-									<div class="controls">
-										<label class="radio inline"> <input type="radio" id="status" name="status" value="A" ${'A' == statusBusca ? 'checked' : ''}>Aberto
-										</label>
-										<label class="radio inline"> <input type="radio" id="status" name="status" value="E" ${'E' == statusBusca ? 'checked' : ''}>Enviado
-										</label>
-									</div>
-								</div>
-								
-								<div class="control-group">	
-								<label class="control-label" for="status">Data do Pedido</label>	
-									<div class="form-group form-group-sm">
-										<div id="inicio">
-											<input type="text" name="inicio" id="datetimepicker" value="${inicio}"></input>
-										</div>
-									</div>
-									<div class="form-group form-group-sm">
-										<div id="fim">
-											<input type="text" name="fim" id="datetimepicker2" value="${fim}"></input>
-										</div>
-									</div>
-								</div>	 
-								
-								<br />
-								<div class="form-actions">
-									<button  class="btn btn-primary btn-small" id="buscar">Buscar</button>
-									<button class="btn btn-small" id="voltarCliente" type="button">Voltar</button>
-								</div>	
-							</form>
-						</div>
-					</div>
-					<!-- /row -->
-					<c:if test="${listaPedidos.size() > 0}">
+					<c:if test="${listaPedidosPickup.size() > 0}">
 						<div class="widget widget-table action-table" id="listaClientes">
 							<div class="widget-header">
 								<i class="icon-th-list"></i>
-								<h3>Lista de Pedidos</h3>
+								<h3>Quadro de Entregas - Pick-up</h3>
 							</div>
 							<!-- /widget-header -->
 							<div class="widget-content">
@@ -135,61 +116,39 @@
 									<thead>
 										<tr>
 											<th>Nome do Cliente</th>
-											<th>Data do Pedido</th>
-											<th>Entrega</th>
+											<th>Data da Entrega</th>
+											<th>Horário</th>
+											<th>Tipo de Entrega</th>
 											<th class="td-actions"></th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="pedido" items="${listaPedidos}">
+										<c:forEach var="quadro" items="${listaPedidosPickup}">
 											<tr>
-											
-												<td><a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}">${pedido.cliente.nome}</a></td>
-												<td><fmt:formatDate pattern="dd/MM HH:mm" value="${pedido.data}" /></td>
-												
+												<td style="width: 520px;"><a href="${linkTo[ClienteController].mostrarCliente}${quadro.entrega.cliente.id}">${quadro.entrega.cliente.nome}</a></td>
+												<td><fmt:formatDate pattern="dd/MM" value="${quadro.data}" /></td>
+												<td>${quadro.horario.horario} </td>
 												<td>
-													<c:if test="${pedido.tipoEntrega eq 'D'}">
-														Delivery
-														<c:if test="${pedido.status eq 'E'}">
-															- Enviado
-														</c:if>
-													</c:if>
-													<c:if test="${pedido.tipoEntrega eq 'P'}">
+													<c:if test="${quadro.entrega.tipoEntrega eq 'P'}">
 														Pick-up
-														<c:if test="${pedido.status eq 'E'}">
+														<c:if test="${quadro.entrega.pedido.status eq 'E'}">
 															- Enviado
 														</c:if>
-													</c:if>
-													<c:if test="${pedido.tipoEntrega eq null}">
-														Não selecionado
 													</c:if>
 												</td>
 												<td class="td-actions" style="width: 150px;">
-												
-													<c:if test="${pedido.status eq 'A'}">
-														<button id="detalhePedido" name="detalhePedido" class="button btn-small btn" onclick="window.open('${linkTo[AdminController].imprimirItens}${pedido.id}')"><i class="icon-print"></i>Print</button>
-														<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${pedido.id}/KG/1/0" style="float: left; padding: 1px;">
+													<c:if test="${quadro.entrega.pedido.status eq 'A'}">
+														<button id="detalhePedido" name="detalhePedido" class="button btn-small btn" onclick="window.open('${linkTo[AdminController].imprimirItens}${quadro.entrega.pedido.id}')"><i class="icon-print"></i>Print</button>
+														<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${quadro.entrega.pedido.id}/KG/1/0" style="float: left; padding: 1px;">
 															<button class="button btn btn-success btn-small" id="verPedido">Editar</button>
 														</form>
 													</c:if>
-													<c:if test="${pedido.status eq 'E'}">
-													<form id="formEnviarPedido" method="get" action="${linkTo[AdminController].pedidoEnviado}${pedido.id}" 
-														style="float: left; padding: 1px;">
-															<button id="detalhePedido" name="detalhePedido" class="button btn-small btn-primary">Detalhes</button>
+													<form id="formEnviarPedidoSaida" method="post" action="${linkTo[AdminController].enviarPedidoSaida}${quadro.entrega.pedido.id}" style="float: left; padding: 1px;">
+														<button id="enviarPedidoSaida" name="enviarPedidoSaida" class="button btn-small btn-primary">Enviar</button>
 													</form>
-													</c:if>
+													
 												</td>
 											</tr>
-										<div id="confirm" class="modal hide fade">
-										  <div class="modal-body">
-										    Confirma exclusão do Cliente?<br />
-										    (Todo o Histórico do cliente também será excluído)
-										  </div>
-										  <div class="modal-footer">
-										    <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Excluir</button>
-										    <button type="button" data-dismiss="modal" class="btn">Cancelar</button>
-										  </div>
-										</div>
 										</c:forEach>
 									</tbody>
 								</table>
@@ -197,6 +156,73 @@
 							<!-- /widget-content -->
 						</div>
 					</c:if>
+					
+					<!-- /row -->
+					<c:if test="${listaPedidosDelivery.size() > 0}">
+						<div class="widget widget-table action-table" id="listaClientes">
+							<div class="widget-header">
+								<i class="icon-th-list"></i>
+								<h3>Quadro de Entregas - Delivery</h3>
+							</div>
+							<!-- /widget-header -->
+							<div class="widget-content">
+								<table class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th>Nome do Cliente</th>
+											<th>Bairro</th>
+											<th>Data da Entrega</th>
+											<th>Horário</th>
+											<th>Tipo de Entrega</th>
+											<th class="td-actions"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="quadro" items="${listaPedidosDelivery}">
+											<tr>
+												<td style="width: 350px;" id="block_container">
+													<a href="${linkTo[ClienteController].mostrarCliente}${quadro.entrega.cliente.id}">${quadro.entrega.cliente.nome}</a>
+												<td style="width: 150px;">${quadro.entrega.endereco.bairro }</td>
+												<td><fmt:formatDate pattern="dd/MM" value="${quadro.data}" /></td>
+												<td>${quadro.horario.horario} </td>
+												<td>
+													<c:if test="${quadro.entrega.tipoEntrega eq 'D'}">
+														Delivery
+														<c:if test="${quadro.entrega.pedido.status eq 'E'}">
+															- Enviado
+														</c:if>
+													</c:if>
+												</td>
+												<td class="td-actions" style="width: 150px;">
+													<c:if test="${quadro.entrega.pedido.status eq 'A'}">
+														<button id="detalhePedido" name="detalhePedido" class="button btn-small btn" onclick="window.open('${linkTo[AdminController].imprimirItens}${quadro.entrega.pedido.id}')"><i class="icon-print"></i>Print</button>
+														<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${quadro.entrega.pedido.id}/KG/1/0" style="float: left; padding: 1px;">
+															<button class="button btn btn-success btn-small" id="verPedido">Editar</button>
+														</form>
+													</c:if>
+													<form id="formEnviarPedidoSaida" method="post" action="${linkTo[AdminController].enviarPedidoSaida}${quadro.entrega.pedido.id}" style="float: left; padding: 1px;">
+														<button id="enviarPedidoSaida" name="enviarPedidoSaida" class="button btn-small btn-primary">Enviar</button>
+													</form>
+												</td>
+											</tr>
+											<div id="confirmEnviar" class="modal hide fade">
+												<div class="modal-body"><h3>Confirma enviar o Pedido?</h3>
+													<br />
+												</div>
+												<div class="modal-footer">
+													<button type="button" data-dismiss="modal"
+														class="btn btn-primary" id="confirmar">Confirmar</button>
+													<button type="button" data-dismiss="modal" class="btn">Cancelar</button>
+												</div>
+											</div>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+							<!-- /widget-content -->
+						</div>
+					</c:if>
+					
 				</div>
 				<!-- /container -->
 			</div>
@@ -209,12 +235,10 @@
 					<div class="row">
 						<div class="span3">
 							<h4>Sobre Estrela Carnes</h4>
-
 						</div>
 						<!-- /span3 -->
 						<div class="span3">
 							<h4>Suporte</h4>
-
 						</div>
 						<!-- /span3 -->
 						<div class="span3"></div>
@@ -229,31 +253,37 @@
 			<!-- /extra-inner -->
 		</div>
 		</div>
-
 		<script src="/estrelacarnes/js/jquery-1.7.2.min.js"></script>
 		<script src="/estrelacarnes/js/jquery.datetimepicker.js"></script>
 		<script src="/estrelacarnes/js/excanvas.min.js"></script>
 		<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 		<script src="/estrelacarnes/js/bootstrap.js"></script>
 		<script>
-		jQuery('#datetimepicker').datetimepicker({
-			timepicker:false,
-			format : 'd/m/Y'
-		});
-		jQuery('#datetimepicker2').datetimepicker({
-			timepicker:false,
-			format : 'd/m/Y'
-		});
-			
-			document.getElementById("voltarCliente").onclick = function() {
-				var url = '/estrelacarnes';
-				window.location.href = url;
-			};
-			$('button[name="_method"]').on('click', function(e){
-			    var $form=$(this).closest('form'); 
+		 $('button[name="enviarPedidoSaida"]').on('click', function(e){
+			    var $form=$(this).closest('#formEnviarPedidoSaida'); 
+			    
 			    e.preventDefault();
-			    $('#confirm').modal({ backdrop: 'static', keyboard: false })
-			        .one('click', '#delete', function() {
+			    
+			    $('#confirmEnviar').modal({ backdrop: 'static', keyboard: false })
+			        .one('click', '#confirmar', function(e) {
+			            $form.trigger('submit'); // submit the form
+			        });
+			});
+		 $('button[name="enviarPedidoSaida"]').on('click', function(e){
+			    var $form=$(this).closest('#formEnviarPedidoSaida'); 
+			    
+			    e.preventDefault();
+			    
+			    $('#confirmEnviar').modal({ backdrop: 'static', keyboard: false })
+			        .one('click', '#confirmar', function(e) {
+			        	/* var valor = $('#valor').val();
+			        	var valorFrete = $('#valorFrete').val();
+				        
+				        $("#valorPedido").val(valor);
+				        $("#valorPedidoFrete").val(valorFrete);
+				        var valor = $('#valor').val();
+				        var valorFrete = $('#valorFrete').val(); */
+				        
 			            $form.trigger('submit'); // submit the form
 			        });
 			});

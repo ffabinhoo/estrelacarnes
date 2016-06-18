@@ -106,9 +106,11 @@
 										<a href="javascript:;" class="shortcut" id="pedidosHoje"><i class="shortcut-icon icon-list-alt"></i>
 										<span class="shortcut-label">Pedidos Abertos</span> </a>
 										<a href="javascript:;" id="pedidosEnviadosHoje" class="shortcut"><i class="shortcut-icon icon-inbox"></i>
-									<span class="shortcut-label">Pedidos Enviados</span> </a>
-										 <a href="${linkTo[AdminController].consultarPedido}" class="shortcut"><i class="shortcut-icon icon-search"></i>
-										 <span class="shortcut-label">Consultar Pedidos</span> </a>
+										<span class="shortcut-label">Pedidos Enviados</span> </a>
+										<a href="${linkTo[AdminController].consultarPedido}" class="shortcut"><i class="shortcut-icon icon-search"></i>
+										<span class="shortcut-label">Consultar Pedidos</span> </a>
+										<a href="${linkTo[AdminController].quadroEntregas}" class="shortcut"><i class="shortcut-icon icon-calendar"></i>
+										<span class="shortcut-label">Quadro de Entregas</span> </a>
 										 
 
 								</div>

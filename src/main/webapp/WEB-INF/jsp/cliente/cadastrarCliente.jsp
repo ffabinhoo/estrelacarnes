@@ -1,10 +1,10 @@
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=iso-8859-1" pageEncoding="iso-8859-1"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="utf-8">
+<meta charset="iso-8859-1">
 <title>Estrela Carnes</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -28,7 +28,7 @@
 		<div class="navbar-inner">
 			<div class="container">
 				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span
-					class="icon-bar"></span> </a> <a class="brand" href="/estrelacarnes">Estrela Carnes - AdministraÃ§Ã£o de Pedidos</a>
+					class="icon-bar"></span> </a> <a class="brand" href="/estrelacarnes">Estrela Carnes - Administração de Pedidos</a>
 				<div class="nav-collapse">
 					<ul class="nav pull-right">
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> <span
@@ -56,13 +56,13 @@
 					<li class="dropdown">					
 						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
 							<i class="icon-cog"></i>
-							<span>AdministraÃ§Ã£o</span>
+							<span>Administração</span>
 							<b class="caret"></b>
 						</a>	
 					
 						<ul class="dropdown-menu">
 	                        <li><a href="#">Produtos</a></li>
-							<li><a href="${linkTo[AdminController].manterHorario}">HorÃ¡rios</a></li>
+							<li><a href="${linkTo[AdminController].manterHorario}">Horários</a></li>
 	                    </ul>    				
 					</li>
 				</ul>
@@ -110,7 +110,7 @@
 									<input class="span6" name="cliente.email" id="email" value="${cliente.email}" type="email">
 								</div>
 								
-								<h2>EndereÃ§o</h2>
+								<h2>Endereço</h2>
 								
 								<div class="controls">
 									<label class="control-label" for="cep">CEP *</label>
@@ -127,7 +127,7 @@
 								<div class="controls">
 									<input class="span6" name="cliente.endereco.complemento" value="${cliente.endereco.complemento}" type="text" id="complemento">
 								</div>
-								<label class="control-label">ReferÃªncia</label>
+								<label class="control-label">Referência</label>
 								<div class="controls">
 									<input class="span6" name="cliente.endereco.referencia" value="${cliente.endereco.referencia}" type="text" id="referencia">
 								</div>
@@ -146,7 +146,7 @@
 								
 								<div class="form-actions">
 									<button name="inserir" value="inserir" class="btn btn-primary btn-small" id="inserirCliente">
-									Salvar AlteraÃ§Ãµes</button>
+									Salvar Alterações</button>
 
 									<button class="btn btn-small" id="voltarCliente" type="button">Voltar</button>
 								</div>
@@ -159,7 +159,7 @@
 				</form>
 			</div>
 			<div id="confirmCliente" class="modal hide fade">
-				<div class="modal-body">Confirma exclusÃ£o do Pedido?</div>
+				<div class="modal-body">Confirma exclusão do Pedido?</div>
 				<div class="modal-footer">
 					<button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Excluir</button>
 					<button type="button" data-dismiss="modal" class="btn">Cancelar</button>

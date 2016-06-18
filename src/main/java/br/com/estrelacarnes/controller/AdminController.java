@@ -6,6 +6,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
@@ -13,10 +19,12 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
+import br.com.caelum.vraptor.view.Results;
 import br.com.estrelacarnes.dao.ClienteDAO;
 import br.com.estrelacarnes.dao.EntregaDAO;
 import br.com.estrelacarnes.dao.HorarioDAO;
 import br.com.estrelacarnes.dao.PedidoDAO;
+import br.com.estrelacarnes.dao.QuadroDAO;
 import br.com.estrelacarnes.interceptor.UserInfo;
 import br.com.estrelacarnes.model.Categoria;
 import br.com.estrelacarnes.model.Cliente;
@@ -28,6 +36,7 @@ import br.com.estrelacarnes.model.Item;
 import br.com.estrelacarnes.model.Pedido;
 import br.com.estrelacarnes.model.Preparo;
 import br.com.estrelacarnes.model.Produto;
+import br.com.estrelacarnes.model.Quadro;
 
 @Controller
 public class AdminController {
@@ -38,19 +47,21 @@ public class AdminController {
 	private final ClienteDAO clienteDAO;
 	private final EntregaDAO entregaDAO;
 	private final HorarioDAO horarioDAO;
+	private final QuadroDAO quadroDAO;
 	
 	protected AdminController() {
-		this(null, null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null,null);
 	}
 	
 	@Inject
-	public AdminController(Result result, PedidoDAO pedidoDAO, ClienteDAO clienteDAO, EntregaDAO entregaDAO, HorarioDAO horarioDAO, UserInfo userInfo,
+	public AdminController(Result result, PedidoDAO pedidoDAO, ClienteDAO clienteDAO, EntregaDAO entregaDAO, HorarioDAO horarioDAO, QuadroDAO quadroDAO,UserInfo userInfo,
 			Validator validator) {
 		this.result = result;
 		this.pedidoDAO = pedidoDAO;
 		this.clienteDAO = clienteDAO;
 		this.entregaDAO = entregaDAO;
 		this.horarioDAO = horarioDAO;
+		this.quadroDAO = quadroDAO; 
 		this.userInfo = userInfo;
 		this.validator = validator;
 	}
@@ -91,6 +102,42 @@ public class AdminController {
 		
 	}
 	
+	@Get("/pedido/quadroEntregas")
+	public void quadroEntregas(){
+		List<Quadro> listaPedidosDelivery = pedidoDAO.listarQuadroEntregasDelivery();
+		List<Quadro> listaPedidosPickup = pedidoDAO.listarQuadroEntregasPickup();
+		
+		for (int i = 0; i < listaPedidosDelivery.size(); i++) {
+			Entrega entrega = new Entrega();
+			if (listaPedidosDelivery.get(i).getEntrega().getPedido().getIdEntrega()!=null){
+				entrega.setId(Integer.valueOf(listaPedidosDelivery.get(i).getEntrega().getPedido().getIdEntrega()));
+				entrega = entregaDAO.load(entrega);
+				listaPedidosDelivery.get(i).getEntrega().getPedido().setTipoEntrega(entrega.getTipoEntrega());
+			}
+			
+			
+		}
+		
+		for (int i = 0; i < listaPedidosPickup.size(); i++) {
+			Entrega entrega = new Entrega();
+			if (listaPedidosPickup.get(i).getEntrega().getPedido().getIdEntrega()!=null){
+				entrega.setId(Integer.valueOf(listaPedidosPickup.get(i).getEntrega().getPedido().getIdEntrega()));
+				entrega = entregaDAO.load(entrega);
+				listaPedidosPickup.get(i).getEntrega().getPedido().setTipoEntrega(entrega.getTipoEntrega());
+			}
+			
+			
+		}
+		
+		 result.include("listaPedidosDelivery", listaPedidosDelivery);
+		 result.include("listaPedidosPickup", listaPedidosPickup);
+	}
+	
+	
+	
+	
+	
+	
 	@Post("/pedido/consultar")
 	public void consultarPedido(String status, String inicio, String fim){
 		List<Pedido> listaPedidos = pedidoDAO.consultarPedido(status, inicio, fim);
@@ -122,6 +169,11 @@ public class AdminController {
 		//String fechados = "F";
 		List<Pedido> listaPedidosEnviadosHoje = pedidoDAO.listarPedidosEnviadosHoje();
 		result.include("listaPedidosEnviadosHoje", listaPedidosEnviadosHoje);
+	}
+	
+	@Get("/data")
+	public void data(){
+		
 	}
 	
 	
@@ -207,9 +259,44 @@ public class AdminController {
 		
 	}
 	
+	@Get("/excluirHorario/{idHorario}")
+	public void excluirHorario(Integer idHorario){
+		Horario horario = new Horario();
+		horario.setId(idHorario);
+		horario = horarioDAO.load(horario);
+		horarioDAO.consultarPedidoHorario(horario);
+		horarioDAO.excluir(horario);
+		result.include("tipomsg", "success");
+		result.include("mensagemNegrito", "Horário ");
+		result.include("mensagem", "excluído com sucesso.");
+		result.redirectTo(AdminController.class).manterHorario();
+	}
+	
+	@Get("/mostrarHorario/{horario.id}")
+	public void mostrarHorario(Horario horario){
+		horario = horarioDAO.load(horario);
+		
+		result.include("horario", horario);
+		
+	}
+	
 	@Post
 	public void cadastrarHorario(Horario horario){
-		System.out.println(horario);
+		String[] horaSplit = horario.getHorario().split(";");
+		Integer hora = Integer.valueOf(horaSplit[0].substring(0, 2));
+		if (hora <12){
+			horario.setTurno(1);
+		}else if (hora >12 &&hora < 18){
+			horario.setTurno(2);
+		}else{
+			horario.setTurno(3);
+		}
+		horario.setAtivo("N");
+		horarioDAO.incluir(horario);
+		result.include("tipomsg", "success");
+		result.include("mensagemNegrito", "Horário ");
+		result.include("mensagem", "incluído com sucesso.");
+		result.redirectTo(AdminController.class).manterHorario();
 	}
 	
 	
@@ -400,8 +487,31 @@ public class AdminController {
 	
 	@Get("/pedido/resumoPedido/{pedido.id}")
 	public void resumoPedido(Pedido pedido){
+		
+		
 		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
 		Entrega entrega = new Entrega();
+		Quadro quadro = new Quadro();
+		Horario horario = new Horario();
+		Integer contador = 0;
+		
+		quadro = horarioDAO.consultarEntregaNoQuadro(pedido.getId());
+		if (quadro != null){
+			horario = horarioDAO.load(quadro.getHorario());
+			String dateTime =quadro.getData().toString();
+			// Format for input
+			DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.0");
+			// Parsing the date
+			DateTime jodatime = dtf.parseDateTime(dateTime);
+			// Format for output
+			DateTimeFormatter dtfOut = DateTimeFormat.forPattern("ddMMyyyy");
+			// Printing the date
+			
+			contador = horarioDAO.totalHorarioDisponivel(horario.getId().toString(), dtfOut.print(jodatime) );
+		}else{
+			horario = null;
+		}
+		
 		if (pedido.getIdEntrega()!=null){
 			entrega.setId(Integer.valueOf(pedidoObj.getIdEntrega()));
 			entrega = entregaDAO.load(entrega);
@@ -410,7 +520,27 @@ public class AdminController {
 			result.include("entrega", entrega);
 		}
 		
+		result.include("quadro", quadro);
+		result.include("horario", horario);
 		result.include("pedido", pedidoObj);
+		result.include("contador", contador);
+		
+		
+	}
+	
+		
+	@Get("/pedido/horarioDisponivel/{pedido}/{horario}")
+	public void horarioDisponivel(Integer pedido, String horario){
+		System.out.println(horario);
+		List<Horario> listaHorarios = horarioDAO.consultarTodosHorariosAtivos();
+		//List<Horario> listaHorariosContador = horarioDAO.consultarTodosHorariosDisponiveis(horario);
+		result.use(Results.json()).from(listaHorarios).serialize();
+	}
+	
+	@Get("/pedido/totalHorarioDisponivel/{idHorario}/{data}")
+	public void totalHorarioDisponivel(String idHorario, String data){
+		Integer contador = horarioDAO.totalHorarioDisponivel(idHorario, data);
+		result.use(Results.json()).from(contador).serialize();
 	}
 	
 	
@@ -450,7 +580,7 @@ public class AdminController {
 	
 	
 	@Post("/pedido/entrega")
-	public void prepararEntrega(Pedido pedido, Endereco endereco, String tipoEntrega){
+	public void prepararEntrega(Pedido pedido, Endereco endereco, String tipoEntrega, Quadro quadro){
 		//validator.addIf(entrega.getTipoEntrega() == null, new SimpleMessage("Tipo entrega", "A Tipo de Entrega deve ser preenchido"));	
 				//validator.onErrorForwardTo(this).erro(pedido);
 		//tipoEntrega = entrega.getTipoEntrega();
@@ -479,22 +609,70 @@ public class AdminController {
 			entrega.setPedido(pedido);
 			entrega.setTipoEntrega(tipoEntrega);
 			entrega.setData(new Date());
-			pedido.setStatus("A");
-			if (pedido.getIdEntrega()==null){
-				entregaDAO.incluir(entrega);
-				pedido.setIdEntrega(entrega.getId().toString());
-			}else{
-				entrega.setId(Integer.valueOf(pedido.getIdEntrega()));
-				entregaDAO.alterar(entrega);
+			/************Quadro***********/
+			if (quadro.getHorario().getId()==null||quadro.getData()==null){
+				result.include("tipomsg", "error");
+				result.include("mensagemNegrito", "Erro! ");
+				result.include("mensagem", "Data e Horário devem ser informados!");
+				result.forwardTo(AdminController.class).resumoPedido(pedido);
 			}
 			
-			pedido = pedidoDAO.alterarPedido(pedido);
-			result.redirectTo(AdminController.class).principal();
+			
+			if (quadro.getHorario().getId()!=null){
+				/*VALIDAR DATA SE É PASSADO*/
+				if (validarData(quadro.getData(), pedido)){
+			
+
+				pedido.setStatus("A");
+	
+				if (pedido.getIdEntrega()==null){
+					entregaDAO.incluir(entrega);
+					pedido.setIdEntrega(entrega.getId().toString());
+					quadro.setEntrega(entrega);
+					quadroDAO.incluir(quadro);
+				}else{
+					entrega.setId(Integer.valueOf(pedido.getIdEntrega()));
+					entregaDAO.alterar(entrega);
+					Quadro quadroObj = quadroDAO.consultarQuadroPorEntrega(entrega.getId());
+					quadroObj.setData(quadro.getData());
+					quadroObj.setHorario(quadro.getHorario());
+					quadroDAO.update(quadroObj);
+				}
+				pedido = pedidoDAO.alterarPedido(pedido);
+				result.redirectTo(AdminController.class).principal();
+			}
+			
+				
+			}
+			
 		}
 		
 		
 		
 	}
+	private boolean validarData(Date dataCampo, Pedido pedido) {
+		boolean retorno = false;
+		LocalDate dataCampoNovo = new LocalDate(dataCampo);
+		LocalDateTime agora = new LocalDateTime(new Date());
+		LocalDate forCompare = agora.toLocalDate();
+		
+		System.out.println("equal : " + forCompare.isAfter(dataCampoNovo));
+		
+			if (forCompare.isEqual(dataCampoNovo) || forCompare.isBefore(dataCampoNovo)){
+				return true;
+			}else{
+				result.include("tipomsg", "error");
+				result.include("mensagemNegrito", "Erro! ");
+				result.include("mensagem", "Data anterior a data de hoje!");
+				result.forwardTo(AdminController.class).resumoPedido(pedido);
+				
+			}
+		
+		
+		
+		return retorno;
+	}
+
 	@Get("/pedido/pedidoEnviado/{pedido.id}")
 	public void pedidoEnviado(Pedido pedido){
 		Entrega entrega = new Entrega();

@@ -16,7 +16,9 @@
 <link href="/estrelacarnes/css/font-awesome.css" rel="stylesheet">
 <link href="/estrelacarnes/css/style.css" rel="stylesheet">
 <link href="/estrelacarnes/css/pages/dashboard.css" rel="stylesheet">
+<link href="/estrelacarnes/css/bootstrap-datepicker.css" rel="stylesheet">
 <link href="/estrelacarnes/css/pages/plans.css" rel="stylesheet">
+
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -124,6 +126,35 @@
 								<div class="widget-content">
 									<textarea rows="3" cols="5" class="span4" id="observacao"
 										name="pedido.observacao">${pedido.observacao}</textarea>
+								</div>
+							</div>
+							<div class="widget widget-table action-table" id="idDivObservacao">
+								<div class="widget-header" id="idTituloObservacao">
+									<i class="icon-th-list"></i>
+									<h3>Horário</h3>
+								</div>
+								<div id="inicio">
+											<c:if test="${quadro!=null}">
+												<fmt:formatDate var="fmtDate" value="${quadro.data}" pattern="dd/MM/yyyy"/>
+											<input class="datepicker" value="${fmtDate}" name="quadro.data" required>
+											</c:if>
+											<c:if test="${quadro==null}">
+												<input class="datepicker" name="quadro.data" required>
+											</c:if>
+       
+								</div>
+								
+								<div class="widget-content" id="divHorario">
+									<select id="selectHorario" onchange="" name="quadro.horario.id" required>
+										<c:if test="${horario!=null}">
+											<option value="${horario.id}">${horario.horario}</option>
+										</c:if>
+										
+									</select>
+									<br>
+									<div id="divTotal" >
+										 AGENDADO(S) <b>${contador}</b> PEDIDO(S) PARA ENTREGA NESTA DATA/HORÁRIO
+									</div>
 								</div>
 							</div>
 							<div class="widget">
@@ -295,7 +326,66 @@
 	<script src="/estrelacarnes/js/excanvas.min.js"></script>
 	<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 	<script src="/estrelacarnes/js/bootstrap.js"></script>
+	<script src="/estrelacarnes/js/bootstrap-datepicker.js"></script>
+	
+	
 	<script>
+	
+	$('.datepicker').datepicker({
+		format: 'dd/mm/yyyy',
+		minDate: 0,
+		autoclose: true,
+	});
+	
+ 	$('.datepicker').on("changeDate", function() {
+		var valor = "";
+		var post_url = "";
+		var pedido = "";
+	    valor = $('.datepicker').val();
+	    pedido = $('#idPedido').val();
+	    dataSemFormatacao = valor.replace("/", "").replace("/", "");
+	    post_url = "/estrelacarnes/pedido/horarioDisponivel/"+pedido+"/" + dataSemFormatacao;
+	    $("#divHorario").show();	
+
+	    $.ajax({
+	        url:post_url,
+	        type:'GET',
+	        dataType: 'json',
+	        success: function( json ) {
+	        	$('#selectHorario').empty();
+	            $.each(json, function(i, value) {
+	            	$('#selectHorario').append('<option value="">Selecione</option>');
+	            	for (var i=0; i<value.length; i++) {
+	            		$('#selectHorario').append('<option value="' + value[i].id + '">' + value[i].horario + '</option>');
+	            	 }
+	                
+	            });
+	        }
+	    });
+	    
+	});
+ 	
+ 	$('#selectHorario').on('change', function() {
+ 		var idHorario = this.value; 
+		var data = $('.datepicker').val();
+		dataSemFormatacao = data.replace("/", "").replace("/", "");
+		post_url = "/estrelacarnes/pedido/totalHorarioDisponivel/"+idHorario+"/" + dataSemFormatacao;		
+
+		$.ajax({
+	        url:post_url,
+	        type:'GET',
+	        dataType: 'json',
+	        success: function( json ) {
+	        	$('#divTotal').empty();
+	            $.each(json, function(i, value) {
+	            	$('#divTotal').append('AGENDADO(S) <b>' + value + '</b> PEDIDO(S) PARA ENTREGA NESTA DATA/HORÁRIO');
+	            });
+	        }
+	    });
+			  
+ 		});
+	
+	
 	$('#observacao').val($('#observacao').val().toUpperCase());
 
 	$('#observacao').keyup(function() {
@@ -306,6 +396,7 @@
 		$("#enderecoDelivery").hide();
 		$("#enderecoPick").hide();
 		$("#frete").hide();
+		
 		
 		var tipoEntrega = $('input[name=ctipoEntrega]:checked',	'#formEnviarPedido').val();
 		if (tipoEntrega == 'D'){
@@ -348,15 +439,8 @@
 			event.preventDefault();
 		    history.back(1);
 		};
-		/* document.getElementById("enviarPedido").onclick = function() {
-			alert('oi');
-			form.submit();
-		}; */
-		/* $('.enviarPedido').click(function(e) {
-		    e.preventDefault(); // prevent the link's default behaviour
-		    alert('oiieeee');
-		    $('#formEnviarPedido').submit(); // trigget the submit handler
-		}); */
+		
+		
 		$(document)
 				.ready(
 						function() {
@@ -377,28 +461,32 @@
 												
 											});
 						});
-		/* $('#valor').keypress(function (event) {
-            return isNumber(event, this)
-        }); */
-        
-		/* $('#valorFrete').keypress(function (event) {
-            return isNumber(event, this)
-        }); */
-        
 		
-		/* function isNumber(evt, element) {
-	        var charCode = (evt.which) ? evt.which : event.keyCode
-	        if (
-	            (charCode != 45 || $(element).val().indexOf('-') != -1) &&      // “-” CHECK MINUS, AND ONLY ONE.
-	            (charCode != 46 || $(element).val().indexOf('.') != -1) &&      // “.” CHECK DOT, AND ONLY ONE.
-	            (charCode != 44 || $(element).val().indexOf(',') != -1) &&      // “.” CHECK DOT, AND ONLY ONE.
-	            (charCode < 48 || charCode > 57))
-	            return false;
-	        return true;
-	    } */
-		//$("#valor").maskMoney('mask', 1999.99);
 	    $("#valor").maskMoney({thousands:'.', decimal:',', affixesStay: true});
 	    $("#valorFrete").maskMoney({thousands:'.', decimal:',', affixesStay: true});
+	    
+	    
+	    
+	    /* $.ajax({
+        type: 'GET',
+        url: post_url,  */
+        //data: valor,
+        /* success: function(msg) {
+           
+        	 $("#divHorario").load(post_url);
+        } */
+        /* dataType: 'json',
+        success: function( json ) {
+        	$('#selectHorario').empty();
+            $('#selectHorario').append($('<option>').text("Select"));
+            var obj = $("#divHorario").load(post_url);
+            $.each(json, function(i, obj){
+                    $('#selectHorario').append($('<option>').text(obj.horario).attr('value', obj.horario));
+            });
+         }
+
+    
+    }); */
 	</script>
 </body>
 </html>
