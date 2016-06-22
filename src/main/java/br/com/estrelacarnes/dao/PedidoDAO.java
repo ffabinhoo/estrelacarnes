@@ -58,6 +58,8 @@ public interface PedidoDAO {
 	
 	List<Quadro> listarQuadroEntregasPickup();
 
+	List<Quadro> listarQuadroPedidosEnviadosHoje();
+
 	
 
 }

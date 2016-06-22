@@ -217,29 +217,31 @@
 											<th>Cliente - Celular</th>
 											<th>Data</th>
 											<th>Entrega</th>
+											<th>Horário</th>
 											<th class="td-actions"></th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="pedido" items="${listaPedidosEnviadosHoje}">
+										<c:forEach var="quadro" items="${listaPedidosEnviadosHoje}">
 											<tr>
-												<td><a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}">
-													${pedido.cliente.nome} - ${pedido.cliente.celular}</a></td>
-												<td><fmt:formatDate pattern="dd/MM HH:mm" value="${pedido.data}" /></td>
+												<td><a href="${linkTo[ClienteController].mostrarCliente}${quadro.entrega.pedido.cliente.id}">
+													${quadro.entrega.pedido.cliente.nome} - ${quadro.entrega.pedido.cliente.celular}</a></td>
+												<td><fmt:formatDate pattern="dd/MM" value="${quadro.entrega.pedido.data}" /></td>
 												<td>
-													<c:if test="${pedido.tipoEntrega eq 'D'}">
+													<c:if test="${quadro.entrega.tipoEntrega eq 'D'}">
 														Delivery
 													</c:if>
-													<c:if test="${pedido.tipoEntrega eq 'P'}">
+													<c:if test="${quadro.entrega.tipoEntrega eq 'P'}">
 														Pick-up
 													</c:if>
-													<c:if test="${pedido.tipoEntrega eq null}">
-														Não selecionado
-													</c:if>
+													
+												</td>
+												<td>
+												${quadro.horario.horario}
 												</td>
 												
 												<td class="td-actions" style="width: 150px;">
-													<form id="formVerPedido" method="get" action="${linkTo[AdminController].pedidoEnviado}${pedido.id}" style="float: left; padding: 1px;">
+													<form id="formVerPedido" method="get" action="${linkTo[AdminController].pedidoEnviado}${quadro.entrega.pedido.id}" style="float: left; padding: 1px;">
 														<button id="detalhePedido" name="detalhePedido" class="button btn-small btn-primary">Detalhes</button>
 													</form>
 													<%-- <form id="formVerPedido" method="get" action="${linkTo[AdminController].imprimirItens}${pedido.id}" style="float: left; padding: 1px;"> --%>

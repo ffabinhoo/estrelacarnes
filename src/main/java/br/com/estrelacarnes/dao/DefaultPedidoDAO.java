@@ -229,9 +229,11 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 		return lista;
 	}
 
-	@SuppressWarnings("unchecked")
+	
+	/*
+	 * @SuppressWarnings("unchecked")
 	@Override
-	public List<Pedido> listarPedidosEnviadosHoje() {
+	 * public List<Pedido> listarPedidosEnviadosHoje() {
 		List<Pedido> lista = new ArrayList<Pedido>();
 		String inicio = "";
 		String fim = "";
@@ -251,20 +253,42 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 				+ "order by p.data desc";
 		lista = entityManager.createNativeQuery(sql, Pedido.class).getResultList();
 		return lista;
+	}*/
+	
+	public List<Pedido> listarPedidosEnviadosHoje() {
+		return null;
+		
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Pedido> consultarHistoricoPedido(Cliente cliente) {
-		List<Pedido> lista = new ArrayList<Pedido>();
-		String sql = "select * from Pedido p, Entrega e p.id = e.idPedido where idCliente = "+cliente.getId()+" order by p.data desc limit 10 ";
-		lista = entityManager.createNativeQuery(sql, Pedido.class).getResultList();
+	public List<Quadro> listarQuadroPedidosEnviadosHoje() {
+		List<Quadro> lista = new ArrayList<Quadro>();
+		String inicio = "";
+		String fim = "";
+		
+		//DateTimeFormatter dtf = DateTimeFormat.forPattern("dd-MM-yyyy");
+		String pattern = "MM/dd/yyyy";
+		DateTime dataInicio = new DateTime();
+		DateTime dataFim = new DateTime(); 
+		inicio = dataInicio.toString();
+		dataInicio = dataInicio.minusDays(1);
+		inicio = dataInicio.toString(pattern);
+		fim = dataFim.toString(pattern);
+		
+		String sql = "select q.* from Quadro q, Pedido p , Entrega e, Horario h "
+				+ " where e.idPedido = p.id "
+				+ " and q.idEntrega = e.id  and h.id = q.idHorario and p.status = 'E' "
+				+ "and  DATE_FORMAT(p.data, '%m/%d/%y') >= '"+inicio+"' "
+				+ "and  DATE_FORMAT(p.data, '%m/%d/%y') <= '"+fim+"' "
+				+ "order by e.tipoEntrega,  h.horario, p.data asc";
+		lista = entityManager.createNativeQuery(sql, Quadro.class).getResultList();
 		return lista;
 	}
 
 	@Override
 	public void inserirListaItens(List<Item> listaItens) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -282,6 +306,14 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 		List<Quadro> lista = new ArrayList<Quadro>();
 		String sql = "select q from Quadro q where q.entrega.pedido.status = 'A' and q.entrega.tipoEntrega = '"+ tipoEntrega +"' order by q.data, q.horario.horario desc ";
 		lista = entityManager.createQuery(sql, Quadro.class).getResultList();
+		return lista;
+	}
+	
+	@Override
+	public List<Pedido> consultarHistoricoPedido(Cliente cliente) {
+		List<Pedido> lista = new ArrayList<Pedido>();
+		String sql = "select * from Pedido p, Entrega e p.id = e.idPedido where idCliente = "+cliente.getId()+" order by p.data desc limit 10 ";
+		lista = entityManager.createNativeQuery(sql, Pedido.class).getResultList();
 		return lista;
 	}
 

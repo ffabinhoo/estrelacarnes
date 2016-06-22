@@ -68,7 +68,8 @@ public class AdminController {
 	
 	@Get("/")
 	public void principal() {
-		List<Pedido> listaPedidosEnviadosHoje = pedidoDAO.listarPedidosEnviadosHoje();
+		//List<Pedido> listaPedidosEnviadosHoje = pedidoDAO.listarPedidosEnviadosHoje();
+		List<Quadro> listaPedidosEnviadosHoje = pedidoDAO.listarQuadroPedidosEnviadosHoje();
 		
 	    List<Pedido> listaPedidosAbertos = pedidoDAO.listarPedidosAbertos();
 	    for (int i = 0; i < listaPedidosAbertos.size(); i++) {
@@ -81,7 +82,7 @@ public class AdminController {
 			
 			
 		}
-	    for (int i = 0; i < listaPedidosEnviadosHoje.size(); i++) {
+	    /*for (int i = 0; i < listaPedidosEnviadosHoje.size(); i++) {
 			Entrega entrega = new Entrega();
 			if (listaPedidosEnviadosHoje.get(i).getIdEntrega()!=null){
 				entrega.setId(Integer.valueOf(listaPedidosEnviadosHoje.get(i).getIdEntrega()));
@@ -90,7 +91,7 @@ public class AdminController {
 			}
 			
 			
-		}
+		}*/
 	    
 	    result.include("listaPedidosEnviadosHoje", listaPedidosEnviadosHoje);
 	    result.include("listaPedidosAbertos", listaPedidosAbertos);
