@@ -100,7 +100,7 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 	@Override
 	public List<Pedido> listarPedidosAbertos() {
 		List<Pedido> lista = new ArrayList<Pedido>();
-		String sql = "select p from Pedido p where p.status = 'A'order by p.data desc";
+		String sql = "select p from Pedido p where p.status = 'A'and p.idEntrega is null order by p.data desc";
 		lista = entityManager.createQuery(sql, Pedido.class).getResultList();
 		return lista;
 	}
