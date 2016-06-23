@@ -49,7 +49,11 @@ font-size: 15px
 font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 
 }
+#obs{
+font-size: 15px
+font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 
+}
 </style>
 </head>
 <body  onload="window.print(); return false;">
@@ -61,6 +65,12 @@ font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 		<strong>${pedido.cliente.nome}</strong>
 		<br>(${pedido.cliente.celular})
 	</div>
+	<br>
+	<c:if test="${pedido.observacao ne ''}">
+	<div align="center" id="obs">
+		${pedido.observacao}
+	</div>
+	</c:if>
 	
 	<div align="left">
 		<c:forEach var="item" items="${pedido.itens}">
