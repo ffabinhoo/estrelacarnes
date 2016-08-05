@@ -8,19 +8,36 @@
 <title>Estrela Carnes</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="/estrelacarnes/css/bootstrap.min.css" rel="stylesheet">
+<link href="/estrelacarnes/css/bootstrap-responsive.min.css" rel="stylesheet">
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
-<link href="css/font-awesome.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<link href="css/pages/dashboard.css" rel="stylesheet">
+<link href="/estrelacarnes/css/font-awesome.css" rel="stylesheet">
+<link href="/estrelacarnes/css/style.css" rel="stylesheet">
+<link href="/estrelacarnes/css/pages/dashboard.css" rel="stylesheet">
+<link href="/estrelacarnes/css/jquery.datetimepicker.css" rel="stylesheet">
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
+    <style>
+    
+/* #block_container
+{
+    
+}
+#bloc1 
+{
+    display:inline;
+    text-align:left;
+}
+#bloc2
+{
+	display:inline;
+	text-align:right;
+	float:center;
+} */
+    </style>
 </head>
-
 <body>
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
@@ -34,12 +51,12 @@
 							<ul class="dropdown-menu">
 								<li><a href="javascript:;">Profile</a></li>
 								<li><a href="${linkTo[IndexController].logout}">logout</a></li>
- 
+
 							</ul></li>
 					</ul>
-					<form class="navbar-search pull-right">
+					<!-- <form class="navbar-search pull-right">
 						<input type="text" class="search-query" placeholder="Search">
-					</form>
+					</form> -->
 				</div>
 				<!--/.nav-collapse -->
 			</div>
@@ -69,18 +86,6 @@
 							<li><a href="${linkTo[AdminController].manterHorario}">Horários</a></li>
 	                    </ul>    				
 					</li>
-					<!-- <li><a href="#"><i class="icon-list-alt"></i><span>Relatórios</span>
-					</a></li> -->
-					<!-- <li class="dropdown"><a href="javascript:;"
-						class="dropdown-toggle" data-toggle="dropdown"> <i
-							class="icon-long-arrow-down"></i> <span>Opções</span> <b
-							class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Cadastrar Cliente</a></li>
-							<li><a href="#">Consultar Pedido</a></li>
-							
-
-						</ul></li> -->
 				</ul>
 			</div>
 			<!-- /container -->
@@ -92,87 +97,140 @@
 		<div class="main-inner">
 			<div class="container">
 				<div class="row">
-					<div class="span12">
-
-						<div class="widget">
-							<div class="widget-header">
-								<i class="icon-bookmark"></i>
-								<h3>Ícones</h3>
-							</div>
-							<!-- /widget-header -->
-							<div class="widget-content">
-								<div class="shortcuts">
-									 
-										<a href="javascript:;" class="shortcut" id="pedidosHoje"><i class="shortcut-icon icon-list-alt"></i>
-										<span class="shortcut-label">Pedidos Abertos</span> </a>
-										<a href="javascript:;" id="pedidosEnviadosHoje" class="shortcut"><i class="shortcut-icon icon-inbox"></i>
-										<span class="shortcut-label">Pedidos Enviados</span> </a>
-										<a href="${linkTo[AdminController].quadroEntregas}" class="shortcut"><i class="shortcut-icon icon-calendar"></i>
-										<span class="shortcut-label">Quadro de Entregas</span> </a>
-										<a href="${linkTo[AdminController].consultarPedido}" class="shortcut"><i class="shortcut-icon icon-search"></i>
-										<span class="shortcut-label">Consultar Pedidos</span> </a>
-										
-										 
-
-								</div>
-								<!-- /shortcuts -->
-							</div>
-							<!-- /widget-content -->
+					<div class="bs-example ${not empty mensagem ? '' : 'hidden'}">
+						<div class="alert alert-${tipomsg}" id="mensagem">
+							<a href="#" class="close" data-dismiss="alert">&times;</a> <strong>${mensagemNegrito}</strong> ${mensagem}
 						</div>
-						<div class="widget widget-table action-table" id="listaPedidosHoje">
+					</div>
+				</div>
+				<div class="row">
+					<div class="widget">
+						<div class="widget-header">
+							<i class="icon-bookmark"></i>
+							<h3>Ícones</h3>
+						</div>
+						<!-- /widget-header -->
+						<div class="widget-content">
+							<div class="shortcuts">
+								<a href="${linkTo[AdminController].principal}" class="shortcut"><i class="shortcut-icon icon-calendar"></i>
+									<span class="shortcut-label">Quadro de Entregas</span> </a>
+								<a href="${linkTo[AdminController].enviadosHoje}" id="pedidosEnviadosHoje" class="shortcut"><i class="shortcut-icon icon-inbox"></i>
+									<span class="shortcut-label">Pedidos Enviados</span> </a> 
+								<a href="${linkTo[AdminController].consultarPedido}" class="shortcut"><i class="shortcut-icon icon-search"></i>
+									<span class="shortcut-label">Consultar Pedidos</span> </a>
+							</div>
+							<!-- /shortcuts -->
+						</div>
+						<!-- /widget-content -->
+					</div>
+					<c:if test="${listaPedidosPickup.size() > 0}">
+						<div class="widget widget-table action-table" id="listaClientes">
 							<div class="widget-header">
 								<i class="icon-th-list"></i>
-								<h3>Pedidos em Aberto</h3>
+								<h3>Quadro de Entregas - Pick-up</h3>
 							</div>
 							<!-- /widget-header -->
 							<div class="widget-content">
 								<table class="table table-striped table-bordered">
 									<thead>
 										<tr>
-											<th>Cliente - Celular</th>
-											<th>Data</th>
-											<th>Entrega</th>
+											<th>Nome do Cliente</th>
+											<th>Data da Entrega</th>
+											<th>Horário</th>
+											<th>Tipo de Entrega</th>
 											<th class="td-actions"></th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="pedido" items="${listaPedidosAbertos}">
+										<c:forEach var="quadro" items="${listaPedidosPickup}">
 											<tr>
-												<td><a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}">
-													${pedido.cliente.nome} - ${pedido.cliente.celular}</a></td>
-												<td><fmt:formatDate pattern="dd/MM HH:mm" value="${pedido.data}" /></td>
+												<td style="width: 520px;"><a href="${linkTo[ClienteController].mostrarCliente}${quadro.entrega.cliente.id}">${quadro.entrega.cliente.nome}</a></td>
+												<td><fmt:formatDate pattern="dd/MM" value="${quadro.data}" /></td>
+												<td>${quadro.horario.horario} </td>
 												<td>
-													<c:if test="${pedido.tipoEntrega eq 'D'}">
-														Delivery
-													</c:if>
-													<c:if test="${pedido.tipoEntrega eq 'P'}">
+													<c:if test="${quadro.entrega.tipoEntrega eq 'P'}">
 														Pick-up
-													</c:if>
-													<c:if test="${pedido.tipoEntrega eq null}">
-														Não selecionado
+														<c:if test="${quadro.entrega.pedido.status eq 'E'}">
+															- Enviado
+														</c:if>
 													</c:if>
 												</td>
-												
 												<td class="td-actions" style="width: 200px;">
-													<button id="detalhePedido" name="detalhePedido" class="button btn-small btn" onclick="window.open('${linkTo[AdminController].imprimirItens}${pedido.id}')"><i class="icon-print"></i>Print</button>
-													<form id="formVerPedido" method="get" action="cadastrarPedido/${pedido.id}/KG/1/0" style="float: left; padding: 1px;">
-														<button class="button btn btn-success btn-small" id="verPedido">Editar</button>
-													</form>
-													<form id="formExcluirPedido" method="get" action="${linkTo[AdminController].excluirPedido}${pedido.id}"
-														style="float: left; padding: 1px;">
-														<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirPedido">Excluir</button>
-													</form>
-													<c:if test="${pedido.idEntrega ne null}">
-														<form id="formEnviarPedidoSaida" method="post" action="${linkTo[AdminController].enviarPedidoSaida}${pedido.id}" 
+													<c:if test="${quadro.entrega.pedido.status eq 'A'}">
+														<button id="detalhePedido" name="detalhePedido" class="button btn-small btn" onclick="window.open('${linkTo[AdminController].imprimirItens}${quadro.entrega.pedido.id}')"><i class="icon-print"></i>Print</button>
+														<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${quadro.entrega.pedido.id}/KG/1/0" style="float: left; padding: 1px;">
+															<button class="button btn btn-success btn-small" id="verPedido">Editar</button>
+														</form>
+														<form id="formExcluirPedido" method="get" action="${linkTo[AdminController].excluirPedido}${pedido.id}"
 															style="float: left; padding: 1px;">
-															<!-- <input type="hidden" name="pedidoValor" id="valorPedido" value="">
-															<input type="hidden" name="pedidoValorFrete" id="valorPedidoFrete" value="">
- -->
-																<button id="enviarPedidoSaida" name="enviarPedidoSaida" class="button btn-small btn-primary">Enviar</button>
+															<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirPedido">Excluir</button>
 														</form>
 													</c:if>
+													<form id="formEnviarPedidoSaida" method="post" action="${linkTo[AdminController].enviarPedidoSaida}${quadro.entrega.pedido.id}" style="float: left; padding: 1px;">
+														<button id="enviarPedidoSaida" name="enviarPedidoSaida" class="button btn-small btn-primary">Enviar</button>
+													</form>
+													
 												</td>
-
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+							<!-- /widget-content -->
+						</div>
+					</c:if>
+					
+					<!-- /row -->
+					<c:if test="${listaPedidosDelivery.size() > 0}">
+						<div class="widget widget-table action-table" id="listaClientes">
+							<div class="widget-header">
+								<i class="icon-th-list"></i>
+								<h3>Quadro de Entregas - Delivery</h3>
+							</div>
+							<!-- /widget-header -->
+							<div class="widget-content">
+								<table class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th>Nome do Cliente</th>
+											<th>Bairro</th>
+											<th>Data da Entrega</th>
+											<th>Horário</th>
+											<th>Tipo de Entrega</th>
+											<th class="td-actions"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="quadro" items="${listaPedidosDelivery}">
+											<tr>
+												<td style="width: 350px;" id="block_container">
+													<a href="${linkTo[ClienteController].mostrarCliente}${quadro.entrega.cliente.id}">${quadro.entrega.cliente.nome}</a>
+												<td style="width: 150px;">${quadro.entrega.endereco.bairro }</td>
+												<td><fmt:formatDate pattern="dd/MM" value="${quadro.data}" /></td>
+												<td>${quadro.horario.horario} </td>
+												<td>
+													<c:if test="${quadro.entrega.tipoEntrega eq 'D'}">
+														Delivery
+														<c:if test="${quadro.entrega.pedido.status eq 'E'}">
+															- Enviado
+														</c:if>
+													</c:if>
+												</td>
+												<td class="td-actions" style="width: 200px;">
+													<c:if test="${quadro.entrega.pedido.status eq 'A'}">
+														<button id="detalhePedido" name="detalhePedido" class="button btn-small btn" onclick="window.open('${linkTo[AdminController].imprimirItens}${quadro.entrega.pedido.id}')"><i class="icon-print"></i>Print</button>
+														<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${quadro.entrega.pedido.id}/KG/1/0" style="float: left; padding: 1px;">
+															<button class="button btn btn-success btn-small" id="verPedido">Editar</button>
+														</form>
+														<form id="formExcluirPedido" method="get" action="${linkTo[AdminController].excluirPedido}${pedido.id}"
+															style="float: left; padding: 1px;">
+															<button name="_method2" value="DELETE" class="button btn btn-danger btn-small" id="excluirPedido">Excluir</button>
+														</form>
+													</c:if>
+													<form id="formEnviarPedidoSaida" method="post" action="${linkTo[AdminController].enviarPedidoSaida}${quadro.entrega.pedido.id}" style="float: left; padding: 1px;">
+														<button id="enviarPedidoSaida" name="enviarPedidoSaida" class="button btn-small btn-primary">Enviar</button>
+													</form>
+												</td>
 											</tr>
 											<div id="confirm" class="modal hide fade">
 												<div class="modal-body"><h4>Confirma exclusão do Pedido?</h4></div>
@@ -184,13 +242,7 @@
 											<div id="confirmEnviar" class="modal hide fade">
 												<div class="modal-body"><h3>Confirma enviar o Pedido?</h3>
 													<br />
-													<!-- <label class="control-label" for="valor">Valor do Pedido(R$):</label>
-													<input type="text" id="valor" name="valor">
-													<label class="control-label" for="valorFrete">Valor do Frete(R$):</label>
-													<input type="text" id="valorFrete" name="valorFrete">
-												<br /> -->
 												</div>
-												
 												<div class="modal-footer">
 													<button type="button" data-dismiss="modal"
 														class="btn btn-primary" id="confirmar">Confirmar</button>
@@ -198,138 +250,72 @@
 												</div>
 											</div>
 										</c:forEach>
-
 									</tbody>
 								</table>
 							</div>
 							<!-- /widget-content -->
 						</div>
-						
-						<div class="widget widget-table action-table" id="listaPedidosEnviadosHoje">
-							<div class="widget-header">
-								<i class="icon-th-list"></i>
-								<h3>Pedidos Enviados Hoje</h3>
-							</div>
-							<!-- /widget-header -->
-							<div class="widget-content">
-								<table class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th>Cliente - Celular</th>
-											<th>Data</th>
-											<th>Entrega</th>
-											<th>Horário</th>
-											<th class="td-actions"></th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="quadro" items="${listaPedidosEnviadosHoje}">
-											<tr>
-												<td><a href="${linkTo[ClienteController].mostrarCliente}${quadro.entrega.pedido.cliente.id}">
-													${quadro.entrega.pedido.cliente.nome} - ${quadro.entrega.pedido.cliente.celular}</a></td>
-												<td><fmt:formatDate pattern="dd/MM" value="${quadro.entrega.pedido.data}" /></td>
-												<td>
-													<c:if test="${quadro.entrega.tipoEntrega eq 'D'}">
-														Delivery
-													</c:if>
-													<c:if test="${quadro.entrega.tipoEntrega eq 'P'}">
-														Pick-up
-													</c:if>
-													
-												</td>
-												<td>
-												${quadro.horario.horario}
-												</td>
-												
-												<td class="td-actions" style="width: 150px;">
-													<form id="formVerPedido" method="get" action="${linkTo[AdminController].pedidoEnviado}${quadro.entrega.pedido.id}" style="float: left; padding: 1px;">
-														<button id="detalhePedido" name="detalhePedido" class="button btn-small btn-primary">Detalhes</button>
-													</form>
-													<%-- <form id="formVerPedido" method="get" action="${linkTo[AdminController].imprimirItens}${pedido.id}" style="float: left; padding: 1px;"> --%>
-													<%-- <button id="detalhePedido" name="detalhePedido" class="button btn-small btn" onclick="window.open('${linkTo[AdminController].imprimirItens}${pedido.id}')"><i class="icon-print"></i>Print</button> --%>
-													<!-- </form> -->
-													
-													
-												</td>
-
-											</tr>
-											
-											
-										</c:forEach>
-
-									</tbody>
-								</table>
-							</div>
-							<!-- /widget-content -->
+					</c:if>
+					
+				</div>
+				<!-- /container -->
+			</div>
+			<!-- /main-inner -->
+		</div>
+		<!-- /main -->
+		<div class="extra">
+			<div class="extra-inner">
+				<div class="container">
+					<div class="row">
+						<div class="span3">
+							<h4>Sobre Estrela Carnes</h4>
 						</div>
-						
-						
-						
-						
+						<!-- /span3 -->
+						<div class="span3">
+							<h4>Suporte</h4>
+						</div>
+						<!-- /span3 -->
+						<div class="span3"></div>
+						<!-- /span3 -->
+						<div class="span3"></div>
+						<!-- /span3 -->
 					</div>
-					<!-- /span6 -->
-
-					<!-- /span6 -->
+					<!-- /row -->
 				</div>
-				<!-- /row -->
+				<!-- /container -->
 			</div>
-			<!-- /container -->
+			<!-- /extra-inner -->
 		</div>
-		<!-- /main-inner -->
-	</div>
-	<!-- /main -->
-	<div class="extra">
-		<div class="extra-inner">
-			<div class="container">
-				<div class="row">
-					<div class="span3">
-						<h4>Sobre Estrela Carnes</h4>
-
-					</div>
-					<!-- /span3 -->
-					<div class="span3">
-						<h4>Suporte</h4>
-
-					</div>
-					<!-- /span3 -->
-					<div class="span3"></div>
-					<!-- /span3 -->
-					<div class="span3"></div>
-					<!-- /span3 -->
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
 		</div>
-		<!-- /extra-inner -->
-	</div>
-
-	<!-- Le javascript
-================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-
-	<script src="js/jquery-1.7.2.min.js"></script>
-	<script src="js/excanvas.min.js"></script>
-	<script src="js/chart.min.js" type="text/javascript"></script>
-	<script src="js/bootstrap.js"></script>
-	<script language="javascript" type="text/javascript" src="js/full-calendar/fullcalendar.min.js"></script>
-
-	<script src="js/base.js"></script>
-	<script>
-		$(function() {
-			$("#listaPedidosHoje").show();
-			$("#pedidosHoje").click(function() {
-				$("#listaPedidosHoje").toggle("slow");
+		<script src="/estrelacarnes/js/jquery-1.7.2.min.js"></script>
+		<script src="/estrelacarnes/js/jquery.datetimepicker.js"></script>
+		<script src="/estrelacarnes/js/excanvas.min.js"></script>
+		<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
+		<script src="/estrelacarnes/js/bootstrap.js"></script>
+		<script>
+		 $('button[name="enviarPedidoSaida"]').on('click', function(e){
+			    var $form=$(this).closest('#formEnviarPedidoSaida'); 
+			    
+			    e.preventDefault();
+			    
+			    $('#confirmEnviar').modal({ backdrop: 'static', keyboard: false })
+			        .one('click', '#confirmar', function(e) {
+			            $form.trigger('submit'); // submit the form
+			        });
 			});
-		});
-		$(function() {
-			$("#listaPedidosEnviadosHoje").hide();
-			$("#pedidosEnviadosHoje").click(function() {
-				$("#listaPedidosHoje").hide();	
-				$("#listaPedidosEnviadosHoje").toggle("slow");
-			});
-		});
+		
 		$('button[name="_method"]').on('click', function(e) {
+				var $form = $(this).closest('form');
+				e.preventDefault();
+				$('#confirm').modal({
+					backdrop : 'static',
+					keyboard : false
+				}).one('click', '#delete', function() {
+					$form.trigger('submit'); // submit the form
+				});
+		});
+
+		$('button[name="_method2"]').on('click', function(e) {
 			var $form = $(this).closest('form');
 			e.preventDefault();
 			$('#confirm').modal({
@@ -338,28 +324,26 @@
 			}).one('click', '#delete', function() {
 				$form.trigger('submit'); // submit the form
 			});
+	});
+					
+		$('button[name="enviarPedidoSaida"]').on('click', function(e){
+			    var $form=$(this).closest('#formEnviarPedidoSaida'); 
+			    
+			    e.preventDefault();
+			    
+			    $('#confirmEnviar').modal({ backdrop: 'static', keyboard: false })
+			        .one('click', '#confirmar', function(e) {
+			        	/* var valor = $('#valor').val();
+			        	var valorFrete = $('#valorFrete').val();
+				        
+				        $("#valorPedido").val(valor);
+				        $("#valorPedidoFrete").val(valorFrete);
+				        var valor = $('#valor').val();
+				        var valorFrete = $('#valorFrete').val(); */
+				        
+			            $form.trigger('submit'); // submit the form
+			        });
 		});
-
-		 $('button[name="enviarPedidoSaida"]').on('click', function(e){
-		    var $form=$(this).closest('#formEnviarPedidoSaida'); 
-		    
-		    e.preventDefault();
-		    
-		    $('#confirmEnviar').modal({ backdrop: 'static', keyboard: false })
-		        .one('click', '#confirmar', function(e) {
-		        	/* var valor = $('#valor').val();
-		        	var valorFrete = $('#valorFrete').val();
-			        
-			        $("#valorPedido").val(valor);
-			        $("#valorPedidoFrete").val(valorFrete);
-			        var valor = $('#valor').val();
-			        var valorFrete = $('#valorFrete').val(); */
-			        
-		            $form.trigger('submit'); // submit the form
-		        });
-		});
-	 	  
-	</script>
-
+		</script>
 </body>
 </html>

@@ -484,8 +484,10 @@
 			});
 		});
 		document.getElementById("voltarPedido").onclick = function() {
-				var url = '/estrelacarnes';
-				window.location.href = url;
+				/* var url = '/estrelacarnes';
+				window.location.href = url; */
+				event.preventDefault();
+		    	history.back(1);
 		};
 
 		/* $('button[name="enviarPedido"]').on('click', function(e){

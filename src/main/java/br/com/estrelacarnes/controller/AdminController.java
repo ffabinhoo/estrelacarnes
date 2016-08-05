@@ -66,8 +66,8 @@ public class AdminController {
 		this.validator = validator;
 	}
 	
-	@Get("/")
-	public void principal() {
+	@Get("/pedido/EnviadosHoje")
+	public void enviadosHoje() {
 		//List<Pedido> listaPedidosEnviadosHoje = pedidoDAO.listarPedidosEnviadosHoje();
 		List<Quadro> listaPedidosEnviadosHoje = pedidoDAO.listarQuadroPedidosEnviadosHoje();
 		
@@ -103,8 +103,8 @@ public class AdminController {
 		
 	}
 	
-	@Get("/pedido/quadroEntregas")
-	public void quadroEntregas(){
+	@Get("/")
+	public void principal(){
 		List<Quadro> listaPedidosDelivery = pedidoDAO.listarQuadroEntregasDelivery();
 		List<Quadro> listaPedidosPickup = pedidoDAO.listarQuadroEntregasPickup();
 		
@@ -479,6 +479,10 @@ public class AdminController {
 			entrega.setId(Integer.valueOf(pedido.getIdEntrega()));
 			entrega = entregaDAO.load(entrega);
 			entregaDAO.excluir(entrega);
+			//Achar Quadro e excluir
+			Quadro quadro = quadroDAO.consultarQuadroPorEntrega(Integer.valueOf(pedido.getIdEntrega()));
+			quadroDAO.excluir(quadro );
+			
 		}
 		pedidoDAO.excluirPedido(pedido);
 		result.redirectTo(AdminController.class).principal();
