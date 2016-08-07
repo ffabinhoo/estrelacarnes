@@ -246,6 +246,16 @@
 							
 					
 				</div>
+				<div id="confirmEnviar" class="modal hide fade">
+					<div class="modal-body"><h3>Confirma enviar Agora o Pedido ?</h3>
+						<br />
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal"
+							class="btn btn-primary" id="confirmar">Confirmar</button>
+						<button type="button" data-dismiss="modal" class="btn" id="naoconfirma">Cancelar</button>
+					</div>
+				</div>
 				
 				</form>
 				<div class="span12">
@@ -456,8 +466,27 @@
 												 $("#idTipoEntrega").val(tipoEntrega);
 												 $("#idEndereco").val(idEndereco);
 												 
-													
-													$('#formEnviarPedido').submit();
+												 /* aqui começa a pergunta */
+												 var $form=$(this).closest('#formEnviarPedido'); 
+												 e.preventDefault();
+												 $('#confirmEnviar').modal({ backdrop: 'static', keyboard: true })
+											        .one('click', '#confirmar', function(e) {
+											        	//$form.trigger('submit');
+											        	pedido = $('#idPedido').val();
+											        	//alert(pedido);
+											        	$('#formEnviarPedido').attr('action', "/estrelacarnes/pedido/direto").submit();
+											     	
+											        });
+												 $('#confirmEnviar').modal({ backdrop: 'static', keyboard: true })
+											        .one('click', '#naoconfirma', function(e) {
+											        	
+											        	$('#formEnviarPedido').submit();
+											     	
+											        });
+												 
+												 /* aqui termina*/
+												 
+												 //$('#formEnviarPedido').submit();
 												
 											});
 						});

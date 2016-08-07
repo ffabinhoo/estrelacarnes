@@ -560,7 +560,7 @@ public class AdminController {
 	
 	@Post("/pedido/enviar/saida/{pedido.id}")
 
-	public void enviarPedidoSaida(Pedido pedido, String pedidoValor, String pedidoValorFrete){
+	public void enviarPedidoSaida(Pedido pedido){
 		Pedido pedidoObj = new Pedido();
 		pedidoObj = pedidoDAO.load(pedido.getId());
 		pedidoObj.setStatus("E");
@@ -576,6 +576,9 @@ public class AdminController {
 		entregaDAO.alterar(entrega);
 		result.redirectTo(AdminController.class).pedidoEnviado(pedidoObj);
 	}
+	
+
+	
 	
 	@Get("/pedido/layout")
 	public void layout(){
@@ -622,11 +625,9 @@ public class AdminController {
 				result.forwardTo(AdminController.class).resumoPedido(pedido);
 			}
 			
-			
 			if (quadro.getHorario().getId()!=null){
 				/*VALIDAR DATA SE É PASSADO*/
 				if (validarData(quadro.getData(), pedido)){
-			
 
 				pedido.setStatus("A");
 	
@@ -643,18 +644,92 @@ public class AdminController {
 					quadroObj.setHorario(quadro.getHorario());
 					quadroDAO.update(quadroObj);
 				}
-				pedido = pedidoDAO.alterarPedido(pedido);
-				result.redirectTo(AdminController.class).principal();
+					pedido = pedidoDAO.alterarPedido(pedido);
+					result.redirectTo(AdminController.class).principal();
+				}
+			}
+		}
+	}
+	
+	@Post("/pedido/direto")
+	public void enviarPedidoSaidaDireto(Pedido pedido, Endereco endereco, String tipoEntrega, Quadro quadro){
+		
+		if (tipoEntrega==null){
+			result.include("tipomsg", "error");
+			result.include("mensagemNegrito", "Erro! ");
+			result.include("mensagem", "Selecione o Tipo de Entrega do Pedido ");
+			result.redirectTo(AdminController.class).resumoPedido(pedido);
+		}
+		if (tipoEntrega!=null){
+			String observacao = pedido.getObservacao();
+			String valor = pedido.getValor();
+			String valorFrete = pedido.getValorFrete();
+			pedido = pedidoDAO.load(pedido.getId());
+			pedido.setObservacao(observacao);
+			pedido.setValor(valor);
+			pedido.setValorFrete(valorFrete);
+			if (endereco.getId()!=null){
+				endereco = clienteDAO.consultarEndereco(endereco);
+			}else{
+				endereco = null;
+			}
+			Entrega entrega = new Entrega();
+			entrega.setCliente(pedido.getCliente());
+			entrega.setEndereco(endereco);
+			entrega.setPedido(pedido);
+			entrega.setTipoEntrega(tipoEntrega);
+			entrega.setData(new Date());
+			/************Quadro***********/
+			if (quadro.getHorario().getId()==null||quadro.getData()==null){
+				result.include("tipomsg", "error");
+				result.include("mensagemNegrito", "Erro! ");
+				result.include("mensagem", "Data e Horário devem ser informados!");
+				result.forwardTo(AdminController.class).resumoPedido(pedido);
 			}
 			
-				
+			if (quadro.getHorario().getId()!=null){
+				/*VALIDAR DATA SE É PASSADO*/
+				if (validarData(quadro.getData(), pedido)){
+
+				pedido.setStatus("A");
+	
+				if (pedido.getIdEntrega()==null){
+					entregaDAO.incluir(entrega);
+					pedido.setIdEntrega(entrega.getId().toString());
+					quadro.setEntrega(entrega);
+					quadroDAO.incluir(quadro);
+				}else{
+					entrega.setId(Integer.valueOf(pedido.getIdEntrega()));
+					entregaDAO.alterar(entrega);
+					Quadro quadroObj = quadroDAO.consultarQuadroPorEntrega(entrega.getId());
+					quadroObj.setData(quadro.getData());
+					quadroObj.setHorario(quadro.getHorario());
+					quadroDAO.update(quadroObj);
+				}
+					pedido = pedidoDAO.alterarPedido(pedido);
+					//result.redirectTo(AdminController.class).principal();
+					/*AQUI VAI O ENVIO DO PEDIDO DIRETO */
+					
+					Pedido pedidoObj = new Pedido();
+					pedidoObj = pedidoDAO.load(pedido.getId());
+					pedidoObj.setStatus("E");
+					
+					pedidoObj.setData(new Date());//Atualiza data de envio do pedido
+					Entrega entregaNEW = new Entrega();
+					entregaNEW.setId(Integer.valueOf(pedidoObj.getIdEntrega()));
+					entregaNEW = entregaDAO.load(entrega);
+					entregaNEW.setData(new Date());
+					pedidoDAO.alterarPedido(pedidoObj);
+					entregaDAO.alterar(entregaNEW);
+					result.redirectTo(AdminController.class).pedidoEnviado(pedidoObj);
+					
+				}
 			}
-			
 		}
 		
 		
-		
 	}
+	
 	private boolean validarData(Date dataCampo, Pedido pedido) {
 		boolean retorno = false;
 		LocalDate dataCampoNovo = new LocalDate(dataCampo);
