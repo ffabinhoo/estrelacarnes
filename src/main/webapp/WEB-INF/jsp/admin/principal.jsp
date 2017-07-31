@@ -222,7 +222,7 @@
 														<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${quadro.entrega.pedido.id}/KG/1/0" style="float: left; padding: 1px;">
 															<button class="button btn btn-success btn-small" id="verPedido">Editar</button>
 														</form>
-														<form id="formExcluirPedido" method="get" action="${linkTo[AdminController].excluirPedido}${pedido.id}"
+														<form id="formExcluirPedido" method="get" action="${linkTo[AdminController].excluirPedido}${quadro.entrega.pedido.id}"
 															style="float: left; padding: 1px;">
 															<button name="_method2" value="DELETE" class="button btn btn-danger btn-small" id="excluirPedido">Excluir</button>
 														</form>
