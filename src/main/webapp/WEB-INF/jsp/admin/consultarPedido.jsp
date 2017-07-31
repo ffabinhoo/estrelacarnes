@@ -145,7 +145,7 @@
 											<tr>
 											
 												<td><a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}">${pedido.cliente.nome}</a></td>
-												<td><fmt:formatDate pattern="dd/MM HH:mm" value="${pedido.data}" /></td>
+												<td><fmt:formatDate pattern="dd/MM/YYYY HH:mm" value="${pedido.data}" /></td>
 												
 												<td>
 													<c:if test="${pedido.tipoEntrega eq 'D'}">

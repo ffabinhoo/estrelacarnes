@@ -115,7 +115,7 @@
 								<a href="${linkTo[AdminController].principal}" class="shortcut"><i class="shortcut-icon icon-calendar"></i>
 									<span class="shortcut-label">Quadro de Entregas</span> </a>
 								<a href="${linkTo[AdminController].enviadosHoje}" id="pedidosEnviadosHoje" class="shortcut"><i class="shortcut-icon icon-inbox"></i>
-									<span class="shortcut-label">Pedidos Enviados</span> </a> 
+									<span class="shortcut-label">Pedidos Enviados e Abertos</span> </a> 
 								<a href="${linkTo[AdminController].consultarPedido}" class="shortcut"><i class="shortcut-icon icon-search"></i>
 									<span class="shortcut-label">Consultar Pedidos</span> </a>
 							</div>
@@ -145,7 +145,7 @@
 										<c:forEach var="quadro" items="${listaPedidosPickup}">
 											<tr>
 												<td style="width: 520px;"><a href="${linkTo[ClienteController].mostrarCliente}${quadro.entrega.cliente.id}">${quadro.entrega.cliente.nome}</a></td>
-												<td><fmt:formatDate pattern="dd/MM" value="${quadro.data}" /></td>
+												<td><fmt:formatDate pattern="dd/MM/YYYY" value="${quadro.data}" /></td>
 												<td>${quadro.horario.horario} </td>
 												<td>
 													<c:if test="${quadro.entrega.tipoEntrega eq 'P'}">
@@ -206,7 +206,7 @@
 												<td style="width: 350px;" id="block_container">
 													<a href="${linkTo[ClienteController].mostrarCliente}${quadro.entrega.cliente.id}">${quadro.entrega.cliente.nome}</a>
 												<td style="width: 150px;">${quadro.entrega.endereco.bairro }</td>
-												<td><fmt:formatDate pattern="dd/MM" value="${quadro.data}" /></td>
+												<td><fmt:formatDate pattern="dd/MM/YYYY" value="${quadro.data}" /></td>
 												<td>${quadro.horario.horario} </td>
 												<td>
 													<c:if test="${quadro.entrega.tipoEntrega eq 'D'}">

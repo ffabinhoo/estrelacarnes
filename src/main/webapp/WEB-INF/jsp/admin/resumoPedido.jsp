@@ -293,6 +293,13 @@
 						</div>
 					</div>
 					<div class="form-actions">
+						
+						<%-- <div class="pull-left">
+							<form id="formSalvarPedido" method="post" action="${linkTo[AdminController].prepararEntrega}">
+								<button id="salvarPedido" name="salvarPedido" class="btn btn-primary" >Salvar Pedido</button>
+							</form>
+						</div> --%>
+						
 						<div class="pull-right">
 							<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${pedido.id}/KG/1/0" style="float: left; padding: 1px;">
 								<button class="button btn btn-success btn-small" id="verPedido">Editar Pedido</button>

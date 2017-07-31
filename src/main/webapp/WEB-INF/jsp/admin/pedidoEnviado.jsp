@@ -115,10 +115,10 @@
 					<div class="span12">
 						<h3>Pedido para Entrega 
 							<c:if test="${entrega.tipoEntrega eq 'D'}">
-								Delivery - <fmt:formatDate pattern="dd/MM HH:mm" value="${entrega.data}" />
+								Delivery - <fmt:formatDate pattern="dd/MM/YYYY HH:mm" value="${entrega.data}" />
 							</c:if>
 							<c:if test="${entrega.tipoEntrega eq 'P'}">
-								Pick-up - <fmt:formatDate pattern="dd/MM HH:mm" value="${entrega.data}" />
+								Pick-up - <fmt:formatDate pattern="dd/MM/YYYY HH:mm" value="${entrega.data}" />
 							</c:if>
 						</h3>
 					</div>
