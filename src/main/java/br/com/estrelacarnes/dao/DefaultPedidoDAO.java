@@ -165,7 +165,7 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 						Calendar cal = Calendar.getInstance();
 						
 					    cal.setTime(datainicio);
-					    cal.add(Calendar.DAY_OF_MONTH, -1);
+					    //cal.add(Calendar.DAY_OF_MONTH, -1);
 					    int year = cal.get(Calendar.YEAR);
 					    int month = cal.get(Calendar.MONTH);
 					    month = month+1;
@@ -182,8 +182,11 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 					    }else{
 					    	days = day + "";
 					    }
-					    inicio = months + "/" + days + "/" + year;
-						String sqlInicio = " and  DATE_FORMAT(p.data, '%m/%d/%y') >= '"+inicio+"' ";
+					    //inicio = months + "/" + days + "/" + year;
+					    
+						//String sqlInicio = " and  DATE_FORMAT(p.data, '%m/%d/%y') >= '"+inicio+"' ";
+					    inicio = year + "-" + months + "-" + days;
+					    String sqlInicio = " and  p.data >= '"+inicio+" 0:00:00' ";
 						sql = sql.concat(sqlInicio);
 					} catch (ParseException e) {
 						e.printStackTrace();
@@ -216,8 +219,10 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 					    }else{
 					    	days = day + "";
 					    }
-					    fim = months + "/" + days + "/" + year;
-						String sqlFim = " and  DATE_FORMAT(p.data, '%m/%d/%y') <= '"+fim+"' ";
+					    //fim = months + "/" + days + "/" + year;
+						//String sqlFim = " and  DATE_FORMAT(p.data, '%m/%d/%y') <= '"+fim+"' ";
+					    fim = year + "-" + months + "-" + days;
+					    String sqlFim = " and  p.data <= '"+fim+" 23:59:59' ";
 						sql = sql.concat(sqlFim);
 					} catch (ParseException e) {
 						e.printStackTrace();
@@ -225,6 +230,7 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 					 
 				}
 				sql = sql + " order by p.data desc"; 
+				//and (p.data between '2017-07-31 0:00:00' and '2017-08-01 23:59:59')
 		lista = entityManager.createNativeQuery(sql, Pedido.class).getResultList();
 		return lista;
 	}
@@ -319,3 +325,4 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 
 	
 }
+

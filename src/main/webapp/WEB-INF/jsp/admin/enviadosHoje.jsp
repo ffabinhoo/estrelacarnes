@@ -136,7 +136,7 @@
 											<tr>
 												<td><a href="${linkTo[ClienteController].mostrarCliente}${quadro.entrega.pedido.cliente.id}">
 													${quadro.entrega.pedido.cliente.nome} - ${quadro.entrega.pedido.cliente.celular}</a></td>
-												<td><fmt:formatDate pattern="dd/MM" value="${quadro.entrega.pedido.data}" /></td>
+												<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${quadro.entrega.pedido.data}" /></td>
 												<td>
 													<c:if test="${quadro.entrega.tipoEntrega eq 'D'}">
 														Delivery
@@ -194,7 +194,7 @@
 											<tr>
 												<td><a href="${linkTo[ClienteController].mostrarCliente}${pedido.cliente.id}">
 													${pedido.cliente.nome} - ${pedido.cliente.celular}</a></td>
-												<td><fmt:formatDate pattern="dd/MM HH:mm" value="${pedido.data}" /></td>
+												<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm" value="${pedido.data}" /></td>
 												<td>
 													<c:if test="${pedido.tipoEntrega eq 'D'}">
 														Delivery
