@@ -490,9 +490,6 @@
 		}
 	});
 
-
-
-
 	
 		document.getElementById("voltarPedido").onclick = function() {
 			
@@ -502,12 +499,8 @@
 		};
 		
 		
-		
-		
 	    $("#valor").maskMoney({thousands:'.', decimal:',', affixesStay: true});
 	    $("#valorFrete").maskMoney({thousands:'.', decimal:',', affixesStay: true});
-	    
-	    
 	    
 	    
 	</script>
