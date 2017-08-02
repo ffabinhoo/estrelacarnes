@@ -187,6 +187,7 @@
 																	<div class="plan">
 																		<div class="plan-actions">
 																			<a href="" class="btn" id="enviarPedido">Enviar</a>
+																			
 																		</div>
 																	</div>
 																</div>
@@ -229,6 +230,7 @@
 																		</div>
 																		<div class="plan-actions">
 																			<a href="" class="btn" id="enviarPedido" name="${endereco.id}" >Enviar</a>
+																			
 																		</div>
 																	</div>
 																</div>
@@ -294,13 +296,14 @@
 					</div>
 					<div class="form-actions">
 						
-						<%-- <div class="pull-left">
+						<div class="pull-right">
 							<form id="formSalvarPedido" method="post" action="${linkTo[AdminController].prepararEntrega}">
 								<button id="salvarPedido" name="salvarPedido" class="btn btn-primary" >Salvar Pedido</button>
+								<button id="enviarPedido" name="enviarPedido" class="btn btn-primary" >Enviar Pedido</button>
 							</form>
-						</div> --%>
+						</div>
 						
-						<div class="pull-right">
+						<div class="pull-left">
 							<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${pedido.id}/KG/1/0" style="float: left; padding: 1px;">
 								<button class="button btn btn-success btn-small" id="verPedido">Editar Pedido</button>
 								<button class="btn btn-small" id="voltarPedido" type="button">Voltar</button>
