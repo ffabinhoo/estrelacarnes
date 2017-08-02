@@ -229,12 +229,12 @@
 																			</ul>
 																		</div>
 																		<div class="plan-actions">
-<<<<<<< HEAD
+
 																			<%-- <a href="" class="btn" id="enviarPedido" name="${endereco.id}" >Enviar</a> --%>
 																			<a href="" class="btn" id="selecionarEndereco">Selecionar</a>
-=======
-																			<a href="" class="btn" id="enviarPedido" name="${endereco.id}" >Enviar</a>
->>>>>>> branch 'master' of https://github.com/ffabinhoo/estrelacarnes.git
+
+																			
+
 																			
 																		</div>
 																	</div>
