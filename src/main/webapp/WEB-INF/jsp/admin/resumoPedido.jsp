@@ -502,7 +502,6 @@
 	    $("#valor").maskMoney({thousands:'.', decimal:',', affixesStay: true});
 	    $("#valorFrete").maskMoney({thousands:'.', decimal:',', affixesStay: true});
 	    
-	    
 	</script>
 </body>
 </html>
