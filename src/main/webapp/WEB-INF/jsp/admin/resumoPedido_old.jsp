@@ -100,9 +100,9 @@
 						</div>
 					</div>
 					<form id="formEnviarPedido" method="post" action="${linkTo[AdminController].prepararEntrega}">
-						<%-- <input type="hidden" value="" id="idEndereco" name="endereco.id">
+						<input type="hidden" value="" id="idEndereco" name="endereco.id">
 						<input type="hidden" value="" id="idTipoEntrega" name="tipoEntrega">
-						<input type="hidden" value="${pedido.id}" id="idPedido" name="pedido.id"> --%>
+						<input type="hidden" value="${pedido.id}" id="idPedido" name="pedido.id">
 						<!-- valor de entrega -->
 						<div class="span12" id="divValores">
 							<ul>
@@ -171,7 +171,34 @@
 							</div>
 						</div>
 						<div class="span12">
-							
+							<div class="main" id="enderecoPick">
+								<div class="main-inner">
+									<div class="container">
+										<div class="row">
+											<div class="span12">
+												<div class="widget">
+													<div class="widget-header">
+														<i class="icon-th-large"></i>
+														<h3>Pegar na Loja</h3>
+													</div>
+													<div class="widget-content">
+														<div class="pricing-plans plans-3">
+															<div class="plan-container">
+																	<div class="plan">
+																		<div class="plan-actions">
+																			<a href="" class="btn" id="enviarPedido">Enviar</a>
+																		</div>
+																	</div>
+																</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
 							<div class="main" id="enderecoDelivery">
 								<div class="main-inner">
 									<div class="container">
@@ -201,10 +228,7 @@
 																			</ul>
 																		</div>
 																		<div class="plan-actions">
-																			<label class="radio inline"> <input type="radio" id="enderecoSelecionado" value="${endereco.id}" 
-																			name="enderecoSelecionado" ${endereco.id == entrega.endereco.id ? 'checked' : ''}> Selecionar Endereço
-									</label> 
-																			<%-- <a href="" class="btn" id="selecionarPedido" name="${endereco.id}" >Selecionar</a> --%>
+																			<a href="" class="btn" id="enviarPedido" name="${endereco.id}" >Enviar</a>
 																		</div>
 																	</div>
 																</div>
@@ -270,25 +294,13 @@
 					</div>
 					<div class="form-actions">
 						
-						<div class="pull-right">
-							<form id="formSalvarPedido" method="post" action="${linkTo[AdminController].gravarPedido}">
-								<input type="hidden" value="${pedido.id}" id="idPedido" name="pedido.id">
-								<input type="hidden" value="" id="idEndereco" name="endereco.id">
-								<input type="hidden" value="" id="idTipoEntrega" name="tipoEntrega">
-								
-								<input type="hidden" value="" id="idValor" name="pedido.valor">
-								<input type="hidden" value="" id="idValorFrete" name="pedido.valorFrete">
-								<input type="hidden" value="" id="idObservacao" name="pedido.observacao">
-								<input type="hidden" value="" id="idData" name="quadro.data">
-								<input type="hidden" value="" id="idHorario" name="quadro.horario.id">
-								
-								
-								<button id="salvarPedido" name="salvarPedido" class="btn btn-primary" >Salvar</button>
-								
+						<%-- <div class="pull-left">
+							<form id="formSalvarPedido" method="post" action="${linkTo[AdminController].prepararEntrega}">
+								<button id="salvarPedido" name="salvarPedido" class="btn btn-primary" >Salvar Pedido</button>
 							</form>
-						</div>
+						</div> --%>
 						
-						<div class="pull-left">
+						<div class="pull-right">
 							<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${pedido.id}/KG/1/0" style="float: left; padding: 1px;">
 								<button class="button btn btn-success btn-small" id="verPedido">Editar Pedido</button>
 								<button class="btn btn-small" id="voltarPedido" type="button">Voltar</button>
@@ -336,45 +348,6 @@
 	
 	<script>
 	
-	$(document).ready(function() {
-		$('#salvarPedido').on('click', function() {
-			var valor = $("#valor").val();
-			var valorFrete = $("#valorFrete").val();
-			var observacao = $("#observacao").val();
-			var tipoEntrega = $('input[name=entrega.ctipoEntrega]:checked',	'#formEnviarPedido').val();
-			var idEndereco = $('input[name=enderecoSelecionado]:checked',	'#formEnviarPedido').val();
-			var data = $('.datepicker').val();
-			var horario = $('#selectHorario').val();
-			
-			//alert(data);
-			//alert(horario);
-			
-			$("#idValor").val(valor);
-			$("#idValorFrete").val(valorFrete);
-			$("#idObservacao").val(observacao);
-			$("#idTipoEntrega").val(tipoEntrega);
-			$("#idEndereco").val(idEndereco);
-			$("#idData").val(data);
-			$("#idHorario").val(horario);
-			
-			
-			
-			//alert(valor);
-			 /* var tipoEntrega = $("#idTipoEntrega").val(tipoEntrega);
-			 var idEndereco = $("#idEndereco").val(idEndereco); */
-			 /* alert(tipoEntrega.value);
-			 alert(idEndereco.value); */
-			 /* if (tipoEntrega || idEndereco == null){
-				 alert('erro');
-				 
-			 } */
-			//event.preventDefault();
-		});
-	});
-	
-	
-	
-	
 	$('.datepicker').datepicker({
 		format: 'dd/mm/yyyy',
 		minDate: 0,
@@ -409,8 +382,6 @@
 	    
 	});
  	
- 	
- 	
  	$('#selectHorario').on('change', function() {
  		var idHorario = this.value; 
 		var data = $('.datepicker').val();
@@ -440,17 +411,20 @@
 	$( "#valor" ).focus();
 	$(document).ready(function() {
 		$("#enderecoDelivery").hide();
+		$("#enderecoPick").hide();
 		$("#frete").hide();
 		
 		
 		var tipoEntrega = $('input[name=ctipoEntrega]:checked',	'#formEnviarPedido').val();
 		if (tipoEntrega == 'D'){
 			$("#enderecoDelivery").show();
+			$("#enderecoPick").hide();
 			$( "#valor" ).focus();
 			$("#frete").show();						
 		} 
 		if (tipoEntrega == 'P'){
 			$("#enderecoDelivery").hide();
+			$("#enderecoPick").show();
 			$( "#valor" ).focus();
 		}
 	});
@@ -477,20 +451,78 @@
 
 	
 		document.getElementById("voltarPedido").onclick = function() {
-			
+			//var url = '/estrelacarnes';
+			//window.location.href = url;
 			event.preventDefault();
 		    history.back(1);
 		};
 		
 		
-		
+		$(document)
+				.ready(
+						function() {
+							$("a.btn")
+									.click(
+											function(e) {
+												e.preventDefault();
+												var tipoEntrega = $(
+														'input[name=entrega.ctipoEntrega]:checked',
+														'#formEnviarPedido')
+														.val();
+												 var idEndereco = this.name;
+												 $("#idTipoEntrega").val(tipoEntrega);
+												 $("#idEndereco").val(idEndereco);
+												 
+												 /* aqui começa a pergunta */
+												 var $form=$(this).closest('#formEnviarPedido'); 
+												 e.preventDefault();
+												 $('#confirmEnviar').modal({ backdrop: 'static', keyboard: true })
+											        .one('click', '#confirmar', function(e) {
+											        	//$form.trigger('submit');
+											        	pedido = $('#idPedido').val();
+											        	//alert(pedido);
+											        	$('#formEnviarPedido').attr('action', "/estrelacarnes/pedido/direto").submit();
+											     	
+											        });
+												 $('#confirmEnviar').modal({ backdrop: 'static', keyboard: true })
+											        .one('click', '#naoconfirma', function(e) {
+											        	
+											        	$('#formEnviarPedido').submit();
+											     	
+											        });
+												 
+												 /* aqui termina*/
+												 
+												 //$('#formEnviarPedido').submit();
+												
+											});
+						});
 		
 	    $("#valor").maskMoney({thousands:'.', decimal:',', affixesStay: true});
 	    $("#valorFrete").maskMoney({thousands:'.', decimal:',', affixesStay: true});
 	    
 	    
 	    
-	    
+	    /* $.ajax({
+        type: 'GET',
+        url: post_url,  */
+        //data: valor,
+        /* success: function(msg) {
+           
+        	 $("#divHorario").load(post_url);
+        } */
+        /* dataType: 'json',
+        success: function( json ) {
+        	$('#selectHorario').empty();
+            $('#selectHorario').append($('<option>').text("Select"));
+            var obj = $("#divHorario").load(post_url);
+            $.each(json, function(i, obj){
+                    $('#selectHorario').append($('<option>').text(obj.horario).attr('value', obj.horario));
+            });
+         }
+
+    
+    }); */
 	</script>
 </body>
 </html>

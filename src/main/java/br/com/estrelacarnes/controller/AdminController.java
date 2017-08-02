@@ -585,13 +585,56 @@ public class AdminController {
 				
 	}
 	
-	
+	@Post("/pedido/gravar")
+	public void gravarPedido(Pedido pedido, Endereco endereco, String tipoEntrega, Quadro quadro){
+		String observacao = pedido.getObservacao();
+		String valor = pedido.getValor();
+		String valorFrete = pedido.getValorFrete();
+		pedido = pedidoDAO.load(pedido.getId());
+		pedido.setObservacao(observacao);
+		pedido.setValor(valor);
+		pedido.setValorFrete(valorFrete);
+		if (endereco.getId()!=null){
+			endereco = clienteDAO.consultarEndereco(endereco);
+		}else{
+			endereco = null;
+		}
+		Entrega entrega = new Entrega();
+		entrega.setCliente(pedido.getCliente());
+		entrega.setEndereco(endereco);
+		entrega.setPedido(pedido);
+		entrega.setTipoEntrega(tipoEntrega);
+		entrega.setData(new Date());
+		if (quadro.getHorario().getId()!=null){
+			/*VALIDAR DATA SE É PASSADO*/
+			if (validarData(quadro.getData(), pedido)){
+
+			pedido.setStatus("A");
+
+			if (pedido.getIdEntrega()==null){
+				entregaDAO.incluir(entrega);
+				pedido.setIdEntrega(entrega.getId().toString());
+				quadro.setEntrega(entrega);
+				quadro.setData(quadro.getData());
+				quadroDAO.incluir(quadro);
+			}else{
+				entrega.setId(Integer.valueOf(pedido.getIdEntrega()));
+				entregaDAO.alterar(entrega);
+				Quadro quadroObj = quadroDAO.consultarQuadroPorEntrega(entrega.getId());
+				quadroObj.setData(quadro.getData());
+				quadroObj.setHorario(quadro.getHorario());
+				quadroDAO.update(quadroObj);
+			}
+				pedido = pedidoDAO.alterarPedido(pedido);
+				
+			}
+		}
+		result.redirectTo(AdminController.class).resumoPedido(pedido);
+	}
 	
 	@Post("/pedido/entrega")
 	public void prepararEntrega(Pedido pedido, Endereco endereco, String tipoEntrega, Quadro quadro){
-		//validator.addIf(entrega.getTipoEntrega() == null, new SimpleMessage("Tipo entrega", "A Tipo de Entrega deve ser preenchido"));	
-				//validator.onErrorForwardTo(this).erro(pedido);
-		//tipoEntrega = entrega.getTipoEntrega();
+		
 		if (tipoEntrega==null){
 			result.include("tipomsg", "error");
 			result.include("mensagemNegrito", "Erro! ");
