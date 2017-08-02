@@ -286,6 +286,22 @@
 								<button id="salvarPedido" name="salvarPedido" class="btn btn-primary" >Salvar</button>
 								
 							</form>
+							<form id="formSaidaDireto" method="post" action="${linkTo[AdminController].enviarPedidoSaidaDireto}">
+								<input type="hidden" value="${pedido.id}" id="idPedido" name="pedido.id">
+								<input type="hidden" value="" id="idEndereco2" name="endereco.id">
+								<input type="hidden" value="" id="idTipoEntrega2" name="tipoEntrega">
+								
+								<input type="hidden" value="" id="idValor2" name="pedido.valor">
+								<input type="hidden" value="" id="idValorFrete2" name="pedido.valorFrete">
+								<input type="hidden" value="" id="idObservacao2" name="pedido.observacao">
+								<input type="hidden" value="" id="idData2" name="quadro.data">
+								<input type="hidden" value="" id="idHorario2" name="quadro.horario.id">
+								
+								
+								<button id="enviarPedido" name="EnviarPedido" class="btn" >Enviar</button>
+								
+							</form>
+							
 						</div>
 						
 						<div class="pull-left">
@@ -346,9 +362,6 @@
 			var data = $('.datepicker').val();
 			var horario = $('#selectHorario').val();
 			
-			//alert(data);
-			//alert(horario);
-			
 			$("#idValor").val(valor);
 			$("#idValorFrete").val(valorFrete);
 			$("#idObservacao").val(observacao);
@@ -357,22 +370,27 @@
 			$("#idData").val(data);
 			$("#idHorario").val(horario);
 			
+		});
+		$('#enviarPedido').on('click', function() {
+			var valor = $("#valor").val();
+			var valorFrete = $("#valorFrete").val();
+			var observacao = $("#observacao").val();
+			var tipoEntrega = $('input[name=entrega.ctipoEntrega]:checked',	'#formEnviarPedido').val();
+			var idEndereco = $('input[name=enderecoSelecionado]:checked',	'#formEnviarPedido').val();
+			var data = $('.datepicker').val();
+			var horario = $('#selectHorario').val();
 			
+			$("#idValor2").val(valor);
+			$("#idValorFrete2").val(valorFrete);
+			$("#idObservacao2").val(observacao);
+			$("#idTipoEntrega2").val(tipoEntrega);
+			$("#idEndereco2").val(idEndereco);
+			$("#idData2").val(data);
+			$("#idHorario2").val(horario);
+
 			
-			//alert(valor);
-			 /* var tipoEntrega = $("#idTipoEntrega").val(tipoEntrega);
-			 var idEndereco = $("#idEndereco").val(idEndereco); */
-			 /* alert(tipoEntrega.value);
-			 alert(idEndereco.value); */
-			 /* if (tipoEntrega || idEndereco == null){
-				 alert('erro');
-				 
-			 } */
-			//event.preventDefault();
 		});
 	});
-	
-	
 	
 	
 	$('.datepicker').datepicker({
@@ -479,7 +497,8 @@
 		document.getElementById("voltarPedido").onclick = function() {
 			
 			event.preventDefault();
-		    history.back(1);
+		    //history.back(1);
+		    window.location = "/estrelacarnes/";
 		};
 		
 		
@@ -494,3 +513,4 @@
 	</script>
 </body>
 </html>
+
