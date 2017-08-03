@@ -9,11 +9,11 @@
 <head>
 <meta charset="iso-8859-1">
 <title>Estrela Carnes</title>
-<link href="/estrelacarnes/css/bootstrap-responsive.min.css" 	rel="stylesheet">
 <!--<meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="/estrelacarnes/css/bootstrap.min.css" rel="stylesheet">
-
+<link href="/estrelacarnes/css/bootstrap-responsive.min.css"
+	rel="stylesheet">
 <link
 	href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
 	rel="stylesheet">
@@ -44,7 +44,8 @@ body {
 <script type="text/javascript">
 function imprimir(){
 	window.print();
-	
+	//var url = '/estrelacarnes/pedido/imprimirItens/' + ${pedido.id};
+	//window.open(url, '_blank');
 	return false;
 }
 </script>
@@ -75,31 +76,6 @@ function imprimir(){
 	
 		</c:forEach>
 	</div>
-	<br><br>
-	<div align="left">
-		<table width="100%" >
-			<c:forEach var="item" items="${pedido.itens}">
-				<tr height="40px">
-					<td width="20">${item.quantidade}</td>
-					<td width="20" align="left">${item.tipo}</td>
-					<td nowrap>${item.produto.nome}</td>
-					<td nowrap>${item.preparo.nome}</td>
-					<td nowrap>${item.complemento.nome}</td>
-					<td>_____________________________________________</td>
-					<td></td>
-				</tr>
-				
-				<tr height="1px">
-					<td colspan="6">${item.observacao}</td>
-				</tr>
-				
-			</c:forEach>
-		</table>
-		
-		
-		
-	</div>
-	
 	
 	<div align="right">
 		<table>

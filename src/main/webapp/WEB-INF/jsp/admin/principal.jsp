@@ -123,62 +123,7 @@
 						</div>
 						<!-- /widget-content -->
 					</div>
-					<c:if test="${listaPedidosPickup.size() > 0}">
-						<div class="widget widget-table action-table" id="listaClientes">
-							<div class="widget-header">
-								<i class="icon-th-list"></i>
-								<h3>Quadro de Entregas - Pick-up</h3>
-							</div>
-							<!-- /widget-header -->
-							<div class="widget-content">
-								<table class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th>Nome do Cliente</th>
-											<th>Data da Entrega</th>
-											<th>Horário</th>
-											<th>Tipo de Entrega</th>
-											<th class="td-actions"></th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="quadro" items="${listaPedidosPickup}">
-											<tr>
-												<td style="width: 520px;"><a href="${linkTo[ClienteController].mostrarCliente}${quadro.entrega.cliente.id}">${quadro.entrega.cliente.nome}</a></td>
-												<td><fmt:formatDate pattern="dd/MM/YYYY" value="${quadro.data}" /></td>
-												<td>${quadro.horario.horario} </td>
-												<td>
-													<c:if test="${quadro.entrega.tipoEntrega eq 'P'}">
-														Pick-up
-														<c:if test="${quadro.entrega.pedido.status eq 'E'}">
-															- Enviado
-														</c:if>
-													</c:if>
-												</td>
-												<td class="td-actions" style="width: 200px;">
-													<c:if test="${quadro.entrega.pedido.status eq 'A'}">
-														<button id="detalhePedido" name="detalhePedido" class="button btn-small btn" onclick="window.open('${linkTo[AdminController].imprimirItens}${quadro.entrega.pedido.id}')"><i class="icon-print"></i>Print</button>
-														<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${quadro.entrega.pedido.id}/KG/1/0" style="float: left; padding: 1px;">
-															<button class="button btn btn-success btn-small" id="verPedido">Editar</button>
-														</form>
-														<form id="formExcluirPedido" method="get" action="${linkTo[AdminController].excluirPedido}${quadro.entrega.pedido.id}"
-															style="float: left; padding: 1px;">
-															<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirPedido">Excluir</button>
-														</form>
-													</c:if>
-													<form id="formEnviarPedidoSaida" method="post" action="${linkTo[AdminController].enviarPedidoSaida}${quadro.entrega.pedido.id}" style="float: left; padding: 1px;">
-														<button id="enviarPedidoSaida" name="enviarPedidoSaida" class="button btn-small btn-primary">Enviar</button>
-													</form>
-													
-												</td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
-							<!-- /widget-content -->
-						</div>
-					</c:if>
+					
 					
 					<!-- /row -->
 					<c:if test="${listaPedidosDelivery.size() > 0}">
@@ -249,6 +194,63 @@
 													<button type="button" data-dismiss="modal" class="btn">Cancelar</button>
 												</div>
 											</div>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+							<!-- /widget-content -->
+						</div>
+					</c:if>
+					
+					<c:if test="${listaPedidosPickup.size() > 0}">
+						<div class="widget widget-table action-table" id="listaClientes">
+							<div class="widget-header">
+								<i class="icon-th-list"></i>
+								<h3>Quadro de Entregas - Pick-up</h3>
+							</div>
+							<!-- /widget-header -->
+							<div class="widget-content">
+								<table class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th>Nome do Cliente</th>
+											<th>Data da Entrega</th>
+											<th>Horário</th>
+											<th>Tipo de Entrega</th>
+											<th class="td-actions"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="quadro" items="${listaPedidosPickup}">
+											<tr>
+												<td style="width: 520px;"><a href="${linkTo[ClienteController].mostrarCliente}${quadro.entrega.cliente.id}">${quadro.entrega.cliente.nome}</a></td>
+												<td><fmt:formatDate pattern="dd/MM/YYYY" value="${quadro.data}" /></td>
+												<td>${quadro.horario.horario} </td>
+												<td>
+													<c:if test="${quadro.entrega.tipoEntrega eq 'P'}">
+														Pick-up
+														<c:if test="${quadro.entrega.pedido.status eq 'E'}">
+															- Enviado
+														</c:if>
+													</c:if>
+												</td>
+												<td class="td-actions" style="width: 200px;">
+													<c:if test="${quadro.entrega.pedido.status eq 'A'}">
+														<button id="detalhePedido" name="detalhePedido" class="button btn-small btn" onclick="window.open('${linkTo[AdminController].imprimirItens}${quadro.entrega.pedido.id}')"><i class="icon-print"></i>Print</button>
+														<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${quadro.entrega.pedido.id}/KG/1/0" style="float: left; padding: 1px;">
+															<button class="button btn btn-success btn-small" id="verPedido">Editar</button>
+														</form>
+														<form id="formExcluirPedido" method="get" action="${linkTo[AdminController].excluirPedido}${quadro.entrega.pedido.id}"
+															style="float: left; padding: 1px;">
+															<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirPedido">Excluir</button>
+														</form>
+													</c:if>
+													<form id="formEnviarPedidoSaida" method="post" action="${linkTo[AdminController].enviarPedidoSaida}${quadro.entrega.pedido.id}" style="float: left; padding: 1px;">
+														<button id="enviarPedidoSaida" name="enviarPedidoSaida" class="button btn-small btn-primary">Enviar</button>
+													</form>
+													
+												</td>
+											</tr>
 										</c:forEach>
 									</tbody>
 								</table>
