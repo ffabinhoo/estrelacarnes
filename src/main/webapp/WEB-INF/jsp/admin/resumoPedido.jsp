@@ -300,6 +300,19 @@
 								
 								<button id="enviarPedido" name="EnviarPedido" class="btn" >Enviar</button>
 								
+								<!-- DIALOG CONFIRMACAO DE ENVIO -->
+								<div id="confirmEnviar" class="modal hide fade">
+									<div class="modal-body"><h3>Confirma enviar o Pedido?</h3>
+										<br />
+									</div>
+									<div class="modal-footer">
+										<button type="button" data-dismiss="modal" class="btn btn-primary" id="confirmar">Confirmar</button>
+										<button type="button" data-dismiss="modal" class="btn">Cancelar</button>
+									</div>
+								</div>
+								<!-- FIM DIALOGO -->
+								
+								
 							</form>
 							
 						</div>
@@ -351,6 +364,17 @@
 	
 	
 	<script>
+	
+	$('button[name="EnviarPedido"]').on('click', function(e){
+	    var $form=$(this).closest('#formSaidaDireto'); 
+	    
+	    e.preventDefault();
+	    
+	    $('#confirmEnviar').modal({ backdrop: 'static', keyboard: false })
+	        .one('click', '#confirmar', function(e) {
+	            $form.trigger('submit'); // submit the form
+	        });
+	});
 	
 	$(document).ready(function() {
 		$('#salvarPedido').on('click', function() {

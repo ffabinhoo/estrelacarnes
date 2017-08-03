@@ -629,7 +629,18 @@ public class AdminController {
 				
 			}
 		}
-		result.redirectTo(AdminController.class).resumoPedido(pedido);
+		if (pedido.getIdEntrega()!=null){
+			result.include("tipomsg", "success");
+			result.include("mensagemNegrito", "");
+			result.include("mensagem", "Pedido salvo e pronto para entrega!");
+			result.redirectTo(AdminController.class).principal();
+		}else{
+			result.include("tipomsg", "success");
+			result.include("mensagemNegrito", "");
+			result.include("mensagem", "Pedido salvo e aguardando definição de entrega.");
+			result.redirectTo(AdminController.class).enviadosHoje();
+		}
+		
 	}
 	
 	@Post("/pedido/entrega")

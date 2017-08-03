@@ -266,8 +266,9 @@
 		document.getElementById("voltarPedido").onclick = function() {
 			//var url = '/estrelacarnes';
 			//window.location.href = url;
-			event.preventDefault();
-		    history.back(1);
+			//event.preventDefault();
+		    //history.back(1);
+			window.location = "/estrelacarnes/pedido/EnviadosHoje";
 		};
 	</script>
 </body>

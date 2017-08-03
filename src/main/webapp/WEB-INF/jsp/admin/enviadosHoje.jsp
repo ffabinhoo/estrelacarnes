@@ -92,6 +92,14 @@
 		<div class="main-inner">
 			<div class="container">
 				<div class="row">
+					<div class="bs-example ${not empty mensagem ? '' : 'hidden'}">
+						<div class="alert alert-${tipomsg}" id="mensagem">
+							<a href="#" class="close" data-dismiss="alert">&times;</a> <strong>${mensagemNegrito}</strong>
+							${mensagem}
+						</div>
+					</div>
+				</div>
+				<div class="row">
 					<div class="span12">
 
 						<div class="widget">
