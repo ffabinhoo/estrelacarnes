@@ -40,6 +40,10 @@ body {
 	font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
  }
 
+table, th, td {
+    border: 0px solid black;
+}
+
 </style>
 <script type="text/javascript">
 function imprimir(){
@@ -90,18 +94,21 @@ function imprimir(){
 				</tr>
 			</thead>
 			<c:forEach var="item" items="${pedido.itens}">
-				<tr height="30px">
+				<tr height="40px" valign="bottom">
 					<td>${item.quantidade}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td align="left">${item.tipo}</td>
-					<td nowrap>${item.produto.nome}</td>
-					<td nowrap>${item.preparo.nome}</td>
-					<td nowrap>${item.complemento.nome}</td>
-					<td>___________________</td>
+					<td nowrap>${item.produto.nome} ${item.preparo.nome} ${item.complemento.nome} 
+					.....................................................................................................</td>
+					
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				</tr>
-				<c:if test="${item.observacao ne ''}">
-					<tr height="30px" valign="top">
-						<td colspan="6">${item.observacao}</td>
+				<c:if test="${item.observacao ne null}">
+					<tr height="20px" valign="top">
+						<td></td>
+						<td></td>
+						<td nowrap valign="top">${item.observacao}</td>
+						
+						<td></td>
 					</tr>
 				</c:if>
 				
