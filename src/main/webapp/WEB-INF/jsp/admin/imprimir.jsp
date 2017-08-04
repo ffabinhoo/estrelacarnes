@@ -9,11 +9,11 @@
 <head>
 <meta charset="iso-8859-1">
 <title>Estrela Carnes</title>
-<link href="/estrelacarnes/css/bootstrap-responsive.min.css" 	rel="stylesheet">
+
 <!--<meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="/estrelacarnes/css/bootstrap.min.css" rel="stylesheet">
-
+<link href="/estrelacarnes/css/bootstrap-responsive.min.css" 	rel="stylesheet">
 <link
 	href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
 	rel="stylesheet">
@@ -64,7 +64,7 @@ function imprimir(){
 		<br>(${pedido.cliente.celular})
 	</div>
 	
-	<div align="left">
+	<%-- <div align="left">
 		<c:forEach var="item" items="${pedido.itens}">
 	
 			<p>${item.quantidade}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${item.tipo}&nbsp;&nbsp;${item.produto.nome}&nbsp;&nbsp;${item.preparo.nome}&nbsp;&nbsp; ${item.complemento.nome}
@@ -74,24 +74,36 @@ function imprimir(){
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${item.observacao}</p>
 	
 		</c:forEach>
-	</div>
+	</div> --%>
 	<br><br>
 	<div align="left">
-		<table width="100%" >
+		<table width="100%"  >
+			<thead>
+				<tr>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
 			<c:forEach var="item" items="${pedido.itens}">
-				<tr height="40px">
-					<td width="20">${item.quantidade}</td>
-					<td width="20" align="left">${item.tipo}</td>
+				<tr height="30px">
+					<td>${item.quantidade}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td align="left">${item.tipo}</td>
 					<td nowrap>${item.produto.nome}</td>
 					<td nowrap>${item.preparo.nome}</td>
 					<td nowrap>${item.complemento.nome}</td>
-					<td>_____________________________________________</td>
-					<td></td>
+					<td>___________________</td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				</tr>
-				
-				<tr height="1px">
-					<td colspan="6">${item.observacao}</td>
-				</tr>
+				<c:if test="${item.observacao ne ''}">
+					<tr height="30px" valign="top">
+						<td colspan="6">${item.observacao}</td>
+					</tr>
+				</c:if>
 				
 			</c:forEach>
 		</table>
@@ -138,10 +150,10 @@ function imprimir(){
 	</div>
 	<br>
 	<div align="left">
-		<Strong>RECEBIMENTO:</strong>________________________________________________________________
+		<Strong>RECEBIMENTO:</strong>________________________________________________
 		<br><br><br><br>
 		
-									 ===============================================================
+									 ============================================================
 	<p>&nbsp;</p>
 	<p>&nbsp;</p>
 	<p>&nbsp;</p>
