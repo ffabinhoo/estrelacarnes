@@ -56,12 +56,26 @@ font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 }
 </style>
 </head>
-<body  onload="window.print(); return false;">
+<body onload="window.print(); return false;">
 	<!--  onload="window.print(); return false;" -->
 	
 			
 	<br>
 	<div align="center" id="nome">
+	 
+		<c:if test="${quadro.entrega.tipoEntrega eq 'D'}">
+														
+			<strong>DELIVERY - ${diaDaSemana} - <fmt:formatDate pattern="dd/MM" value="${quadro.data}" /></strong><br>
+			<Strong>${quadro.entrega.endereco.endereco} - ${quadro.entrega.endereco.complemento}</Strong><br>
+			<strong>${quadro.entrega.endereco.bairro} - ${quadro.horario.horario }</strong><br>
+		</c:if>
+		<c:if test="${quadro.entrega.tipoEntrega eq 'P'}">
+														
+			<strong>PICK-UP - ${diaDaSemana} - <fmt:formatDate pattern="dd/MM" value="${quadro.data}" /></strong><br>
+			<strong>${quadro.horario.horario }</strong><br>
+			
+		</c:if>
+		<br><br><br>
 		<strong>${pedido.cliente.nome}</strong>
 		<br>(${pedido.cliente.celular})
 	</div>

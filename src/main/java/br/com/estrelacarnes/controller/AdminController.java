@@ -7,6 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -833,7 +834,16 @@ public class AdminController {
 	public void imprimirItens(Pedido pedido){
 		Pedido pedidoObj = pedidoDAO.load(pedido.getId());
 		
+		Quadro quadro = quadroDAO.consultarQuadroPorEntrega(Integer.valueOf(pedidoObj.getIdEntrega()));
+		
+		
+		DateTime dateTime = new DateTime(quadro.getData());
+		
+		int diaSemana = dateTime.getDayOfWeek();
+		
+		result.include("quadro", quadro);
 		result.include("pedido", pedidoObj);
+		result.include("diaDaSemana", diaDaSemana(diaSemana));
 	}
 	
 	
@@ -846,5 +856,37 @@ public class AdminController {
 	}
 	
 	*/
+	
+	public String diaDaSemana (int dia){
+		String diaDaSemana = "";
+		if (dia ==1){
+			return "Segunda";
+		}
+		if (dia ==2){
+			return "Terça";
+		}
+		if (dia ==3){
+			return "Quarta";
+		}
+		if (dia ==4){
+			return "Quinta";
+		}
+		if (dia ==5){
+			return "Sexta";
+		}
+		if (dia ==6){
+			return "Sábado";
+		}
+		if (dia ==7){
+			return "Domingo";
+		}
+		
+		
+		
+		
+		return diaDaSemana;
+	}
+	
+	
 
 }

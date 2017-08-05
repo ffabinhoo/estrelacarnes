@@ -12,6 +12,8 @@ public interface EntregaDAO {
 	void incluir(Entrega entrega);
 
 	Entrega load(Entrega entrega);
+	
+	Entrega carregarEntregaPeloPedido(Pedido pedido);
 
 	List<Entrega> consultarEnderecoEntrega(Endereco endereco);
 
@@ -21,5 +23,7 @@ public interface EntregaDAO {
 
 
 	void excluir(Entrega entrega);
+
+	
 
 }

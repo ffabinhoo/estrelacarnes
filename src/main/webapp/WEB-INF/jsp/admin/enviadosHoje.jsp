@@ -216,7 +216,7 @@
 												</td>
 												
 												<td class="td-actions" style="width: 200px;">
-													<button id="detalhePedido" name="detalhePedido" class="button btn-small btn" onclick="window.open('${linkTo[AdminController].imprimirItens}${pedido.id}')"><i class="icon-print"></i>Print</button>
+													<%-- <button id="detalhePedido" name="detalhePedido" class="button btn-small btn" onclick="window.open('${linkTo[AdminController].imprimirItens}${pedido.id}')"><i class="icon-print"></i>Print</button> --%>
 													<form id="formVerPedido" method="get" action="/estrelacarnes/cadastrarPedido/${pedido.id}/KG/1/0" style="float: left; padding: 1px;">
 														<button class="button btn btn-success btn-small" id="verPedido">Editar</button>
 													</form>

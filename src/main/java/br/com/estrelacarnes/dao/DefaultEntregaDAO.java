@@ -38,6 +38,11 @@ public class DefaultEntregaDAO implements EntregaDAO, Serializable{
 	public Entrega load(Entrega entrega) {
 		return this.entityManager.find(Entrega.class, entrega.getId());
 	}
+	
+	@Override
+	public Entrega carregarEntregaPeloPedido(Pedido pedido){
+		return entityManager.createQuery("select e from Entrega e where e.pedido.id = " + pedido.getId(),  Entrega.class).getSingleResult();
+	}
 
 	@Override
 	public List<Entrega> consultarEnderecoEntrega(Endereco endereco) {
