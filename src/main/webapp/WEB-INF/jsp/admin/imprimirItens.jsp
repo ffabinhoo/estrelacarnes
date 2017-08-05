@@ -66,7 +66,7 @@ font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 		<c:if test="${quadro.entrega.tipoEntrega eq 'D'}">
 														
 			<strong>DELIVERY - ${diaDaSemana} - <fmt:formatDate pattern="dd/MM" value="${quadro.data}" /></strong><br>
-			<Strong>${quadro.entrega.endereco.endereco} - ${quadro.entrega.endereco.complemento}</Strong><br>
+			<%-- <Strong>${quadro.entrega.endereco.endereco} - ${quadro.entrega.endereco.complemento}</Strong><br> --%>
 			<strong>${quadro.entrega.endereco.bairro} - ${quadro.horario.horario }</strong><br>
 		</c:if>
 		<c:if test="${quadro.entrega.tipoEntrega eq 'P'}">
