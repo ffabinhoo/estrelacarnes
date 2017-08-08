@@ -55,7 +55,7 @@ public class DefaultEntregaDAO implements EntregaDAO, Serializable{
 	@Override
 	public List<Entrega> consultarEntregasCliente(Cliente cliente) {
 		List<Entrega> lista = new ArrayList<Entrega>();
-		String sql = "select i from Entrega i where i.cliente.id = " + cliente.getId() + " ";
+		String sql = "select i from Entrega i where i.cliente.id = " + cliente.getId() + " order by 1 desc";
 		lista = entityManager.createQuery(sql, Entrega.class).getResultList();
 		return lista;
 	}

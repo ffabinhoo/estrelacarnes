@@ -261,6 +261,16 @@ public class AdminController {
 		
 	}
 	
+	@Post("/alterarHorario")
+	public void atualizarHorario(Horario horario){
+		horarioDAO.update(horario);
+		result.include("tipomsg", "success");
+		result.include("mensagemNegrito", "Horário ");
+		result.include("mensagem", "alterado com sucesso.");
+		result.redirectTo(AdminController.class).manterHorario();
+		
+	}
+	
 	@Get("/excluirHorario/{idHorario}")
 	public void excluirHorario(Integer idHorario){
 		Horario horario = new Horario();
@@ -502,7 +512,7 @@ public class AdminController {
 		Integer contador = 0;
 		
 		quadro = horarioDAO.consultarEntregaNoQuadro(pedido.getId());
-		if (quadro != null){
+		if (quadro != null && quadro.getData()!= null){
 			horario = horarioDAO.load(quadro.getHorario());
 			String dateTime =quadro.getData().toString();
 			// Format for input
@@ -608,7 +618,7 @@ public class AdminController {
 		entrega.setData(new Date());
 		if (quadro.getHorario().getId()!=null){
 			/*VALIDAR DATA SE É PASSADO*/
-			if (validarData(quadro.getData(), pedido)){
+			if (validarData(quadro.getData(), pedido, tipoEntrega)){
 
 			pedido.setStatus("A");
 
@@ -682,7 +692,7 @@ public class AdminController {
 			
 			if (quadro.getHorario().getId()!=null){
 				/*VALIDAR DATA SE É PASSADO*/
-				if (validarData(quadro.getData(), pedido)){
+				if (validarData(quadro.getData(), pedido,tipoEntrega)){
 
 				pedido.setStatus("A");
 	
@@ -744,7 +754,7 @@ public class AdminController {
 			
 			if (quadro.getHorario().getId()!=null){
 				/*VALIDAR DATA SE É PASSADO*/
-				if (validarData(quadro.getData(), pedido)){
+				if (validarData(quadro.getData(), pedido, tipoEntrega)){
 
 				pedido.setStatus("A");
 	
@@ -785,7 +795,7 @@ public class AdminController {
 		
 	}
 	
-	private boolean validarData(Date dataCampo, Pedido pedido) {
+	private boolean validarData(Date dataCampo, Pedido pedido, String tipoEntrega) {
 		boolean retorno = false;
 		LocalDate dataCampoNovo = new LocalDate(dataCampo);
 		LocalDateTime agora = new LocalDateTime(new Date());
@@ -793,9 +803,19 @@ public class AdminController {
 		
 		System.out.println("equal : " + forCompare.isAfter(dataCampoNovo));
 		
+		if (tipoEntrega==null){
+			result.include("tipomsg", "error");
+			result.include("mensagemNegrito", "Erro! ");
+			result.include("mensagem", "Tipo de Entrega deve ser preenchido!");
+			result.forwardTo(AdminController.class).resumoPedido(pedido);
+		}
+		
 			if (forCompare.isEqual(dataCampoNovo) || forCompare.isBefore(dataCampoNovo)){
 				return true;
 			}else{
+				
+				
+				
 				result.include("tipomsg", "error");
 				result.include("mensagemNegrito", "Erro! ");
 				result.include("mensagem", "Data anterior a data de hoje!");
