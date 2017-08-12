@@ -232,6 +232,8 @@ public class AdminController {
 			listaCliente = clienteDAO.consultarUsuarioPorNome(nome);
 		}
 		result.include("listaCliente", listaCliente);
+		result.include("nomeBusca", nome);
+		result.include("telBusca", telefone);
 	}
 	
 	@Get("/consultarUsuario")

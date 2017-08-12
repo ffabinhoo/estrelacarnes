@@ -96,7 +96,16 @@
 									<div class="form-actions">
 										<button  class="btn btn-primary btn-small" id="buscar">Buscar</button>
 										<button class="btn btn-small" id="voltarCliente" type="button">Voltar</button>
-								</div>	
+										
+										
+									</div>	
+							</form>
+							<form action="${linkTo[ClienteController].exportar}" method="post" id="formExportar">
+								<input type="hidden" name="nomeBusca" value="${nomeBusca}" id="nomeBusca">
+								<input type="hidden" name="telBusca" value="${telBusca}" id="telefoneBusca">
+								<div class="pull-right">
+									<button id="exportar" name="exportar" class="btn" >Exportar Lista</button>
+								</div>
 							</form>
 						</div>
 					</div>
@@ -199,6 +208,16 @@
 				var url = '/estrelacarnes';
 				window.location.href = url;
 			};
+			
+			
+			
+			$( "#exportar" ).click(function() {
+				$('#formExportar').attr('action', "/estrelacarnes/cliente/exportar");
+				  $( "#formExportar" ).submit();
+			});
+			
+			
+			
 			$('button[name="_method"]').on('click', function(e){
 			    var $form=$(this).closest('form'); 
 			    e.preventDefault();

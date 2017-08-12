@@ -330,5 +330,21 @@ public class ClienteController {
 		result.redirectTo(ClienteController.class).mostrarCliente(cliente);
 	}
 	
+	@Post("cliente/exportar")
+	public void exportar(String telBusca, String nomeBusca){
+		List<Cliente> listaCliente = new ArrayList<Cliente>();
+		if (telBusca == null && nomeBusca == null){
+			listaCliente = clienteDAO.listarTodosUsuarios();
+		}
+		
+		if (telBusca != null){
+			listaCliente = clienteDAO.consultarUsuarioPorTelefone(telBusca);
+		} 
+		if (nomeBusca != null){
+			listaCliente = clienteDAO.consultarUsuarioPorNome(nomeBusca);
+		}
+		result.include("listaCliente", listaCliente);
+	}
+	
 	
 }
