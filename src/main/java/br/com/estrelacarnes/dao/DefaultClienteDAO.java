@@ -143,9 +143,9 @@ public class DefaultClienteDAO implements ClienteDAO, Serializable{
 				+ " "
 				; 
 		System.out.println(sql);
-		Object valor = entityManager.createNativeQuery(sql).getSingleResult();
-		String retorno = valor.toString();
-		return null;
+		Object valor = entityManager.createNativeQuery(sql).getResultList();
+		
+		return (List<ClienteRelatorio>) valor;
 	}
 
 }
