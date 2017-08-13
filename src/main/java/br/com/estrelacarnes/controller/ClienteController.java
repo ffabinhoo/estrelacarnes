@@ -22,6 +22,7 @@ import br.com.estrelacarnes.dao.EntregaDAO;
 import br.com.estrelacarnes.dao.PedidoDAO;
 import br.com.estrelacarnes.interceptor.UserInfo;
 import br.com.estrelacarnes.model.Cliente;
+import br.com.estrelacarnes.model.ClienteRelatorio;
 import br.com.estrelacarnes.model.Endereco;
 import br.com.estrelacarnes.model.Entrega;
 import br.com.estrelacarnes.model.Pedido;
@@ -332,17 +333,21 @@ public class ClienteController {
 	
 	@Post("cliente/exportar")
 	public void exportar(String telBusca, String nomeBusca){
-		List<Cliente> listaCliente = new ArrayList<Cliente>();
-		if (telBusca == null && nomeBusca == null){
-			listaCliente = clienteDAO.listarTodosUsuarios();
-		}
+		List<ClienteRelatorio> listaCliente = new ArrayList<ClienteRelatorio>();
+//		if (telBusca == null && nomeBusca == null){
+//			listaCliente = clienteDAO.listarTodosUsuarios();
+//		}
+//		
+//		if (telBusca != null){
+//			listaCliente = clienteDAO.consultarUsuarioPorTelefone(telBusca);
+//		} 
+//		if (nomeBusca != null){
+//			listaCliente = clienteDAO.consultarUsuarioPorNome(nomeBusca);
+//		}
 		
-		if (telBusca != null){
-			listaCliente = clienteDAO.consultarUsuarioPorTelefone(telBusca);
-		} 
-		if (nomeBusca != null){
-			listaCliente = clienteDAO.consultarUsuarioPorNome(nomeBusca);
-		}
+			listaCliente = clienteDAO.relatorioClientesPedidos(telBusca, nomeBusca);
+		
+		
 		result.include("listaCliente", listaCliente);
 	}
 	

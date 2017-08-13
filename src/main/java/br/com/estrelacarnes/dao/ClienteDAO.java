@@ -5,6 +5,7 @@ import java.util.List;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 import br.com.estrelacarnes.model.Cliente;
+import br.com.estrelacarnes.model.ClienteRelatorio;
 import br.com.estrelacarnes.model.Endereco;
 
 public interface ClienteDAO {
@@ -44,6 +45,8 @@ public interface ClienteDAO {
 	Endereco consultarEndereco(Endereco endereco);
 
 	void alterarEndereco(Endereco endereco);
+
+	List<ClienteRelatorio> relatorioClientesPedidos(String telBusca, String nomeBusca);
 	
 	
 }

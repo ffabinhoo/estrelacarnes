@@ -56,6 +56,7 @@ public class Cliente implements Serializable{
 	
 	
 	
+	
 	 
 
 	public Integer getId() {
