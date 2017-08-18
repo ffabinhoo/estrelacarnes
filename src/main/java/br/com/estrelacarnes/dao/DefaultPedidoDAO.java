@@ -287,7 +287,7 @@ public class DefaultPedidoDAO implements PedidoDAO, Serializable{
 				+ " and q.idEntrega = e.id  and h.id = q.idHorario and p.status = 'E' "
 				+ "and  DATE_FORMAT(p.data, '%m/%d/%y') >= '"+inicio+"' "
 				+ "and  DATE_FORMAT(p.data, '%m/%d/%y') <= '"+fim+"' "
-				+ "order by e.tipoEntrega,  h.horario, p.data asc";
+				+ "order by e.tipoEntrega,  h.horario, p.data desc";
 		lista = entityManager.createNativeQuery(sql, Quadro.class).getResultList();
 		return lista;
 	}
