@@ -89,6 +89,7 @@
 						<ul class="dropdown-menu">
 	                        <li><a href="#">Produtos</a></li>
 							<li><a href="${linkTo[AdminController].manterHorario}">Horários</a></li>
+							<li><a href="${linkTo[AdminController].relatorios}">Relatórios</a></li>
 	                    </ul>    				
 					</li>
 				</ul>

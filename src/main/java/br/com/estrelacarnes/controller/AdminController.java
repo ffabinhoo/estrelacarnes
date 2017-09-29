@@ -241,6 +241,11 @@ public class AdminController {
 		System.out.println("consultar usuario");
 	}
 	
+	@Get("/relatorios")
+	public void relatorios() {
+		System.out.println("consultar usuario");
+	}
+	
 	@Get("/manterHorario")
 	public void manterHorario() {
 		List<Horario> listaHorario = new ArrayList<Horario>();

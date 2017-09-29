@@ -60,82 +60,10 @@
 				</div>
 				<div class="row">
 					<div class="span12">
-						<div class="widget widget-table action-table" id="buscaUsuario">
-							<form action="${linkTo[AdminController].consultarUsuario}" method="post" id="formConsulta">
-								
-								<input type="text" class="" placeholder="Nome" id="nome" name="nome" value=""> <!-- <a href="#" id="idBuscaNome"><i
-									class="icon-search"></i></a> --><br />
-									<input type="text" class="" placeholder="Telefone" id="telefone" name="telefone" value=""> <!-- <a href="#" id="idBusca"><i
-									class="icon-search"></i></a> --><br />
-									<div class="form-actions">
-										<button  class="btn btn-primary btn-small" id="buscar">Buscar</button>
-										<button class="btn btn-small" id="voltarCliente" type="button">Voltar</button>
-										
-										
-									</div>	
-							</form>
-							<form action="${linkTo[ClienteController].exportar}" method="post" id="formExportar">
-								<input type="hidden" name="nomeBusca" value="${nomeBusca}" id="nomeBusca">
-								<input type="hidden" name="telBusca" value="${telBusca}" id="telefoneBusca">
-								<div class="pull-right">
-									<button id="exportar" name="exportar" class="btn" >Exportar Lista</button>
-								</div>
-							</form>
-						</div>
+						
 					</div>
 					<!-- /row -->
-					<c:if test="${listaCliente.size() > 0}">
-						<div class="widget widget-table action-table" id="listaClientes">
-							<div class="widget-header">
-								<i class="icon-th-list"></i>
-								<h3>Clientes</h3>
-							</div>
-							<!-- /widget-header -->
-							<div class="widget-content">
-								<table class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th>Nome do Cliente</th>
-											<th>Telefone</th>
-											<th>CPF</th>
-											<th class="td-actions"></th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="cliente" items="${listaCliente}">
-											<tr>
-											
-												<td><a href="${linkTo[ClienteController].mostrarCliente}${cliente.id}">${cliente.nome}</a></td>
-												<td>${cliente.celular}</td>
-												<td>${cliente.cpf}</td>
-												<td class="td-actions" style="width: 200px;">
-													<form action="${linkTo[AdminController].cadastrarPedidoNovo}" method="post" id="formAbrirPedido" style="float: left; padding: 1px;">
-														<input type="hidden" id="idCliente" name="idCliente" value="${cliente.id}">
-														<button class="button btn btn-success btn-small" id="abrirPedido">Abrir Pedido</button>
-													</form>
-													<form id="formExcluirCliente" method="get" action="${linkTo[ClienteController].excluirCliente}${cliente.id}" 
-														style="float: left; padding: 1px;">
-														<button name="_method" value="DELETE" class="button btn btn-danger btn-small" id="excluirCliente">Excluir Cliente</button>
-													</form>
-												</td>
-											</tr>
-										<div id="confirm" class="modal hide fade">
-										  <div class="modal-body">
-										    Confirma exclusão do Cliente?<br />
-										    (Todo o Histórico do cliente também será excluído)
-										  </div>
-										  <div class="modal-footer">
-										    <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Excluir</button>
-										    <button type="button" data-dismiss="modal" class="btn">Cancelar</button>
-										  </div>
-										</div>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
-							<!-- /widget-content -->
-						</div>
-					</c:if>
+					
 				</div>
 				<!-- /container -->
 			</div>
