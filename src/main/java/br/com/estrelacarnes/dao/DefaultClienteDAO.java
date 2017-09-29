@@ -133,15 +133,24 @@ public class DefaultClienteDAO implements ClienteDAO, Serializable{
 	@Override
 	public List<ClienteRelatorio> relatorioClientesPedidos(String telBusca, String nomeBusca) {
 		
-		String sql = "select c.id, c.nome, c.telefone, c.celular, p.id pedido, e.id entrega, "
+		/*String sql = "select c.id, c.nome, c.telefone, c.celular, p.id pedido, e.id entrega, "
 				+ " count(p.id) qtd, sum(CAST(replace(p.valor, ',','.') as DECIMAL(12,2))) soma from cliente c, Pedido p, Entrega e "
 				+ " where c.id = p.idCliente "
-				+ " and p.idEntrega = e.id "
-				+ " AND c.nome like  '%"	+ nomeBusca	+ "%'"	
-				+ " AND c.celular like  '%"	+ telBusca	+ "%'"
-				+ " group by select c.id, c.nome, c.telefone, c.celular, p.id pedido, e.id entrega "
-				+ " "
-				; 
+				+ " and p.idEntrega = e.id ";*/
+		String sql = "select  C.nome , COUNT(E.ID) quantidade, sum(CAST(replace(P.valor, ',','.') as DECIMAL(12,2))) soma  from Pedido P, Entrega E, CLIENTE C where P.ID = E.IDPEDIDO AND C.ID = P.IDCLIENTE ";
+		
+			if (nomeBusca != (null)){
+				sql = sql + " AND C.nome like  '%"	+ nomeBusca	+ "%' ";
+			}
+			if (telBusca != (null)){
+				sql = sql + " AND C.celular like  '%"	+ telBusca	+ "%' ";
+			}
+		
+				//sql = sql + " group by select c.id, c.nome, c.telefone, c.celular, p.id pedido, e.id entrega "
+			
+				sql = sql + " GROUP BY C.NOME ORDER BY C.NOME ";
+				
+				
 		System.out.println(sql);
 		Object valor = entityManager.createNativeQuery(sql).getResultList();
 		

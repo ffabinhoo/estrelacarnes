@@ -9,7 +9,7 @@ public class ClienteRelatorio{
 	
 	private Integer id;
 	
-
+	@Transient
 	private String nome;
 	
 	@Transient

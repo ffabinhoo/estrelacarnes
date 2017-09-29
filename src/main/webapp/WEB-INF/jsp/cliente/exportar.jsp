@@ -35,18 +35,16 @@
 						<div class="widget widget-table action-table" id="listaClientes">
 							<div class="widget-header">
 								<i class="icon-th-list"></i>
-								<h3>Clientes</h3>
+								<h3>Exportar</h3>
 							</div>
 							<!-- /widget-header -->
 							<div class="widget-content">
-								<table class="table table-striped table-bordered">
+								<table class="table table-striped table-bordered" id="headerTable">
 									<thead>
 										<tr>
 											<th>Nome do Cliente</th>
-											<th>Telefone Residencial</th>
-											<th>Telefone Celular</th>
-											<th>Endereço</th>
-											
+											<th>Quantidade</th>
+											<th>Soma</th>
 											
 										</tr>
 									</thead>
@@ -54,18 +52,10 @@
 										<c:forEach var="cliente" items="${listaCliente}">
 											<tr>
 											
-												<td><a href="${linkTo[ClienteController].mostrarCliente}${cliente.id}">${cliente.nome}</a></td>
-												<td>${cliente.telefone}</td>
-												<td>${cliente.celular}</td>
-												<td>
-													<ul>
-														<c:forEach var="endereco" items="${cliente.enderecos}">
-														<li>
-															${endereco.endereco} - ${endereco.complemento} - ${endereco.bairro} 
-														</li>
-														</c:forEach>
-													</ul>
-												</td>
+												<td>${cliente[0]}</td>
+												<td>${cliente[1]}</td>
+												<td>${cliente[2]}</td>
+												
 												
 											</tr>
 										
@@ -73,8 +63,10 @@
 									</tbody>
 								</table>
 							</div>
+							<button id="btnExport" onclick="fnExcelReport();"> EXPORT </button>
 							<!-- /widget-content -->
 						</div>
+						<iframe id="txtArea1" style="display:none"></iframe>
 					</c:if>
 				</div>
 				<!-- /container -->
@@ -90,23 +82,40 @@
 		<script src="/estrelacarnes/js/chart.min.js" type="text/javascript"></script>
 		<script src="/estrelacarnes/js/bootstrap.js"></script>
 		<script>
-		$(function() {
-			$("#nome").focus();
-		});
-			
-			document.getElementById("voltarCliente").onclick = function() {
-				var url = '/estrelacarnes';
-				window.location.href = url;
-			};
-			$('button[name="_method"]').on('click', function(e){
-			    var $form=$(this).closest('form'); 
-			    e.preventDefault();
-			    $('#confirm').modal({ backdrop: 'static', keyboard: false })
-			        .one('click', '#delete', function() {
-			            $form.trigger('submit'); // submit the form
-			        });
-			        // .one() is NOT a typo of .on()
-			});
+		function fnExcelReport()
+		{
+
+		    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+		    var textRange; var j=0;
+		    tab = document.getElementById('headerTable'); // id of table
+
+		    for(j = 0 ; j < tab.rows.length ; j++) 
+		    {     
+		        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+		        //tab_text=tab_text+"</tr>";
+		    }
+
+		    tab_text=tab_text+"</table>";
+		    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+		    tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+		    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+		    var ua = window.navigator.userAgent;
+		    var msie = ua.indexOf("MSIE "); 
+
+		    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+		    {
+		        txtArea1.document.open("txt/html","replace");
+		        txtArea1.document.write(tab_text);
+		        txtArea1.document.close();
+		        txtArea1.focus(); 
+		        sa=txtArea1.document.execCommand("SaveAs",true,"Say Thanks to Sumit.xls");
+		    }  
+		    else                 //other browser not tested on IE 11
+		        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
+
+		    return (sa);
+		}
 			
 		</script>
 </body>
