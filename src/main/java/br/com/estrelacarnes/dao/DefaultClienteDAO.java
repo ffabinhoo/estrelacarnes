@@ -137,7 +137,7 @@ public class DefaultClienteDAO implements ClienteDAO, Serializable{
 				+ " count(p.id) qtd, sum(CAST(replace(p.valor, ',','.') as DECIMAL(12,2))) soma from cliente c, Pedido p, Entrega e "
 				+ " where c.id = p.idCliente "
 				+ " and p.idEntrega = e.id ";*/
-		String sql = "select  C.nome , COUNT(E.ID) quantidade, sum(CAST(replace(P.valor, ',','.') as DECIMAL(12,2))) soma  from Pedido P, Entrega E, CLIENTE C where P.ID = E.IDPEDIDO AND C.ID = P.IDCLIENTE ";
+		String sql = "select  C.nome , C.telefone, C.celular, COUNT(E.ID) quantidade, sum(CAST(replace(P.valor, ',','.') as DECIMAL(12,2))) soma  from Pedido P, Entrega E, CLIENTE C where P.ID = E.IDPEDIDO AND C.ID = P.IDCLIENTE ";
 		
 			if (nomeBusca != (null)){
 				sql = sql + " AND C.nome like  '%"	+ nomeBusca	+ "%' ";
@@ -148,7 +148,7 @@ public class DefaultClienteDAO implements ClienteDAO, Serializable{
 		
 				//sql = sql + " group by select c.id, c.nome, c.telefone, c.celular, p.id pedido, e.id entrega "
 			
-				sql = sql + " GROUP BY C.NOME ORDER BY C.NOME ";
+				sql = sql + " GROUP BY C.NOME, C.telefone, C.celular ORDER BY C.NOME ";
 				
 				
 		System.out.println(sql);

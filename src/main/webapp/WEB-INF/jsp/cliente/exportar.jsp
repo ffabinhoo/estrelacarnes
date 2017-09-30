@@ -43,6 +43,8 @@
 									<thead>
 										<tr>
 											<th>Nome do Cliente</th>
+											<th>Telefone</th>
+											<th>Celular</th>
 											<th>Quantidade</th>
 											<th>Soma</th>
 											
@@ -55,6 +57,9 @@
 												<td>${cliente[0]}</td>
 												<td>${cliente[1]}</td>
 												<td>${cliente[2]}</td>
+												<td>${cliente[3]}</td>
+												<td>${cliente[4]}</td>
+												
 												
 												
 											</tr>
