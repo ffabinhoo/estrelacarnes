@@ -57,8 +57,11 @@ function imprimir(){
 	<!--  onload="window.print()" -->
 	
 		<div align="center" >
-			<label id="nomeEmpresa"><strong> ESTRELA CARNES</strong></label>
-			WWW.ESTRELACARNES.COM.BR
+			<label id="nomeEmpresa"><strong> CAMPERIA</strong></label>
+			<br/>
+			<h4> CASA DE CARNES</h4>
+			<h4>WWW.CAMPERIA.COM.BR</h4>
+			
 			<br> CNPJ: 00.454.728/0001-93
 			<br> TEL: 3351-2313
 		</div>	
