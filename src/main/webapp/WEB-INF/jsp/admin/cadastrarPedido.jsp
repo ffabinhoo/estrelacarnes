@@ -8,7 +8,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Estrela Carnes</title>
+<title>Camperia Carnes</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -52,7 +52,7 @@
 					<span class="icon-bar">c</span>
 				</a> -->
 				<a class="brand" href="/estrelacarnes">
-					Estrela Carnes - Administração de Pedidos
+					Camperia Carnes - Administração de Pedidos
 				</a>
 				<div class="nav-collapse">
 					<ul class="nav pull-right">
@@ -371,7 +371,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="span3">
-						<h4>Sobre Estrela Carnes</h4>
+						<h4>Sobre Camperia Carnes</h4>
 
 					</div>
 					<!-- /span3 -->

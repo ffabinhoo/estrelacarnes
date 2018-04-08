@@ -7,7 +7,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="iso-8859-1">
-<title>Estrela Carnes</title>
+<title>Camperia Carnes</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link href="/estrelacarnes/css/bootstrap.min.css" rel="stylesheet">
@@ -30,7 +30,7 @@
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-				<a class="brand" href="/estrelacarnes">Estrela Carnes - Administração de Pedidos</a>
+				<a class="brand" href="/estrelacarnes">Camperia Carnes - Administração de Pedidos</a>
 				<div class="nav-collapse">
 					<ul class="nav pull-right">
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-user"></i> <span
@@ -334,7 +334,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="span3">
-						<h4>Sobre Estrela Carnes</h4>
+						<h4>Sobre Camperia Carnes</h4>
 
 					</div>
 					<!-- /span3 -->

@@ -8,7 +8,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="iso-8859-1">
-<title>Estrela Carnes</title>
+<title>Camperia Carnes</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -237,7 +237,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="span3">
-						<h4>Sobre Estrela Carnes</h4>
+						<h4>Sobre Camperia Carnes</h4>
 
 					</div>
 					<!-- /span3 -->
